@@ -1,0 +1,125 @@
+//
+   Created by jmjeong on 2015. 4. 16..
+
+div(ng-include='"components/navbar/navbar.html"')
+
+div(ng-controller='MainCtrl')
+    script(type='text/ng-template' id='myModalContent.html')
+        .modal-header
+            h3.modal-title Upgrade
+        .modal-body
+            div(ui-slider min=0 max=200 ng-model='slider')
+        .modal-footer
+            button.btn.btn-primary(ng-click='ok()') OK
+            button.btn.btn-warning(ng-click='cancel()') Cancel
+
+.container
+    .row
+        .col-lg-12
+            div(ng-include="'app/main/subnav.html'")
+
+            table.table.table-bordered.table-condensed
+                thead
+                    tr
+                        th.col-md-2 {{activeTab|uppercase}}
+                        th.col-md-3
+                        th.col-md-7 Upgrade Costs
+                tbody
+                    tr(ng-repeat-start="item in list")
+                        td(rowspan="{{detail[item.name].length}}") {{item.title}}
+                        td.text-center
+                            a.btn.btn-default.btn-xs.pull-left(ng-click='changeLevel(item.name,0,-1,item.maxLevel)'
+                                ng-disabled='detail[item.name][0].level==0 || detail[item.name][0].upgradeIdx>=0')
+                                span.glyphicon.glyphicon-minus
+                            //a(href='#' editable-text="detail[item.name][0].level" buttons='no' e-style='width: 25px')
+                            {{detail[item.name][0].level}}/{{item.maxLevel}}
+                            span.pull-right
+                                a.btn.btn-default.btn-xs(ng-click='changeLevel(item.name,0,1,item.maxLevel)'
+                                    ng-disabled="detail[item.name][0].level>=item.maxLevel || detail[item.name][0].upgradeIdx >= 0")
+                                    span.glyphicon.glyphicon-plus
+                                a.btn.btn-default.btn-xs(ng-click='upgrade(item.name,item.title,0)'
+                                    ng-disabled="detail[item.name][0].level>=item.maxLevel"
+                                    popover='{{detail[item.name][0].nextUpgrade.popover}}'
+                                    popover-trigger='mouseenter')
+                                    span.glyphicon.glyphicon-home
+                        td
+                            div(ng-show='detail[item.name][0].upgradeIdx >= 0')
+                                span Upgrade to {{upgradeList[detail[item.name][0].upgradeIdx].level}}
+                                span.space
+                                b
+                                    span(am-time-ago='upgradeList[detail[item.name][0].upgradeIdx].due')
+                            div
+                                span(ng-hide='detail[item.name][0].nextUpgrade.data.length==0')
+                                    icon-gold(ng-show='detail[item.name][0].nextUpgrade.type == "g"')
+                                    icon-elixir(ng-show='detail[item.name][0].nextUpgrade.type == "e"')
+                                    icon-darkelixir(ng-show='detail[item.name][0].nextUpgrade.type == "d"')
+                                    span.space(ng-repeat='i in detail[item.name][0].nextUpgrade.data | limitTo:limitTo') {{costStr(i[1])}}/{{timeStr(i[2])}} (Lev{{i[0]}})
+                                    span(ng-show='detail[item.name][0].nextUpgrade.data.length >= limitTo+1') ...
+
+                    tr(ng-repeat-end ng-repeat="d in detail[item.name].slice(1)")
+                        td.text-center
+                            a.btn.btn-default.btn-xs.pull-left(ng-click='changeLevel(item.name,$index+1,-1,item.maxLevel)'
+                                ng-disabled="d.level==0 || d.upgradeIdx>=0")
+                                span.glyphicon.glyphicon-minus
+                            // a(href='#' editable-text="d.level" buttons='no' e-style='width: 25px')
+                            {{d.level}}/{{item.maxLevel}}
+                            span.pull-right
+                                a.btn.btn-default.btn-xs(ng-click='changeLevel(item.name,$index+1,1,item.maxLevel)'
+                                    ng-disabled="d.level>=item.maxLevel || d.upgradeIdx >= 0")
+                                    span.glyphicon.glyphicon-plus
+                                a.btn.btn-default.btn-xs(ng-click='upgrade(item.name,item.title,$index+1)'
+                                    ng-disabled="d.level>=item.maxLevel"
+                                    popover='{{d.nextUpgrade.popover}}'
+                                    popover-trigger='mouseenter')
+                                    span.glyphicon.glyphicon-home
+                        td
+                            div(ng-show='d.upgradeIdx >= 0')
+                                span Upgrade to {{upgradeList[d.upgradeIdx].level}}
+                                span.space
+                                b
+                                    span(am-time-ago='upgradeList[d.upgradeIdx].due')
+                            div
+                                span(ng-hide='d.nextUpgrade.data.length==0')
+                                    icon-gold(ng-show='d.nextUpgrade.type == "g"')
+                                    icon-elixir(ng-show='d.nextUpgrade.type == "e"')
+                                    icon-darkelixir(ng-show='d.nextUpgrade.type == "d"')
+                                    span.space(ng-repeat='i in d.nextUpgrade.data | limitTo:limitTo') {{costStr(i[1])}}/{{timeStr(i[2])}} (Lev{{i[0]}})
+                                    span(ng-show='d.nextUpgrade.data.length >= limitTo+1') ...
+                    tr
+                        td(colspan='3')
+                            div
+                                strong.space(popover='Total time to upgrade all {{activeTab}}' popover-trigger='mouseenter') Upgrade Time:
+                                span {{timeStr(summary.requiredTime)}}
+                                span
+                                    span(popover='with {{builder}} builders' popover-trigger='mouseenter' style='margin: 10px')
+                                        {{timeWithBuilder(summary.requiredTime, builder, summary.maxRequiredTime)}}
+                                        small.glyphicon.glyphicon-home(style='margin:5px')
+                            div
+                                strong.space(popover='Total cost to upgrade all {{activeTab}}' popover-trigger='mouseenter') Upgrade Cost:
+                                span(ng-hide='summary.requiredCost[0] == 0')
+                                    span {{costFormat(summary.requiredCost[0])}}
+                                        icon-gold.space
+                                span(ng-hide='summary.requiredCost[1] == 0')
+                                    span {{costFormat(summary.requiredCost[1])}}
+                                        icon-elixir.space
+                                span(ng-hide='summary.requiredCost[2] == 0')
+                                    span {{costFormat(summary.requiredCost[2])}}
+                                        icon-darkelixr
+                            div.small
+                                span.space Done Time:
+                                span
+                                    {{timeStr(summary.doneTime)}}
+                                    span(popover='with {{builder}} builders' popover-trigger='mouseenter' style='margin: 10px')
+                                        {{timeWithBuilder(summary.doneTime,builder, summary.maxDoneTime)}}
+                                        span.glyphicon.glyphicon-home(style='margin:5px')
+                            div.small
+                                span.space Done Cost:
+                                span(ng-hide='summary.doneCost[0] == 0')
+                                    span {{costFormat(summary.doneCost[0])}}
+                                    icon-gold.space
+                                span(ng-hide='summary.doneCost[1] == 0')
+                                    span {{costFormat(summary.doneCost[1])}}
+                                    icon-elixir.space
+                                span(ng-hide='summary.doneCost[2] == 0')
+                                    span {{costFormat(summary.doneCost[2])}}
+                                    icon-darkelixir

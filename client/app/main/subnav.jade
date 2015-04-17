@@ -1,0 +1,12 @@
+//
+   Created by jmjeong on 2015. 4. 16..
+
+div
+    ul.nav.nav-tabs(ng-controller='NavbarCtrl')
+        li(ng-repeat="c in ['Overview', 'Defense', 'Trap', 'Army', 'Resource', 'Walls', 'Research', 'Other']")
+            a(ng-href="/p/{{c|lowercase}}" ng-class='{active: isActive("/p/{{c|lowercase}}")}') {{c}}
+
+p
+p
+
+div.col-md-12

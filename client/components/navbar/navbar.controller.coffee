@@ -16,4 +16,5 @@ angular.module 'cocApp'
     $location.path '/login'
 
   $scope.isActive = (route) ->
+    #console.log(route)
     route is $location.path()

@@ -1,0 +1,55 @@
+//
+   Created by jmjeong on 2015. 4. 16..
+
+div(ng-include='"components/navbar/navbar.html"')
+//- header#banner.hero-unit
+//-   .container
+//-     h1 'Allo, 'Allo!
+//-     p.lead Kick-start your next web app with Angular Fullstack
+//-     img(src='assets/images/yeoman.png', alt='I\'m Yeoman')
+.container
+    .row
+        .col-lg-12
+            div(ng-include="'app/main/subnav.html'")
+
+            table.table.table-bordered.table-condensed
+                thead
+                    tr
+                        th.col-md-2 WALL
+                        th.col-md-3
+                        th.col-md-7 Upgrade Costs
+                tbody
+                    form(novalidate name='form')
+                        tr(ng-repeat='w in walls.data')
+                            td
+                                img(ng-src="/assets/walls{{w.level}}.png" width='30')
+                                span  Level {{w.level}}
+                            td
+                                input(type='number' name='count' ng-model='w.count' ng-max-length='3'
+                                ng-change='changeNum(w.level, w.idx, w.count)')
+                                div.error(ng-show='form.count.$dirty && form.count.$invalid')
+                                    small Error
+                            td
+                                span(ng-hide='w.count <= 0')
+                                    icon-gold(ng-show='w.upgrade.type == "g"')
+                                    icon-elixir(ng-show='w.upgrade.type == "e"')
+                                    icon-darkelixir(ng-show='w.upgrade.type == "d"')
+                                    span.space(ng-repeat='i in w.upgrade.data | limitTo:7') {{costStr(i[1])}} (Lev{{i[0]}})
+                                    span(ng-show='w.upgrade.data.length >= 8') ...
+                    tr
+                        td Total
+                        td(colspan=2)
+                            b.text-success(ng-show='walls.total==walls.available').space {{walls.total}}
+                            b.text-danger(ng-show='walls.total>walls.available').space {{walls.total}}
+                            b.text-default(ng-show='walls.total<walls.available').space {{walls.total}}
+                            span walls built of {{walls.available}} available
+                    tr
+                        td(colspan=3)
+                            strong.space Upgrade Cost:
+                            span
+                                span {{costFormat(summary.requiredCost)}}
+                                icon-gold.space
+                            div.small
+                                span.space Done Cost:
+                                {{costFormat(summary.doneCost)}}
+                                icon-gold.space
