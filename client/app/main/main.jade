@@ -35,11 +35,11 @@ div(ng-include='"components/navbar/navbar.html"')
                   td.text-center {{timeStr(u.time)}}
                   td
                       div.row-fluid
-                          div.col-md-10
+                          div.col-md-12
                               {{u.due | amCalendar}}
-                          div.col-md-2.pull-right
-                              a.btn.btn-default.btn-xs(ng-click='cancelUpgrade(u.name,u.index)')
-                                  span.glyphicon.glyphicon-remove
+                          //div.col-md-2.pull-right
+                          //    a.btn.btn-default.btn-xs(ng-click='cancelUpgrade(u.name,u.index)')
+                          //        span.glyphicon.glyphicon-remove
               tr(ng-show="!upgradeList.length")
                   td(colspan=5).text-center No Upgrades
 

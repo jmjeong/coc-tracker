@@ -16,7 +16,8 @@
     "angular-moment": "~0.10.0",
     "angular-ui-slider": "~0.1.1",
     "angular-local-storage": "~0.1.5",
-    "ng-lodash": "~0.2.1"
+    "ng-lodash": "~0.2.1",
+    "angular-bootstrap-slider": "~0.1.1"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",

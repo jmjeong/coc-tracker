@@ -9,7 +9,7 @@ angular.module 'cocApp', [
   'LocalStorageModule',
   'angularMoment',
   'ngLodash',
-  'ui.slider'
+  'ui.bootstrap-slider'
 ]
 .config ($routeProvider, $locationProvider, $httpProvider) ->
   $routeProvider

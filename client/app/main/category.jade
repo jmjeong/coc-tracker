@@ -6,12 +6,20 @@ div(ng-include='"components/navbar/navbar.html"')
 div(ng-controller='MainCtrl')
     script(type='text/ng-template' id='myModalContent.html')
         .modal-header
-            h3.modal-title Upgrade
+            h4.modal-title Upgrade to {{sliders.title}} \#{{sliders.level}}
         .modal-body
-            div(ui-slider min=0 max=200 ng-model='slider')
+            span.space Time: {{origin}}
+            span.text-primary ({{changed}})
+            p
+            p
+            span.text-iinfo Adjust Completion Time
+            span(slider ng-model="sliders.sliderValue" min=0 max="sliders.sliderMax"
+                value='sliders.sliderValue' formater='format' on-slide='sliderDelegate(value,$event)')
         .modal-footer
-            button.btn.btn-primary(ng-click='ok()') OK
-            button.btn.btn-warning(ng-click='cancel()') Cancel
+            button.btn.btn-primary(ng-click='ok()' ng-show='update') Update
+            button.btn.btn-primary(ng-click='ok()' ng-show='!update') Upgrade
+            button.btn.btn-danger(ng-click='stop()' ng-show='update') Stop
+            //button.btn.btn-warning(ng-click='cancel()') Cancel
 
 .container
     .row

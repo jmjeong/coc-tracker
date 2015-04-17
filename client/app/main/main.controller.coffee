@@ -30,14 +30,6 @@ angular.module 'cocApp'
         $scope.set.hideDone = user.set.hideDone
         $scope.set.hideDoneResearch = user.set.hideDoneResearch
         $scope.limitTo = user.limitTo
-        $scope.items = ['1','2','3']
-        $scope.sliders = {}
-        $scope.testOptions = {
-            min: 0
-            max: 1230
-            value: 500
-            step: 2
-            }
 
         category = if ($scope.activeTab == undefined) then 'all' else $scope.activeTab
         #console.log(category)
@@ -139,16 +131,41 @@ angular.module 'cocApp'
             user.set.hideDoneResearch = $scope.set.hideDoneResearch
             userFactory.set(user)
 
-        $scope.upgradePre = (name, title, index) ->
+        $scope.upgrade = (name, title, index) ->
+            idx = $scope.detail[name][index].idx
+            level = user[name][idx] ? 0
+            user.upgrade ?= []
+            find = lodash.findIndex(user.upgrade, {
+                name: name,
+                index: idx
+            })
+            ut = buildingData[name]['upgrade time']
+            due = new moment()
+            due = due.add(ut[level], 'minutes')
+
+            if (find >= 0)
+                due = moment(user.upgrade[find].due)
+                value = parseInt(moment.duration(due.diff(moment())).asMinutes())
+            else
+                value = ut[level]
+
             modalInstance = $modal.open
                 templateUrl: 'myModalContent.html'
                 controller: 'ModalInstanceCtrl',
-                size: 'sm'
+                # size: 'sm'
                 resolve:
-                    items: () ->
-                        return $scope.items
+                    data: () ->
+                        {
+                        sliderValue: value
+                        title: title
+                        sliderMax: ut[level]
+                        level: level+1
+                        update: (find >= 0)
+                        }
+            modalInstance.result.then (value) ->
+                $scope.upgradeAction(name, title, index, value)
 
-        $scope.upgrade = (name, title, index) ->
+        $scope.upgradeAction = (name, title, index, value) ->
             idx = $scope.detail[name][index].idx
             level = user[name][idx] ? 0
             user.upgrade ?= []
@@ -158,36 +175,45 @@ angular.module 'cocApp'
                 index: idx
             })
             ut = buildingData[name]['upgrade time']
-            due = new moment()
-            due = due.add(ut[level], 'minutes')
-            # console.log(ut[level], due, user.upgrade, user.upgrade.length)
-            if (find < 0)
-                upgradeNum = lodash.filter user.upgrade, (u) ->
-                    return u.index >= 0
-                return if (user.builder <= upgradeNum.length)
-
-                $scope.detail[name][index].upgradeIdx = user.upgrade.length
-                user.upgrade.push(
-                    name: name
-                    title: title
-                    index: idx
-                    level: level+1
-                    time: ut[level]
-                    due: due
-                )
+            if (value < 0)
+                lodash.remove(user.upgrade, {
+                    name: name,
+                    index: index
+                })
+                $scope.detail[name][index].upgradeIdx = -1
             else
-                $scope.detail[name][index].upgradeIdx = find
-                user.upgrade[find] = {
-                    name: name
-                    title: title
-                    index: idx
-                    level: level+1
-                    time: ut[level]
-                    due: due
-                }
+                due = new moment()
+                due = due.add(value, 'minutes')
+                # console.log(ut[level], due, user.upgrade, user.upgrade.length)
+                level++
+                if (find < 0)
+                    upgradeNum = lodash.filter user.upgrade, (u) ->
+                        return u.index >= 0
+                    return if (user.builder <= upgradeNum.length)
+
+                    $scope.detail[name][index].upgradeIdx = user.upgrade.length
+                    user.upgrade.push(
+                        name: name
+                        title: title
+                        index: idx
+                        level: level
+                        time: ut[level]
+                        due: due
+                    )
+                else
+                    $scope.detail[name][index].upgradeIdx = find
+                    user.upgrade[find] = {
+                        name: name
+                        title: title
+                        index: idx
+                        level: level
+                        time: ut[level]
+                        due: due
+                    }
+                $scope.detail[name][index].popover = "Upgrading..."
             maxLevel = util.max_level(user.hall, buildingData[name]['required town hall'])
             uc = buildingData[name]['upgrade cost']
-            $scope.detail[name][index].nextUpgrade = nextUpgrade(level+1, maxLevel, ut, uc)
+            $scope.detail[name][index].nextUpgrade = nextUpgrade(level, maxLevel, ut, uc)
             $scope.summary = util.totalCostTime(category, user)
             # user.upgrade = []
             userFactory.set(user)
@@ -196,21 +222,50 @@ angular.module 'cocApp'
             # console.log(user.upgrade)
             #
         $scope.cancelUpgrade = (name, index) ->
-           lodash.remove(user.upgrade, {
+            lodash.remove(user.upgrade, {
                    name: name,
                    index: index
-           })
-           $scope.summary = util.totalCostTime(category, user)
-           $scope.researchSummary = util.totalResearchCostTime(user)
-           userFactory.set(user)
+            })
+            level = $scope.detail[name][index].level
+            $scope.detail[name][index].upgradeIdx = -1
+            maxLevel = util.max_level(user.hall, buildingData[name]['required town hall'])
+            ut = buildingData[name]['upgrade time']
+            uc = buildingData[name]['upgrade cost']
+            $scope.detail[name][index].nextUpgrade = nextUpgrade(level, maxLevel, ut, uc)
+            $scope.summary = util.totalCostTime(category, user)
+            $scope.researchSummary = util.totalResearchCostTime(user)
+            userFactory.set(user)
 
 angular.module('cocApp')
-    .controller 'ModalInstanceCtrl', ($scope, $modalInstance, items) ->
-        $scope.items = items
-        $scope.selected =
-            item: $scope.items[0]
+    .controller 'ModalInstanceCtrl', ($scope, $modalInstance, data) ->
+        $scope.sliders = data
+        $scope.selected = data.sliderValue
+        $scope.update = data.update
+
+        timeStr = (value) ->
+            duration = moment.duration({
+                minutes: value
+            })
+            d = duration.days()
+            h = duration.hours()
+            m = duration.minutes()
+            if (d==0)
+                h + 'h ' + m + 'm'
+            else
+                d + 'd ' + h + 'h'
+
+        $scope.origin = timeStr(data.sliderMax)
+        $scope.changed = $scope.origin
 
         $scope.ok = ()->
-            $modalInstance.close($scope.selected.item)
+            $modalInstance.close($scope.selected)
+        $scope.stop = ()->
+            $modalInstance.close(-1)
         $scope.cancel = ()->
             $modalInstance.dismiss('cancel')
+        $scope.format = (value)->
+            timeStr(value)
+        $scope.sliderDelegate = (value, $event) ->
+            $scope.changed = timeStr(value)
+            $scope.selected = value
+
