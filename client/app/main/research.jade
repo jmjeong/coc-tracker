@@ -1,18 +1,31 @@
-//
-   Created by jmjeong on 2015. 4. 16..
-
 div(ng-include='"components/navbar/navbar.html"')
-//- header#banner.hero-unit
-//-   .container
-//-     h1 'Allo, 'Allo!
-//-     p.lead Kick-start your next web app with Angular Fullstack
-//-     img(src='assets/images/yeoman.png', alt='I\'m Yeoman')
+
+toast
+
+div(ng-controller='ResearchCtrl')
+    script(type='text/ng-template' id='myModalContent.html')
+        .modal-header
+            h4.modal-title Upgrade to {{sliders.title}} \#{{sliders.level}}
+        .modal-body
+            span.space Time: {{origin}}
+            span.text-primary ({{changed}})
+            p
+            p
+            span.text-iinfo Adjust Completion Time
+            span(slider ng-model="sliders.sliderValue" min=0 max="sliders.sliderMax"
+            value='sliders.sliderValue' formater='format' on-slide='sliderDelegate(value,$event)')
+        .modal-footer
+            button.btn.btn-primary(ng-click='ok()' ng-show='update') Update
+            button.btn.btn-primary(ng-click='ok()' ng-show='!update') Upgrade
+            button.btn.btn-danger(ng-click='stop()' ng-show='update') Stop
+            //button.btn.btn-warning(ng-click='cancel()') Cancel
+
 .container
     .row
         .col-lg-12
             div(ng-include="'app/main/subnav.html'")
 
-            table.table.table-bordered.table-condensed
+            table.table.table-rdered.table-condensed
                 thead
                     tr
                         th.col-md-2 RESEARCH
@@ -32,7 +45,7 @@ div(ng-include='"components/navbar/navbar.html"')
                                     span.glyphicon.glyphicon-plus
                                 a.btn.btn-default.btn-xs(ng-click='upgrade(d.name,d.title,$index,d.maxLevel)'
                                 ng-disabled="d.level>=d.maxLevel"
-                                popover='{{d.nextUpgrade.popover}}'
+                                popover='Upgrade'
                                 popover-trigger='mouseenter')
                                     span.glyphicon.glyphicon-home
                         td

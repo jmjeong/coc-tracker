@@ -3,6 +3,8 @@
 
 div(ng-include='"components/navbar/navbar.html"')
 
+toast
+
 div(ng-controller='MainCtrl')
     script(type='text/ng-template' id='myModalContent.html')
         .modal-header
@@ -26,6 +28,8 @@ div(ng-controller='MainCtrl')
         .col-lg-12
             div(ng-include="'app/main/subnav.html'")
 
+
+
             table.table.table-bordered.table-condensed
                 thead
                     tr
@@ -47,7 +51,7 @@ div(ng-controller='MainCtrl')
                                     span.glyphicon.glyphicon-plus
                                 a.btn.btn-default.btn-xs(ng-click='upgrade(item.name,item.title,0)'
                                     ng-disabled="detail[item.name][0].level>=item.maxLevel"
-                                    popover='{{detail[item.name][0].nextUpgrade.popover}}'
+                                    popover='Upgrade'
                                     popover-trigger='mouseenter')
                                     span.glyphicon.glyphicon-home
                         td
@@ -77,7 +81,7 @@ div(ng-controller='MainCtrl')
                                     span.glyphicon.glyphicon-plus
                                 a.btn.btn-default.btn-xs(ng-click='upgrade(item.name,item.title,$index+1)'
                                     ng-disabled="d.level>=item.maxLevel"
-                                    popover='{{d.nextUpgrade.popover}}'
+                                    popover='Upgrade'
                                     popover-trigger='mouseenter')
                                     span.glyphicon.glyphicon-home
                         td

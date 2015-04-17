@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('cocApp')
-.controller 'ResearchCtrl', ($scope, util, lodash, userFactory) ->
+.controller 'ResearchCtrl', ($scope, $modal, util, lodash, ngToast, userFactory) ->
     user = userFactory.get()
 
     # user['laboratory'] ?= []
@@ -31,7 +31,7 @@ angular.module('cocApp')
             data.push([i+1, costArray[i], timeArray[i]*60])
         return {
         type: type
-        popover: util.costFormat(data[0][1]) + ' / ' + util.timeStr(data[0][2])
+        # popover: util.costFormat(data[0][1]) + ' / ' + util.timeStr(data[0][2])
         data: data
         }
 
@@ -76,51 +76,87 @@ angular.module('cocApp')
             $scope.summary = util.totalResearchCostTime(user)
             userFactory.set(user)
 
-    $scope.upgrade = (name, title, index, maxLevel) ->
+    $scope.upgrade = (name, title, index) ->
         level = user[name] ? 0
         user.upgrade ?= []
 
-        # console.log(name, index, level, maxLevel)
+        find = lodash.findIndex(user.upgrade, {
+            name: name,
+            index: -1
+        })
+        if (find < 0)
+            upgradeNum = lodash.filter user.upgrade, (u) ->
+                return u.index < 0
+            if (upgradeNum.length >= 1)
+                ngToast.create(
+                    className: 'warning'
+                    content: 'research is processing...')
+                return
+
+        ut = troopData[name]['research time']
+        if (find >= 0)
+            due = moment(user.upgrade[find].due)
+            value = parseInt(moment.duration(due.diff(moment())).asMinutes())
+        else
+            value = ut[level]*60
+
+        modalInstance = $modal.open
+            templateUrl: 'myModalContent.html'
+            controller: 'ModalInstanceCtrl',
+            resolve:
+                data: () ->
+                    {
+                    sliderValue: value
+                    title: title
+                    sliderMax: ut[level]*60
+                    level: level+1
+                    update: (find >= 0)
+                    }
+        modalInstance.result.then (value) ->
+            $scope.upgradeAction(name, title, index, value)
+
+    $scope.upgradeAction = (name, title, index, value) ->
+        level = user[name] ? 0
+        user.upgrade ?= []
 
         find = lodash.findIndex(user.upgrade, {
             name: name,
             index: -1
         })
         ut = troopData[name]['research time']
-        due = new moment()
-        due = due.add(ut[level], 'hours')
-        # console.log(ut[level], due, user.upgrade, user.upgrade.length)
-        if (find < 0)
-            upgradeNum = lodash.filter user.upgrade, (u) ->
-                return u.index < 0
-            # console.log(upgradeNum)
-            return if (1 <= upgradeNum.length)
-
-            user.upgrade.push(
+        if (value < 0)
+            lodash.remove(user.upgrade, {
                 name: name
-                title: title
                 index: -1
-                level: level+1
-                time: ut[level]*60
-                due: due
-            )
-            console.log(user.upgrade, index, user.upgrade.length)
-            $scope.data[index].upgradeIdx = user.upgrade.length-1
-            $scope.data[index].nextUpgrade = nextUpgrade(level+1, maxLevel,
-                troopData[name]['research time'], troopData[name]['research cost'],
-                troopData[name]['barracks type'])
-
+            })
+            $scope.data[index].upgradeIdx = -1
+            # console.log($scope.data[index])
         else
-            $scope.data[index].upgradeIdx = find
-            user.upgrade[find] =
-                name: name
-                title: title
-                index: -1
-                level: level+1
-                time: ut[level]*60
-                due: due
-            $scope.data[index].nextUpgrade = nextUpgrade(user[name]+1, maxlevel,
-                troopData[name]['research time'], troopData[name]['research cost'],
-                troopData[name]['barracks type'])
+            due = new moment()
+            due = due.add(value, 'minutes')
+            level++
+            if (find < 0)
+                user.upgrade.push(
+                    name: name
+                    title: title
+                    index: -1
+                    level: level
+                    time: ut[level]*60
+                    due: due
+                )
+                $scope.data[index].upgradeIdx = user.upgrade.length-1
+            else
+                user.upgrade[find] =
+                    name: name
+                    title: title
+                    index: -1
+                    level: level
+                    time: ut[level]*60
+                    due: due
+                $scope.data[index].upgradeIdx = find
+        maxlevel = max_level(labLevel, troopData[name]['laboratory level'])
+        $scope.data[index].nextUpgrade = nextUpgrade(level, maxlevel,
+            troopData[name]['research time'], troopData[name]['research cost'],
+            troopData[name]['barracks type'])
         $scope.summary = util.totalResearchCostTime(user)
         userFactory.set(user)
