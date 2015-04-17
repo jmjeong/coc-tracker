@@ -23,9 +23,8 @@ angular.module('cocApp')
     nextUpgrade = (current, maxLevel, timeArray, costArray, type) ->
         return {} if (current >= maxLevel)
         switch type
-            when 'Normal' then type = 'e'
-            else type = 'd'
-
+            when 'Dark' then type = 'd'
+            else type = 'e'
         data = []
         for i in [current..maxLevel-1]
             data.push([i+1, costArray[i], timeArray[i]*60])
@@ -38,8 +37,8 @@ angular.module('cocApp')
     for title in util.upgrade_list()
         name = util.cannonicalName(title)
         user[name] ?= 0
-        maxlevel = max_level(labLevel, troopData[name]['laboratory level'])
-        continue if (typeof troopData[name].subtype != 'undefined' || maxlevel <= 1)
+        maxlevel = max_level(labLevel, rD[name]['laboratory level'])
+        continue if (typeof rD[name].subtype != 'undefined' || maxlevel <= 1)
         continue if (user.set.hideDoneResearch && user[name] >= maxlevel)
         find = lodash.findIndex(user.upgrade, {
             name: name,
@@ -53,8 +52,8 @@ angular.module('cocApp')
             level: user[name]
             maxLevel: maxlevel
             nextUpgrade: nextUpgrade(level, maxlevel,
-                troopData[name]['research time'], troopData[name]['research cost'],
-                troopData[name]['barracks type'])
+                rD[name]['research time'], rD[name]['research cost'],
+                rD[name]['barracks type'])
             upgradeIdx: find
 
     $scope.summary = util.totalResearchCostTime(user)
@@ -66,11 +65,11 @@ angular.module('cocApp')
         currentLevel = 0 if currentLevel < 0
         currentLevel = maxLevel if currentLevel > maxLevel
         # console.log(name)
-        # console.log(troopData[name]['research time'] )
+        # console.log(rD[name]['research time'] )
         $scope.data[index].level = currentLevel
         $scope.data[index].nextUpgrade = nextUpgrade(currentLevel, maxLevel,
-            troopData[name]['research time'], troopData[name]['research cost'],
-            troopData[name]['barracks type'])
+            rD[name]['research time'], rD[name]['research cost'],
+            rD[name]['barracks type'])
         if oldLevel != currentLevel
             user[name] = currentLevel
             $scope.summary = util.totalResearchCostTime(user)
@@ -93,7 +92,7 @@ angular.module('cocApp')
                     content: 'research is processing...')
                 return
 
-        ut = troopData[name]['research time']
+        ut = rD[name]['research time']
         if (find >= 0)
             due = moment(user.upgrade[find].due)
             value = parseInt(moment.duration(due.diff(moment())).asMinutes())
@@ -123,7 +122,7 @@ angular.module('cocApp')
             name: name,
             index: -1
         })
-        ut = troopData[name]['research time']
+        ut = rD[name]['research time']
         if (value < 0)
             lodash.remove(user.upgrade, {
                 name: name
@@ -154,9 +153,9 @@ angular.module('cocApp')
                     time: ut[level]*60
                     due: due
                 $scope.data[index].upgradeIdx = find
-        maxlevel = max_level(labLevel, troopData[name]['laboratory level'])
+        maxlevel = max_level(labLevel, rD[name]['laboratory level'])
         $scope.data[index].nextUpgrade = nextUpgrade(level, maxlevel,
-            troopData[name]['research time'], troopData[name]['research cost'],
-            troopData[name]['barracks type'])
+            rD[name]['research time'], rD[name]['research cost'],
+            rD[name]['barracks type'])
         $scope.summary = util.totalResearchCostTime(user)
         userFactory.set(user)

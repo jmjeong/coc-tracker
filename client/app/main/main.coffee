@@ -95,7 +95,7 @@ angular.module 'cocApp'
         requiredCost: requiredCost
         }
     upgrade_list = () ->
-        return troopData.list
+        return rD.list
 
     return {
         building_list: building_list
@@ -183,20 +183,20 @@ angular.module 'cocApp'
 
             for item in upgrade_list()
                 name = cannonicalName(item)
-                maxlevel = max_level(labLevel, troopData[name]['laboratory level'])
-                continue if (typeof troopData[name].subtype != 'undefined' || maxlevel <= 1)
-                maxLevel = max_level(labLevel, troopData[name]['laboratory level'])
-                uc = troopData[name]['research cost']
-                ut = troopData[name]['research time']
+                maxlevel = max_level(labLevel, rD[name]['laboratory level'])
+                continue if (typeof rD[name].subtype != 'undefined' || maxlevel <= 1)
+                maxLevel = max_level(labLevel, rD[name]['laboratory level'])
+                uc = rD[name]['research cost']
+                ut = rD[name]['research time']
 
                 level = user[name]
                 find = lodash.findIndex user.upgrade,
                     name: name,
                     index: -1
                 for i in [0..maxLevel-1]
-                    switch troopData[name]['barracks type']
-                        when 'Normal' then type = 'e'
-                        else type = 'd'
+                    switch rD[name]['barracks type']
+                        when 'Dark' then type = 'd'
+                        else type = 'e'
                     if i < level
                         doneDarkCost += uc[i] if type == 'd'
                         doneElixirCost += uc[i] if type == 'e'

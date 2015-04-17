@@ -169,7 +169,7 @@ angular.module 'cocApp'
         if (value < 0)
             lodash.remove(user.upgrade, {
                 name: name,
-                index: index
+                index: idx
             })
             $scope.detail[name][index].upgradeIdx = -1
         else
