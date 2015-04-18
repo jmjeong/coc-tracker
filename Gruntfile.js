@@ -735,5 +735,8 @@ module.exports = function (grunt) {
     // 'test',
     'build'
   ]);
-  grunt.registerTask('deploy', 'shell:publish')
+  grunt.registerTask('deploy', [
+    'build',
+    'shell:publish'
+  ]);
 };
