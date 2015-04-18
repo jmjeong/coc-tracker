@@ -292,7 +292,8 @@ angular.module 'cocApp'
                     if hour == 0
                         day + 'd'
                     else
-                        day + 'd ' + hour + 'h'
+                        day += parseFloat((hour/24).toFixed(1))
+                        day + 'd '
 
             return retString
 

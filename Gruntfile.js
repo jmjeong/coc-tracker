@@ -134,9 +134,14 @@ module.exports = function (grunt) {
           livereload: true,
           nospawn: true //Without this option specified express won't be reloaded
         }
-      }
+      },
     },
 
+    shell: {
+      publish: {
+        command: 'rsync -avz  dist/public w.jmjeong.com:~/coc/'
+      }
+    },
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
@@ -726,8 +731,9 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('default', [
-    'newer:jshint',
-    'test',
+    // 'newer:jshint',
+    // 'test',
     'build'
   ]);
+  grunt.registerTask('deploy', 'shell:publish')
 };
