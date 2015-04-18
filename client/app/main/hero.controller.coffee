@@ -1,17 +1,23 @@
 'use strict'
 
 angular.module('cocApp')
-.controller 'HeroCtrl', ($scope, $modal, util, lodash, ngToast, userFactory) ->
+.controller 'HeroCtrl', ($scope, $modal, $interval, util, lodash, ngToast, userFactory, upgradeConfig) ->
     user = userFactory.get()
 
     $scope.costStr = util.costStr
     $scope.timeStr = util.timeStr
     $scope.costFormat = util.costFormat
-    $scope.data = []
     $scope.upgradeList = user.upgrade
     $scope.limitTo = user.limitTo
 
-    HEROFLAG = 100
+    intervalPromise = $interval ()->
+        if !util.checkUpgrade(user)
+            userFactory.set(user)
+            update()
+    , 2000
+    $scope.$on '$destroy', () ->
+        $interval.cancel(intervalPromise)
+
 
     nextUpgrade = (current, maxLevel, timeArray, costArray, type) ->
         return {} if (current >= maxLevel)
@@ -23,30 +29,31 @@ angular.module('cocApp')
         data: data
         }
 
-    for title in util.hero_list()
-        name = util.cannonicalName(title)
-        user[name] ?= 0
-        maxlevel = util.max_level(user.hall, hD[name]['required town hall'])
-        # console.log(maxlevel, user.hall, hD[name]['required town hall'])
-        continue if (maxlevel <= 1)
-        continue if (user.set.hideDone && user[name] >= maxlevel)
-        find = lodash.findIndex(user.upgrade, {
-            name: name,
-            index: HEROFLAG
-        })
-        level = user[name]
-        level++ if find >= 0
-        console.log(title, name)
-        $scope.data.push
-            title: title
-            name: name
-            level: user[name]
-            maxLevel: maxlevel
-            nextUpgrade: nextUpgrade(level, maxlevel,hD[name]['training time'], hD[name]['training cost'], 'd')
+    update = () ->
+        $scope.data = []
+        for title in util.hero_list()
+            name = util.cannonicalName(title)
+            user[name] ?= 0
+            maxlevel = util.max_level(user.hall, hD[name]['required town hall'])
+            continue if (maxlevel <= 1)
+            continue if (user.set.hideDone && user[name] >= maxlevel)
+            find = lodash.findIndex(user.upgrade, {
+                name: name,
+                index: upgradeConfig.HEROFLAG
+            })
+            level = user[name]
+            level++ if find >= 0
+            $scope.data.push
+                title: title
+                name: name
+                level: user[name]
+                maxLevel: maxlevel
+                nextUpgrade: nextUpgrade(level, maxlevel,hD[name]['training time'], hD[name]['training cost'], 'd')
 
-            upgradeIdx: find
+                upgradeIdx: find
 
-    $scope.summary = util.totalHeroCostTime(user)
+        $scope.summary = util.totalHeroCostTime(user)
+    update()
 
     $scope.timeWithBuilder = (time, builder, maxTime) ->
         max = lodash.max([time/builder, maxTime])
@@ -71,7 +78,7 @@ angular.module('cocApp')
 
         find = lodash.findIndex(user.upgrade, {
             name: name,
-            index: HEROFLAG
+            index: upgradeConfig.HEROFLAG
         })
         if (find < 0)
             upgradeNum = lodash.filter user.upgrade, (u) ->
@@ -110,13 +117,13 @@ angular.module('cocApp')
 
         find = lodash.findIndex(user.upgrade, {
             name: name,
-            index: HEROFLAG
+            index: upgradeConfig.HEROFLAG
         })
         ut = hD[name]['training time']
         if (value < 0)
             lodash.remove(user.upgrade, {
                 name: name
-                index: HEROFLAG
+                index: upgradeConfig.HEROFLAG
             })
             $scope.data[index].upgradeIdx = -1
         else
@@ -127,7 +134,7 @@ angular.module('cocApp')
                 user.upgrade.push(
                     name: name
                     title: title
-                    index: HEROFLAG
+                    index: upgradeConfig.HEROFLAG
                     level: level+1
                     time: ut[level]
                     due: due
@@ -137,7 +144,7 @@ angular.module('cocApp')
                 user.upgrade[find] =
                     name: name
                     title: title
-                    index: HEROFLAG
+                    index: upgradeConfig.HEROFLAG
                     level: level+1
                     time: ut[level]
                     due: due

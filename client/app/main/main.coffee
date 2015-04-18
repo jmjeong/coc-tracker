@@ -14,11 +14,11 @@ angular.module 'cocApp'
     .when '/p/research',
         templateUrl: 'app/main/research.html'
         controller: 'ResearchCtrl'
-    .when '/p/overview',
-        redirectTo: '/'
     .when '/p/hero',
         templateUrl: 'app/main/hero.html'
         controller: 'HeroCtrl'
+    .when '/p/overview',
+          redirectTo: '/'
     .when '/p/:category',
         templateUrl: 'app/main/category.html'
         controller: 'MainCtrl'
@@ -26,7 +26,9 @@ angular.module 'cocApp'
     localStorageServiceProvider
     .setPrefix('coc-tracker')
     .setStorageType('localStorage')
-.factory 'userFactory', (localStorageService) ->
+.constant 'upgradeConfig',
+    HEROFLAG: 100
+.factory 'userFactory', (localStorageService, upgradeConfig) ->
     get: () ->
         user = localStorageService.get('user')
         user ?= {}
@@ -50,7 +52,7 @@ angular.module 'cocApp'
 .directive 'iconDarkelixir', () ->
     restrict: 'E',
     template: '<img src="assets/images/darkelixir.png" width="10" style="margin: 3px">'
-.factory 'util', (lodash) ->
+.factory 'util', (lodash, upgradeConfig) ->
     cannonicalName =  (name) ->
         name.replace(/\s+|\'/g, '').toLowerCase()
 
@@ -118,8 +120,8 @@ angular.module 'cocApp'
 
             level = user[name]
             find = lodash.findIndex user.upgrade,
-                                    name: name,
-                                        index: 100
+                name: name,
+                index: upgradeConfig.HELOFLAG
 
             mrt = mdt = 0
             for i in [0..maxlevel-1]
@@ -180,7 +182,6 @@ angular.module 'cocApp'
                     })
                     mrt = mdt = 0
                     for k in [0..maxLevel-1]
-        # console.log(name, i, k, ut[k])
                         if k < currentLevel
                             doneCost = addArrays(doneCost, uc[k], '+')
                             doneTime += ut[k]
@@ -194,7 +195,6 @@ angular.module 'cocApp'
                             mrt += dueMin
                             doneTime += ut[k]-dueMin
                             mdt += ut[k]-dueMin
-        # console.log(name, i, k, dueMin, ut[k])
                         else
                             requiredCost = addArrays(requiredCost, uc[k], '+')
                             requiredTime += ut[k]
@@ -229,10 +229,8 @@ angular.module 'cocApp'
             for i in [0..maxLevel-1]
                 count = user[name][i] ? 0
                 costVal = wallCost(i, maxLevel, uc)
-                #console.log(count, costVal)
                 doneCost += count * costVal.doneCost
                 requiredCost += count * costVal.requiredCost
-            # console.log(requiredCost, doneCost)
             return {
             requiredCost: requiredCost
             doneCost: doneCost
@@ -273,7 +271,6 @@ angular.module 'cocApp'
                         requiredDarkCost += uc[i] if type == 'd'
                         requiredElixirCost += uc[i] if type =='e'
                         requiredTime += ut[i]
-            # console.log(name, requiredElixirCost, requiredDarkCost, requiredTime, doneTime)
             return {
             requiredCost: [0, requiredElixirCost, requiredDarkCost]
             doneCost: [0, doneElixirCost, doneDarkCost]
@@ -285,7 +282,6 @@ angular.module 'cocApp'
 
         max_level: max_level
         timeStr: (time) ->
-        # console.log(time)
             retString = switch
                 when time == 0 then '0'
                 when time < 60 then time + 'm'
@@ -316,4 +312,20 @@ angular.module 'cocApp'
             return ''
 
         addArrays: addArrays
+
+        checkUpgrade: (user)->
+            now = new moment()
+            fired = lodash.filter user.upgrade, (u)->
+                now.isAfter(moment(u.due))
+            if fired.length > 0
+                for u in fired
+                    if u.index >= 0 && u.index != upgradeConfig.HEROFLAG
+                        user[u.name][u.index] = u.level
+                    else
+                        user[u.name] = u.level
+                lodash.remove user.upgrade, (u) ->
+                    now.isAfter(moment(u.due))
+                return 0
+            else return 1
+
     }

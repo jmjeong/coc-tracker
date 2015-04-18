@@ -1,7 +1,8 @@
 'use strict'
 
 angular.module 'cocApp'
-.controller 'MainCtrl', ($scope, $modal, $log, util, lodash, userFactory, $routeParams, $http, moment, ngToast) ->
+.controller 'MainCtrl', ($scope, $modal, $interval, $log, $route, upgradeConfig,
+    util, lodash, userFactory, $routeParams, $http, moment, ngToast) ->
 
     user = userFactory.get()
 
@@ -16,6 +17,15 @@ angular.module 'cocApp'
     $scope.set.hideDone = user.set.hideDone
     $scope.set.hideDoneResearch = user.set.hideDoneResearch
     $scope.limitTo = user.limitTo
+    $scope.HEROFLAG = upgradeConfig.HEROFLAG
+
+    intervalPromise = $interval ()->
+         if !util.checkUpgrade(user)
+            userFactory.set(user)
+            update()
+    , 2000
+    $scope.$on '$destroy', () ->
+        $interval.cancel(intervalPromise)
 
     category = if ($scope.activeTab == undefined) then 'all' else $scope.activeTab
     #console.log(category)
@@ -111,7 +121,6 @@ angular.module 'cocApp'
         userFactory.set(user)
 
     $scope.settingChanged = () ->
-        console.log($scope.set.hideDone, $scope.set.hideDoneResearch)
         user.set.hideDone = $scope.set.hideDone
         user.set.hideDoneResearch = $scope.set.hideDoneResearch
         userFactory.set(user)

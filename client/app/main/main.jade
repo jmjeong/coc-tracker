@@ -28,8 +28,8 @@ div(ng-include='"components/navbar/navbar.html"')
                       div.row-fluid
                           div.col-md-12
                               b.text-info(ng-show='u.index<0') {{u.title}}
-                              b.text-success(ng-show='u.index==100') {{u.title}}
-                              span(ng-show='u.index>=0&&u.index!=100') {{u.title}} # {{u.index+1}}
+                              b.text-success(ng-show='u.index==HEROFLAG') {{u.title}}
+                              span(ng-show='u.index>=0&&u.index!=HEROFLAG') {{u.title}} # {{u.index+1}}
                   td.text-center {{u.level}}
                   td.text-center
                       span(am-time-ago='u.due')

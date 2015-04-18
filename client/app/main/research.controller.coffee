@@ -1,24 +1,24 @@
 'use strict'
 
 angular.module('cocApp')
-.controller 'ResearchCtrl', ($scope, $modal, util, lodash, ngToast, userFactory) ->
+.controller 'ResearchCtrl', ($scope, $modal, $interval, util, lodash, ngToast, userFactory) ->
     user = userFactory.get()
 
-    # user['laboratory'] ?= []
-    # labLevel = user['laboratory'][0] ? 0
     labLevel = util.max_level(user.hall, bD['laboratory']['required town hall'])
 
     $scope.costStr = util.costStr
     $scope.timeStr = util.timeStr
     $scope.costFormat = util.costFormat
-    $scope.data = []
     $scope.upgradeList = user.upgrade
     $scope.limitTo = user.limitTo
 
-#    max_level = (level, required) ->
-#        for l, i in required by -1
-#            return i + 1 if l <= level
-#        return 0
+    intervalPromise = $interval ()->
+        if !util.checkUpgrade(user)
+            userFactory.set(user)
+            update()
+    , 2000
+    $scope.$on '$destroy', () ->
+        $interval.cancel(intervalPromise)
 
     nextUpgrade = (current, maxLevel, timeArray, costArray, type) ->
         return {} if (current >= maxLevel)
@@ -34,30 +34,32 @@ angular.module('cocApp')
         data: data
         }
 
-    for title in util.upgrade_list()
-        name = util.cannonicalName(title)
-        user[name] ?= 0
-        maxlevel = util.max_level(labLevel, rD[name]['laboratory level'])
-        continue if (typeof rD[name].subtype != 'undefined' || maxlevel <= 1)
-        continue if (user.set.hideDoneResearch && user[name] >= maxlevel)
-        find = lodash.findIndex(user.upgrade, {
-            name: name,
-            index: -1
-        })
-        level = user[name]
-        level++ if find >= 0
-        $scope.data.push
-            title: title
-            name: name
-            level: user[name]
-            maxLevel: maxlevel
-            nextUpgrade: nextUpgrade(level, maxlevel,
-                rD[name]['research time'], rD[name]['research cost'],
-                rD[name]['barracks type'])
-            upgradeIdx: find
+    update = () ->
+        $scope.data = []
+        for title in util.upgrade_list()
+            name = util.cannonicalName(title)
+            user[name] ?= 0
+            maxlevel = util.max_level(labLevel, rD[name]['laboratory level'])
+            continue if (typeof rD[name].subtype != 'undefined' || maxlevel <= 1)
+            continue if (user.set.hideDoneResearch && user[name] >= maxlevel)
+            find = lodash.findIndex(user.upgrade, {
+                name: name,
+                index: -1
+            })
+            level = user[name]
+            level++ if find >= 0
+            $scope.data.push
+                title: title
+                name: name
+                level: user[name]
+                maxLevel: maxlevel
+                nextUpgrade: nextUpgrade(level, maxlevel,
+                    rD[name]['research time'], rD[name]['research cost'],
+                    rD[name]['barracks type'])
+                upgradeIdx: find
+        $scope.summary = util.totalResearchCostTime(user)
 
-    $scope.summary = util.totalResearchCostTime(user)
-    # console.log($scope.summary)
+    update()
 
     $scope.changeLevel = (name, index, inc, maxLevel) ->
         currentLevel = oldLevel = $scope.data[index].level
