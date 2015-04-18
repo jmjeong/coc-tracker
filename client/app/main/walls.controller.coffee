@@ -32,10 +32,10 @@ angular.module('cocApp')
         $scope.requiredTime = 0
         $scope.doneTime = 0
 
-        walls.available = availableNum = buildingData['number available'][name][user.hall-1]
+        walls.available = availableNum = bD['number available'][name][user.hall-1]
 
         start = 0
-        maxLevel = util.max_level(user.hall, buildingData[name]['required town hall'])
+        maxLevel = util.max_level(user.hall, bD[name]['required town hall'])
         if ($scope.hideDone)
             for i in [0..maxLevel-1]
                 count = user[name][i] ? 0
@@ -44,7 +44,7 @@ angular.module('cocApp')
                     break
         if (start <= maxLevel-1)
             for i in [start..maxLevel-1]
-                uc = buildingData[name]['upgrade cost']
+                uc = bD[name]['upgrade cost']
                 user[name][i] ?= 0
                 count = user[name][i]
                 walls.total += count
@@ -53,7 +53,7 @@ angular.module('cocApp')
                     idx: i-start
                     level: i+1
                     count: count
-                    upgrade: nextUpgrade(i+1, maxLevel, buildingData[name]['upgrade cost'])
+                    upgrade: nextUpgrade(i+1, maxLevel, bD[name]['upgrade cost'])
                 )
         $scope.summary = util.totalWallCost(user)
 
@@ -62,8 +62,8 @@ angular.module('cocApp')
     $scope.changeNum = (level, idx, count) ->
         return if count == undefined || count < 0
         user['walls'][level-1] = count
-        maxLevel = util.max_level(user.hall, buildingData[name]['required town hall'])
-        $scope.walls.data[idx].upgrade = nextUpgrade(level, maxLevel, buildingData[name]['upgrade cost'])
+        maxLevel = util.max_level(user.hall, bD[name]['required town hall'])
+        $scope.walls.data[idx].upgrade = nextUpgrade(level, maxLevel, bD[name]['upgrade cost'])
         total = 0
         for i in [0..maxLevel-1]
             total += user['walls'][i]

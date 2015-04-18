@@ -1,8 +1,7 @@
 div(ng-include='"components/navbar/navbar.html"')
 
 toast
-
-div(ng-controller='ResearchCtrl')
+div(ng-controller='HeroCtrl')
     script(type='text/ng-template' id='myModalContent.html')
         .modal-header
             h4.modal-title Upgrade to {{sliders.title}} \#{{sliders.level}}
@@ -24,11 +23,10 @@ div(ng-controller='ResearchCtrl')
     .row
         .col-lg-12
             div(ng-include="'app/main/subnav.html'")
-
             table.table.table-bordered.table-condensed
                 thead
                     tr
-                        th.col-md-2 RESEARCH
+                        th.col-md-2 HERO
                         th.col-md-3
                         th.col-md-7 Upgrade Costs
                 tbody
@@ -44,26 +42,32 @@ div(ng-controller='ResearchCtrl')
                                 ng-disabled="d.level>=d.maxLevel || d.upgradeIdx >= 0")
                                     span.glyphicon.glyphicon-plus
                                 a.btn.btn-default.btn-xs(ng-click='upgrade(d.name,d.title,$index,d.maxLevel)'
-                                ng-disabled="d.level>=d.maxLevel")
+                                ng-disabled="d.level>=d.maxLevel"
+                                popover='Upgrade'
+                                popover-trigger='mouseenter')
                                     span.glyphicon.glyphicon-home
                         td
                             div(ng-show='d.upgradeIdx >= 0')
                                 span Upgrade to {{upgradeList[d.upgradeIdx].level}}
                                 span.space
                                 b
-                                    span(am-time-ago='upgradeList[d.upgradexIdx].due')
+                                    span(am-time-ago='upgradeList[d.upgradeIdx].due')
                             div
                                 span(ng-hide='d.nextUpgrade. data.length==0')
                                     icon-elixir(ng-show='d.nextUpgrade.type == "e"')
                                     icon-darkelixir(ng-show='d.nextUpgrade.type == "d"')
                                     icon-gold(ng-show='d.nextUpgrade.type == "g"')
-                                    span.space(ng-repeat='i in d.nextUpgrade.data') {{costFormat(i[1])}}/{{timeStr(i[2])}} (Lev{{i[0]}})
-                                    // span(ng-show='d.nextUpgrade.data.length >= 4') ...
+                                    span.space(ng-repeat='i in d.nextUpgrade.data|limitTo:limitTo') {{costFormat(i[1])}}/{{timeStr(i[2])}} (Lev{{i[0]}})
+                                    span(ng-show='d.nextUpgrade.data.length >= limitTo+1') ...
                     tr
                         td(colspan='3')
                             div
                                 strong.space(popover='Total time to upgrade all Research' popover-trigger='mouseenter') Upgrade Time:
                                 span {{timeStr(summary.requiredTime)}}
+                                span(ng-hide='data.length<2')
+                                    span(popover='with {{data.length}} builders' popover-trigger='mouseenter' style='margin: 10px')
+                                        {{timeWithBuilder(summary.requiredTime, data.length, summary.maxRequiredTime)}}
+                                        small.glyphicon.glyphicon-home(style='margin:5px')
                             div
                                 strong.space(popover='Total cost to upgrade all Research' popover-trigger='mouseenter') Upgrade Cost:
                                 span(ng-hide='summary.requiredCost[1]==0')
@@ -75,6 +79,10 @@ div(ng-controller='ResearchCtrl')
                             div.small
                                 span.space Done Time:
                                 span {{timeStr(summary.doneTime)}}
+                                span(ng-hide='data.length<2')
+                                    span(popover='with {{data.length}} builders' popover-trigger='mouseenter' style='margin: 10px')
+                                        {{timeWithBuilder(summary.doneTime, data.length, summary.maxDoneTime)}}
+                                        span.glyphicon.glyphicon-home(style='margin:5px')
                             div.small
                                 span.space Done Cost:
                                 span(ng-hide='summary.doneCost[1]==0')

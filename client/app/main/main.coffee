@@ -16,6 +16,9 @@ angular.module 'cocApp'
         controller: 'ResearchCtrl'
     .when '/p/overview',
         redirectTo: '/'
+    .when '/p/hero',
+        templateUrl: 'app/main/hero.html'
+        controller: 'HeroCtrl'
     .when '/p/:category',
         templateUrl: 'app/main/category.html'
         controller: 'MainCtrl'
@@ -74,10 +77,10 @@ angular.module 'cocApp'
         result = []
         # exclude = ['Walls', 'Archer Queen Altar', 'Barbarian King Altar', "Builder's Hut"]
         exclude = ['Walls']
-        for item in buildingData['list']
+        for item in bD['list']
             continue if lodash.indexOf(exclude, item) >= 0
             name = cannonicalName item
-            if (type == 'all' || buildingData[name]['type'].toLowerCase()== type.toLowerCase())
+            if (type == 'all' || bD[name]['type'].toLowerCase()== type.toLowerCase())
                 result.push(item)
         return result
 
@@ -95,12 +98,64 @@ angular.module 'cocApp'
         requiredCost: requiredCost
         }
     upgrade_list = () ->
-        return rD.list
+        rD.list
+
+    hero_list = () ->
+        hD.list
+
+    totalHeroCostTime = (user) ->
+        requiredDarkCost = 0
+        doneDarkCost = 0
+        requiredTime = maxRequiredTime = 0
+        doneTime = maxDoneTime = 0
+
+        for item in hero_list()
+            name = cannonicalName(item)
+            maxlevel = max_level(user.hall, hD[name]['required town hall'])
+            continue if (maxlevel <= 1)
+            uc = hD[name]['training cost']
+            ut = hD[name]['training time']
+
+            level = user[name]
+            find = lodash.findIndex user.upgrade,
+                                    name: name,
+                                        index: 100
+
+            mrt = mdt = 0
+            for i in [0..maxlevel-1]
+                if i < level
+                    doneDarkCost += uc[i]
+                    doneTime += ut[i]
+                    mdt += ut[i]
+                else if find >= 0 && i+1 == user.upgrade[find].level
+                    doneDarkCost += uc[i]
+                    due = moment(user.upgrade[find].due)
+                    dueMinutes = parseInt(moment.duration(due.diff(moment())).asMinutes())
+                    requiredTime += dueMinutes
+                    mrt += dueMinutes
+                    doneTime += ut[i]-dueMinutes
+                    mdt += ut[i]-dueMinutes
+                else
+                    requiredDarkCost += uc[i]
+                    requiredTime += ut[i]
+                    mrt += ut[i]
+            maxRequiredTime = lodash.max([maxRequiredTime, mrt])
+            maxDoneTime = lodash.max([maxDoneTime, mdt])
+        return {
+        requiredCost: [0, 0, requiredDarkCost]
+        doneCost: [0, 0, doneDarkCost]
+        requiredTime: requiredTime
+        doneTime: doneTime
+        maxRequiredTime: maxRequiredTime
+        maxDoneTime: maxDoneTime
+        }
 
     return {
         building_list: building_list
 
         upgrade_list: upgrade_list
+
+        hero_list: hero_list
 
         totalCostTime: (type, user) ->
             requiredCost = [0,0,0]
@@ -109,12 +164,12 @@ angular.module 'cocApp'
             doneTime = maxDoneTime = 0
             for item in building_list(type)
                 name = cannonicalName(item)
-                availableNum = buildingData['number available'][name][user.hall-1]
+                availableNum = bD['number available'][name][user.hall-1]
                 continue if (availableNum == 0 )
 
-                maxLevel = max_level(user.hall, buildingData[name]['required town hall'])
-                uc = buildingData[name]['upgrade cost']
-                ut = buildingData[name]['upgrade time']
+                maxLevel = max_level(user.hall, bD[name]['required town hall'])
+                uc = bD[name]['upgrade cost']
+                ut = bD[name]['upgrade time']
 
                 for i in [0..availableNum-1]
                     user[name] ?= []
@@ -146,7 +201,14 @@ angular.module 'cocApp'
                             mrt += ut[k]
                     maxRequiredTime = lodash.max([maxRequiredTime, mrt])
                     maxDoneTime = lodash.max([maxDoneTime, mdt])
-            # console.log(name, requiredCost)
+            if type == 'all'
+                hs = totalHeroCostTime(user)
+                requiredCost = addArrays(requiredCost, hs.requiredCost, '+')
+                doneCost = addArrays(doneCost, hs.doneCost, '+')
+                requiredTime += hs.requiredTime
+                doneTime += hs.doneTime
+                maxRequiredTime = lodash.max([maxRequiredTime, hs.maxRequiredTime])
+                maxDoneTime = lodash.max([maxDoneTime, hs.maxDoneTime])
             return {
             requiredCost: requiredCost
             doneCost: doneCost
@@ -161,8 +223,8 @@ angular.module 'cocApp'
             name = cannonicalName('Walls')
             user[name] ?= []
 
-            uc = buildingData[name]['upgrade cost']
-            maxLevel = max_level(user.hall, buildingData[name]['required town hall'])
+            uc = bD[name]['upgrade cost']
+            maxLevel = max_level(user.hall, bD[name]['required town hall'])
 
             for i in [0..maxLevel-1]
                 count = user[name][i] ? 0
@@ -179,13 +241,12 @@ angular.module 'cocApp'
             requiredElixirCost = requiredDarkCost = 0
             doneElixirCost = doneDarkCost = 0
             requiredTime = doneTime = 0
-            labLevel = max_level(user.hall, buildingData['laboratory']['required town hall'])
+            labLevel = max_level(user.hall, bD['laboratory']['required town hall'])
 
             for item in upgrade_list()
                 name = cannonicalName(item)
                 maxlevel = max_level(labLevel, rD[name]['laboratory level'])
                 continue if (typeof rD[name].subtype != 'undefined' || maxlevel <= 1)
-                maxLevel = max_level(labLevel, rD[name]['laboratory level'])
                 uc = rD[name]['research cost']
                 ut = rD[name]['research time']
 
@@ -193,7 +254,7 @@ angular.module 'cocApp'
                 find = lodash.findIndex user.upgrade,
                     name: name,
                     index: -1
-                for i in [0..maxLevel-1]
+                for i in [0..maxlevel-1]
                     switch rD[name]['barracks type']
                         when 'Dark' then type = 'd'
                         else type = 'e'
@@ -219,7 +280,7 @@ angular.module 'cocApp'
             requiredTime: requiredTime*60
             doneTime: doneTime*60
             }
-
+        totalHeroCostTime: totalHeroCostTime
         cannonicalName: cannonicalName
 
         max_level: max_level
@@ -230,7 +291,13 @@ angular.module 'cocApp'
                 when time < 60 then time + 'm'
                 when time < 60 * 24 then parseInt(time / 60) + 'h'
                 else
-                    parseInt(time / 60 / 24) + 'd'
+                    day = parseInt(time/60/24)
+                    hour = parseInt((time-day*60*24)/60)
+                    if hour == 0
+                        day + 'd'
+                    else
+                        day + 'd ' + hour + 'h'
+
             return retString
 
         costFormat: costFormat

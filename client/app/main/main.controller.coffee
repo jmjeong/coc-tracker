@@ -39,13 +39,13 @@ angular.module 'cocApp'
         # $scope.activeTab = undefined
         for item in lodash.sortBy(util.building_list(category))
             name = util.cannonicalName(item)
-            availableNum = buildingData['number available'][name][user.hall-1]
+            availableNum = bD['number available'][name][user.hall-1]
             continue if (availableNum == 0 )
 
-            maxLevel = util.max_level(user.hall, buildingData[name]['required town hall'])
+            maxLevel = util.max_level(user.hall, bD[name]['required town hall'])
             detail[name] = []
-            uc = buildingData[name]['upgrade cost']
-            ut = buildingData[name]['upgrade time']
+            uc = bD[name]['upgrade cost']
+            ut = bD[name]['upgrade time']
             for i in [0..availableNum-1]
                 user[name] ?= []
                 currentLevel = user[name][i] ? 0
@@ -73,7 +73,6 @@ angular.module 'cocApp'
             )
         $scope.summary = util.totalCostTime(category, user)
         $scope.researchSummary = util.totalResearchCostTime(user)
-        # console.log($scope.researchSummary)
         $scope.wallSummary = util.totalWallCost(user)
         # console.log($scope.activeTab)
 
@@ -84,9 +83,9 @@ angular.module 'cocApp'
         currentLevel += inc
         currentLevel = 0 if currentLevel < 0
         currentLevel = maxLevel if currentLevel > maxLevel
-        # maxLevel = util.max_level(user.hall, buildingData[name]['required town hall'])
-        uc = buildingData[name]['upgrade cost']
-        ut = buildingData[name]['upgrade time']
+        # maxLevel = util.max_level(user.hall, bD[name]['required town hall'])
+        uc = bD[name]['upgrade cost']
+        ut = bD[name]['upgrade time']
         $scope.detail[name][index] =
             idx: $scope.detail[name][index].idx
             level: currentLevel
@@ -133,7 +132,7 @@ angular.module 'cocApp'
                     className: 'warning'
                     content: 'need more builders...')
                 return
-        ut = buildingData[name]['upgrade time']
+        ut = bD[name]['upgrade time']
         if (find >= 0)
             due = moment(user.upgrade[find].due)
             value = parseInt(moment.duration(due.diff(moment())).asMinutes())
@@ -165,7 +164,7 @@ angular.module 'cocApp'
             name: name,
             index: idx
         })
-        ut = buildingData[name]['upgrade time']
+        ut = bD[name]['upgrade time']
         if (value < 0)
             lodash.remove(user.upgrade, {
                 name: name,
@@ -175,18 +174,14 @@ angular.module 'cocApp'
         else
             due = new moment()
             due = due.add(value, 'minutes')
-            # console.log(ut[level], due, user.upgrade, user.upgrade.length)
-            level++
+
             if (find < 0)
-#                    upgradeNum = lodash.filter user.upgrade, (u) ->
-#                        return u.index >= 0
-#                    return if (user.builder <= upgradeNum.length)
                 $scope.detail[name][index].upgradeIdx = user.upgrade.length
                 user.upgrade.push(
                     name: name
                     title: title
                     index: idx
-                    level: level
+                    level: level+1
                     time: ut[level]
                     due: due
                 )
@@ -196,12 +191,13 @@ angular.module 'cocApp'
                     name: name
                     title: title
                     index: idx
-                    level: level
+                    level: level+1
                     time: ut[level]
                     due: due
                 }
-        maxLevel = util.max_level(user.hall, buildingData[name]['required town hall'])
-        uc = buildingData[name]['upgrade cost']
+            level++
+        maxLevel = util.max_level(user.hall, bD[name]['required town hall'])
+        uc = bD[name]['upgrade cost']
         $scope.detail[name][index].nextUpgrade = nextUpgrade(level, maxLevel, ut, uc)
         $scope.summary = util.totalCostTime(category, user)
         # user.upgrade = []
@@ -217,9 +213,9 @@ angular.module 'cocApp'
         })
         level = $scope.detail[name][index].level
         $scope.detail[name][index].upgradeIdx = -1
-        maxLevel = util.max_level(user.hall, buildingData[name]['required town hall'])
-        ut = buildingData[name]['upgrade time']
-        uc = buildingData[name]['upgrade cost']
+        maxLevel = util.max_level(user.hall, bD[name]['required town hall'])
+        ut = bD[name]['upgrade time']
+        uc = bD[name]['upgrade cost']
         $scope.detail[name][index].nextUpgrade = nextUpgrade(level, maxLevel, ut, uc)
         $scope.summary = util.totalCostTime(category, user)
         $scope.researchSummary = util.totalResearchCostTime(user)
