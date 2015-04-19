@@ -18,7 +18,6 @@ angular.module('cocApp')
     $scope.$on '$destroy', () ->
         $interval.cancel(intervalPromise)
 
-
     nextUpgrade = (current, maxLevel, timeArray, costArray, type) ->
         return {} if (current >= maxLevel)
         data = []
