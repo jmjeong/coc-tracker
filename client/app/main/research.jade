@@ -48,9 +48,9 @@ div
                                     span.glyphicon.glyphicon-home
                         td
                             div(ng-show='d.upgradeIdx >= 0')
-                                span Upgrade to {{upgradeList[d.upgradeIdx].level}}
+                                span.text-primary Upgrade to {{upgradeList[d.upgradeIdx].level}}
                                 span.space
-                                b
+                                b.text-primary
                                     span(am-time-ago='upgradeList[d.upgradeIdx].due')
                             div
                                 span(ng-hide='d.nextUpgrade. data.length==0')
