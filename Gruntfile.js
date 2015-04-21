@@ -139,7 +139,8 @@ module.exports = function (grunt) {
 
     shell: {
       publish: {
-        command: 'rsync -avz  dist/public w.jmjeong.com:~/coc/'
+        // command: 'rsync -avz  dist/public w.jmjeong.com:~/coc/'
+        command: 'rsync -avz --delete dist/* w.jmjeong.com:~/coc'
       }
     },
     // Make sure code styles are up to par and there are no obvious mistakes
