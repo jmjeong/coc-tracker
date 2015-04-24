@@ -104,7 +104,6 @@ angular.module 'cocApp'
         if oldLevel != currentLevel
             user[name][$scope.detail[name][index].idx] = currentLevel
             $scope.summary = util.totalCostTime(category, user)
-            console.log(name, $scope.detail[name][index].idx,currentLevel)
             userFactory.set(name, user[name])
 
     $scope.timeWithBuilder = (time, builder, maxTime) ->

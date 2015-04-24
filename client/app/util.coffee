@@ -20,13 +20,13 @@ angular.module 'cocApp'
             user.limitTo ?= 5
             user
     set: (key, value) ->
-        console.log(key, value)
+        # console.log(key, value)
         # localStorageService.set('user', user)
         $http.post '/api/users/me/data',
             key: key
             value: value
         .success (response)->
-            console.log(response)
+            # console.log(response)
 
 .factory 'util', (lodash, HEROFLAG) ->
     cannonicalName =  (name) ->

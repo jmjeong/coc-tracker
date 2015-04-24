@@ -122,6 +122,7 @@ exports.putData = function(req, res, next) {
         user.markModified('data');
         user.save(function (err) {
             if (err) return res.send(500, err);
+            res.send(200);
         });
     });
 };
