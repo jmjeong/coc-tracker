@@ -1,8 +1,10 @@
 'use strict'
 
 angular.module('cocApp')
-.controller 'WallCtrl', ($scope, util, lodash, userFactory) ->
-    user = userFactory.get()
+.controller 'WallCtrl', ($scope, util, lodash, userFactory, data) ->
+    # user = userFactory.get()
+
+    user = data
 
     name = util.cannonicalName('Walls')
     user[name] ?= []
@@ -69,6 +71,6 @@ angular.module('cocApp')
             total += user['walls'][i]
         $scope.walls.total = total
         $scope.summary = util.totalWallCost(user)
-        userFactory.set(user)
+        userFactory.set('walls', user.walls)
 
 

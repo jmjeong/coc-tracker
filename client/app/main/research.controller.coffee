@@ -1,9 +1,10 @@
 'use strict'
 
 angular.module('cocApp')
-.controller 'ResearchCtrl', ($scope, $modal, $interval, util, lodash, ngToast, userFactory) ->
-    user = userFactory.get()
+.controller 'ResearchCtrl', ($scope, $modal, $interval, util, lodash, ngToast, userFactory, data) ->
+    # user = userFactory.get()
 
+    user = data
     labLevel = util.max_level(user.hall, bD['laboratory']['required town hall'])
 
     $scope.costStr = util.costStr
@@ -14,9 +15,9 @@ angular.module('cocApp')
 
     intervalPromise = $interval ()->
         if !util.checkUpgrade(user)
-            userFactory.set(user)
+            userFactory.set('upgrade',user.upgrade)
             update()
-    , 2000
+    , 5000
     $scope.$on '$destroy', () ->
         $interval.cancel(intervalPromise)
 
@@ -75,7 +76,7 @@ angular.module('cocApp')
         if oldLevel != currentLevel
             user[name] = currentLevel
             $scope.summary = util.totalResearchCostTime(user)
-            userFactory.set(user)
+            userFactory.set(name, user[name])
 
     $scope.upgrade = (name, title, index) ->
         level = user[name] ? 0
@@ -160,4 +161,4 @@ angular.module('cocApp')
             rD[name]['research time'], rD[name]['research cost'],
             rD[name]['barracks type'])
         $scope.summary = util.totalResearchCostTime(user)
-        userFactory.set(user)
+        userFactory.set('upgrade', user.upgrade)

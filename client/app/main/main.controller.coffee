@@ -1,11 +1,12 @@
 'use strict'
 
 angular.module 'cocApp'
-.controller 'MainCtrl', ($scope, $modal, $interval, $log, $route, upgradeConfig,
-    util, lodash, userFactory, $routeParams, $http, moment, ngToast) ->
+.controller 'MainCtrl', ($scope, $modal, $interval, $log, $route, HEROFLAG,
+    util, lodash, userFactory, $routeParams, $http, moment, ngToast, data) ->
 
-    user = userFactory.get()
-
+    # user = userFactory.get()
+    # console.log(data)
+    user = data
     $scope.timeStr = util.timeStr
     $scope.costStr = util.costStr
     $scope.costFormat = util.costFormat
@@ -14,16 +15,16 @@ angular.module 'cocApp'
     $scope.upgradeList = user.upgrade
     $scope.activeTab = $routeParams.category
     $scope.set = {}
-    $scope.set.hideDone = user.set.hideDone
-    $scope.set.hideDoneResearch = user.set.hideDoneResearch
+    $scope.set.hideDone ?= user.set.hideDone
+    $scope.set.hideDoneResearch ?= user.set.hideDoneResearch
     $scope.limitTo = user.limitTo
-    $scope.HEROFLAG = upgradeConfig.HEROFLAG
+    $scope.HEROFLAG = HEROFLAG
 
     intervalPromise = $interval ()->
          if !util.checkUpgrade(user)
-            userFactory.set(user)
+            userFactory.set('upgrade', user.upgrade)
             update()
-    , 2000
+    , 5000
     $scope.$on '$destroy', () ->
         $interval.cancel(intervalPromise)
 
@@ -103,7 +104,8 @@ angular.module 'cocApp'
         if oldLevel != currentLevel
             user[name][$scope.detail[name][index].idx] = currentLevel
             $scope.summary = util.totalCostTime(category, user)
-            userFactory.set(user)
+            console.log(name, $scope.detail[name][index].idx,currentLevel)
+            userFactory.set(name, user[name])
 
     $scope.timeWithBuilder = (time, builder, maxTime) ->
         # console.log($scope.longRequiredTime, $scope.requiredTime)
@@ -113,17 +115,17 @@ angular.module 'cocApp'
 
     $scope.setHall = (hall) ->
         $scope.hall = user.hall = hall
-        userFactory.set(user)
+        userFactory.set('hall', user.hall)
         update()
 
     $scope.setBuilder = (builder) ->
         $scope.builder = user.builder = builder
-        userFactory.set(user)
+        userFactory.set('builder', builder)
 
     $scope.settingChanged = () ->
         user.set.hideDone = $scope.set.hideDone
         user.set.hideDoneResearch = $scope.set.hideDoneResearch
-        userFactory.set(user)
+        userFactory.set('set', user.set)
 
     $scope.upgrade = (name, title, index) ->
         idx = $scope.detail[name][index].idx
@@ -210,7 +212,7 @@ angular.module 'cocApp'
         $scope.detail[name][index].nextUpgrade = nextUpgrade(level, maxLevel, ut, uc)
         $scope.summary = util.totalCostTime(category, user)
         # user.upgrade = []
-        userFactory.set(user)
+        userFactory.set('upgrade', user.upgrade)
 
         # console.log(find, name, index, idx, level, util.timeStr(ut[level]) )
         # console.log(user.upgrade)
@@ -228,7 +230,7 @@ angular.module 'cocApp'
         $scope.detail[name][index].nextUpgrade = nextUpgrade(level, maxLevel, ut, uc)
         $scope.summary = util.totalCostTime(category, user)
         $scope.researchSummary = util.totalResearchCostTime(user)
-        userFactory.set(user)
+        userFactory.set('upgrade', user.upgrade)
 
 angular.module('cocApp')
     .controller 'ModalInstanceCtrl', ($scope, $modalInstance, data) ->
@@ -262,4 +264,3 @@ angular.module('cocApp')
         $scope.sliderDelegate = (value, $event) ->
             $scope.changed = timeStr(value)
             $scope.selected = value
-

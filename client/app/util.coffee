@@ -1,22 +1,34 @@
 'use strict'
 
 angular.module 'cocApp'
-.factory 'userFactory', (localStorageService, upgradeConfig) ->
-    get: () ->
-        user = localStorageService.get('user')
-        user ?= {}
-        user.upgrade ?= []
-        user.hall ?= 7
-        user.builder ?= 3
-        user.hideDone ?= false
-        user.set ?= {}
-        user.set.hideDone ?= false
-        user.set.hideDoneResearch ?= false
-        user.limitTo ?= 5
-        user
-    set: (user) ->
-        localStorageService.set('user', user)
-.factory 'util', (lodash, upgradeConfig) ->
+.factory 'userFactory', (localStorageService, $http) ->
+    get: ->
+        # user = localStorageService.get('user')
+        $http.get '/api/users/me/data'
+        .then (response)->
+            # console.log(response)
+            if (response.data.data == undefined)
+                user = {}
+            else
+                user = JSON.parse(response.data.data)
+            user.upgrade ?= []
+            user.hall ?= 7
+            user.builder ?= 3
+            user.set ?= {}
+            user.set.hideDone ?= false
+            user.set.hideDoneResearch ?= false
+            user.limitTo ?= 5
+            user
+    set: (key, value) ->
+        console.log(key, value)
+        # localStorageService.set('user', user)
+        $http.post '/api/users/me/data',
+            key: key
+            value: value
+        .success (response)->
+            console.log(response)
+
+.factory 'util', (lodash, HEROFLAG) ->
     cannonicalName =  (name) ->
         name.replace(/\s+|\'/g, '').toLowerCase()
 
@@ -85,7 +97,7 @@ angular.module 'cocApp'
             level = user[name]
             find = lodash.findIndex user.upgrade,
                                     name: name,
-                                        index: upgradeConfig.HELOFLAG
+                                    index: HEROFLAG
 
             mrt = mdt = 0
             for i in [0..maxlevel-1]
@@ -281,7 +293,7 @@ angular.module 'cocApp'
             now.isAfter(moment(u.due))
         if fired.length > 0
             for u in fired
-                if u.index >= 0 && u.index != upgradeConfig.HEROFLAG
+                if u.index >= 0 && u.index != HEROFLAG
                     user[u.name][u.index] = u.level
                 else
                     user[u.name] = u.level

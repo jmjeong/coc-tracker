@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('cocApp')
-.controller 'HeroCtrl', ($scope, $modal, $interval, util, lodash, ngToast, userFactory, upgradeConfig) ->
+.controller 'HeroCtrl', ($scope, $modal, $interval, util, lodash, ngToast, userFactory, HEROFLAG) ->
     user = userFactory.get()
 
     $scope.costStr = util.costStr
@@ -14,7 +14,7 @@ angular.module('cocApp')
         if !util.checkUpgrade(user)
             userFactory.set(user)
             update()
-    , 2000
+    , 5000
     $scope.$on '$destroy', () ->
         $interval.cancel(intervalPromise)
 
@@ -38,7 +38,7 @@ angular.module('cocApp')
             continue if (user.set.hideDone && user[name] >= maxlevel)
             find = lodash.findIndex(user.upgrade, {
                 name: name,
-                index: upgradeConfig.HEROFLAG
+                index: HEROFLAG
             })
             level = user[name]
             level++ if find >= 0
@@ -77,7 +77,7 @@ angular.module('cocApp')
 
         find = lodash.findIndex(user.upgrade, {
             name: name,
-            index: upgradeConfig.HEROFLAG
+            index: HEROFLAG
         })
         if (find < 0)
             upgradeNum = lodash.filter user.upgrade, (u) ->
@@ -116,13 +116,13 @@ angular.module('cocApp')
 
         find = lodash.findIndex(user.upgrade, {
             name: name,
-            index: upgradeConfig.HEROFLAG
+            index: HEROFLAG
         })
         ut = hD[name]['training time']
         if (value < 0)
             lodash.remove(user.upgrade, {
                 name: name
-                index: upgradeConfig.HEROFLAG
+                index: HEROFLAG
             })
             $scope.data[index].upgradeIdx = -1
         else
@@ -133,7 +133,7 @@ angular.module('cocApp')
                 user.upgrade.push(
                     name: name
                     title: title
-                    index: upgradeConfig.HEROFLAG
+                    index: HEROFLAG
                     level: level+1
                     time: ut[level]
                     due: due
@@ -143,7 +143,7 @@ angular.module('cocApp')
                 user.upgrade[find] =
                     name: name
                     title: title
-                    index: upgradeConfig.HEROFLAG
+                    index: HEROFLAG
                     level: level+1
                     time: ut[level]
                     due: due
