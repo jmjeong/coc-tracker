@@ -1,16 +1,27 @@
 'use strict'
 
 angular.module 'cocApp'
-.factory 'userFactory', (localStorageService, $http) ->
+.factory 'userFactory', (localStorageService, $http, Auth) ->
     get: ->
         # user = localStorageService.get('user')
-        $http.get '/api/users/me/data'
-        .then (response)->
-            # console.log(response)
-            if (response.data.data == undefined)
-                user = {}
-            else
-                user = JSON.parse(response.data.data)
+        if Auth.isLoggedIn()
+            $http.get '/api/users/me/data'
+            .then (response)->
+                # console.log(response)
+                if (response.data.data == undefined)
+                    user = {}
+                else
+                    user = JSON.parse(response.data.data)
+                user.upgrade ?= []
+                user.hall ?= 7
+                user.builder ?= 3
+                user.set ?= {}
+                user.set.hideDone ?= false
+                user.set.hideDoneResearch ?= false
+                user.limitTo ?= 5
+                user
+        else
+            user = localStorageService.get('user')
             user.upgrade ?= []
             user.hall ?= 7
             user.builder ?= 3
@@ -19,14 +30,17 @@ angular.module 'cocApp'
             user.set.hideDoneResearch ?= false
             user.limitTo ?= 5
             user
-    set: (key, value) ->
+    set: (key, value, user) ->
         # console.log(key, value)
         # localStorageService.set('user', user)
-        $http.post '/api/users/me/data',
-            key: key
-            value: value
-        .success (response)->
-            # console.log(response)
+        if Auth.isLoggedIn()
+            $http.post '/api/users/me/data',
+                key: key
+                value: value
+            .success (response)->
+                # console.log(response)
+        else
+            localStorageService.set('user', user)
 
 .factory 'util', (lodash, HEROFLAG) ->
     cannonicalName =  (name) ->

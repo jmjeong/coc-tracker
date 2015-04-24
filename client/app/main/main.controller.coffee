@@ -22,7 +22,7 @@ angular.module 'cocApp'
 
     intervalPromise = $interval ()->
          if !util.checkUpgrade(user)
-            userFactory.set('upgrade', user.upgrade)
+            userFactory.set('upgrade', user.upgrade, user)
             update()
     , 5000
     $scope.$on '$destroy', () ->
@@ -104,7 +104,7 @@ angular.module 'cocApp'
         if oldLevel != currentLevel
             user[name][$scope.detail[name][index].idx] = currentLevel
             $scope.summary = util.totalCostTime(category, user)
-            userFactory.set(name, user[name])
+            userFactory.set(name, user[name], user)
 
     $scope.timeWithBuilder = (time, builder, maxTime) ->
         # console.log($scope.longRequiredTime, $scope.requiredTime)
@@ -114,17 +114,17 @@ angular.module 'cocApp'
 
     $scope.setHall = (hall) ->
         $scope.hall = user.hall = hall
-        userFactory.set('hall', user.hall)
+        userFactory.set('hall', user.hall, user)
         update()
 
     $scope.setBuilder = (builder) ->
         $scope.builder = user.builder = builder
-        userFactory.set('builder', builder)
+        userFactory.set('builder', builder, user)
 
     $scope.settingChanged = () ->
         user.set.hideDone = $scope.set.hideDone
         user.set.hideDoneResearch = $scope.set.hideDoneResearch
-        userFactory.set('set', user.set)
+        userFactory.set('set', user.set, user)
 
     $scope.upgrade = (name, title, index) ->
         idx = $scope.detail[name][index].idx
@@ -211,7 +211,7 @@ angular.module 'cocApp'
         $scope.detail[name][index].nextUpgrade = nextUpgrade(level, maxLevel, ut, uc)
         $scope.summary = util.totalCostTime(category, user)
         # user.upgrade = []
-        userFactory.set('upgrade', user.upgrade)
+        userFactory.set('upgrade', user.upgrade, user)
 
         # console.log(find, name, index, idx, level, util.timeStr(ut[level]) )
         # console.log(user.upgrade)
@@ -229,7 +229,7 @@ angular.module 'cocApp'
         $scope.detail[name][index].nextUpgrade = nextUpgrade(level, maxLevel, ut, uc)
         $scope.summary = util.totalCostTime(category, user)
         $scope.researchSummary = util.totalResearchCostTime(user)
-        userFactory.set('upgrade', user.upgrade)
+        userFactory.set('upgrade', user.upgrade, user)
 
 angular.module('cocApp')
     .controller 'ModalInstanceCtrl', ($scope, $modalInstance, data) ->

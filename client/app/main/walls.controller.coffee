@@ -71,6 +71,6 @@ angular.module('cocApp')
             total += user['walls'][i]
         $scope.walls.total = total
         $scope.summary = util.totalWallCost(user)
-        userFactory.set('walls', user.walls)
+        userFactory.set('walls', user.walls, user)
 
 

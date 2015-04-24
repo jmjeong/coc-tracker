@@ -15,7 +15,7 @@ angular.module('cocApp')
 
     intervalPromise = $interval ()->
         if !util.checkUpgrade(user)
-            userFactory.set('upgrade',user.upgrade)
+            userFactory.set('upgrade',user.upgrade, user)
             update()
     , 5000
     $scope.$on '$destroy', () ->
@@ -76,7 +76,7 @@ angular.module('cocApp')
         if oldLevel != currentLevel
             user[name] = currentLevel
             $scope.summary = util.totalResearchCostTime(user)
-            userFactory.set(name, user[name])
+            userFactory.set(name, user[name], user)
 
     $scope.upgrade = (name, title, index) ->
         level = user[name] ? 0
@@ -161,4 +161,4 @@ angular.module('cocApp')
             rD[name]['research time'], rD[name]['research cost'],
             rD[name]['barracks type'])
         $scope.summary = util.totalResearchCostTime(user)
-        userFactory.set('upgrade', user.upgrade)
+        userFactory.set('upgrade', user.upgrade, user)
