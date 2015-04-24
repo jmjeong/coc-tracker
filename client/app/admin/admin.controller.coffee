@@ -9,5 +9,7 @@ angular.module 'cocApp'
     #console.log(users)
 
   $scope.delete = (user) ->
+    console.log(user)
+    return if user.role == 'admin'
     User.remove id: user._id
     _.remove $scope.users, user
