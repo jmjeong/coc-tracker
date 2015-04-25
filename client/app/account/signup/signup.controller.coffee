@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'cocApp'
-.controller 'SignupCtrl', ($scope, Auth, $location) ->
+.controller 'SignupCtrl', ($scope, Auth, $location, userFactory) ->
   $scope.user = {}
   $scope.errors = {}
   $scope.register = (form) ->
@@ -13,6 +13,7 @@ angular.module 'cocApp'
         name: $scope.user.name
         email: $scope.user.email
         password: $scope.user.password
+        data: JSON.stringify(userFactory.get())
 
       .then ->
         $location.path '/'

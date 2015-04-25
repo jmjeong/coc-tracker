@@ -26,6 +26,7 @@ exports.index = function(req, res) {
  */
 exports.create = function (req, res, next) {
   var newUser = new User(req.body);
+  //  console.log(req.body);
   newUser.provider = 'local';
   newUser.role = 'user';
   newUser.save(function(err, user) {
@@ -113,7 +114,12 @@ exports.putData = function(req, res, next) {
         if (!user) return res.send(404);
 
         // console.log(req.body.key);
-        var data = JSON.parse(user.data);
+        if (user.data) {
+            var data = JSON.parse(user.data);
+        }
+        else {
+            var data = {}
+        }
         // console.log(data[req.body.key]);
         data[req.body.key] = req.body.value;
         // console.log(data[req.body.key]);

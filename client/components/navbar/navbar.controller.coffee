@@ -2,9 +2,13 @@
 
 angular.module 'cocApp'
 .controller 'NavbarCtrl', ($scope, $location, Auth, User) ->
-    $scope.menu = [
+    $scope.menu = [{
         title: 'Home'
         link: '/'
+    }, {
+        title: 'About'
+        link: '/about'
+    }
     ]
     $scope.isCollapsed = true
     $scope.isLoggedIn = Auth.isLoggedIn

@@ -3,8 +3,7 @@
 angular.module 'cocApp'
 .factory 'userFactory', (localStorageService, $http, Auth) ->
     get: ->
-        # user = localStorageService.get('user')
-        if Auth.isLoggedIn()
+        if Auth.isLoggedInAsync()
             $http.get '/api/users/me/data'
             .then (response)->
                 # console.log(response)
@@ -31,9 +30,7 @@ angular.module 'cocApp'
             user.limitTo ?= 5
             user
     set: (key, value, user) ->
-        # console.log(key, value)
-        # localStorageService.set('user', user)
-        if Auth.isLoggedIn()
+        if Auth.isLoggedInAsync()
             $http.post '/api/users/me/data',
                 key: key
                 value: value
