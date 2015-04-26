@@ -15,6 +15,7 @@ angular.module 'cocApp'
                 util.initUser(user)
         else
             user = localStorageService.get('user')
+            user ?= {}
             util.initUser(user)
     set: (key, value, user) ->
         if Auth.isLoggedInAsync()

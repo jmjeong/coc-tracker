@@ -6,7 +6,7 @@ angular.module 'cocApp'
         title: 'Home'
         link: '/'
     }, {
-        title: 'About'
+        title: 'Info'
         link: '/about'
     }
     ]
