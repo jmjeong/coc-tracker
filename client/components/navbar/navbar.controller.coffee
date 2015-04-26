@@ -21,7 +21,3 @@ angular.module 'cocApp'
 
     $scope.isActive = (route) ->
         route is $location.path()
-
-    $scope.save = ->
-        console.log('save called')
-        Auth.save()

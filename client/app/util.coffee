@@ -1,7 +1,8 @@
 'use strict'
 
 angular.module 'cocApp'
-.factory 'userFactory', (localStorageService, $http, Auth) ->
+.factory 'userFactory', (localStorageService, $http, Auth, util) ->
+
     get: ->
         if Auth.isLoggedInAsync()
             $http.get '/api/users/me/data'
@@ -11,24 +12,10 @@ angular.module 'cocApp'
                     user = {}
                 else
                     user = JSON.parse(response.data.data)
-                user.upgrade ?= []
-                user.hall ?= 7
-                user.builder ?= 3
-                user.set ?= {}
-                user.set.hideDone ?= false
-                user.set.hideDoneResearch ?= false
-                user.limitTo ?= 5
-                user
+                util.initUser(user)
         else
             user = localStorageService.get('user')
-            user.upgrade ?= []
-            user.hall ?= 7
-            user.builder ?= 3
-            user.set ?= {}
-            user.set.hideDone ?= false
-            user.set.hideDoneResearch ?= false
-            user.limitTo ?= 5
-            user
+            util.initUser(user)
     set: (key, value, user) ->
         if Auth.isLoggedInAsync()
             $http.post '/api/users/me/data',
@@ -40,6 +27,7 @@ angular.module 'cocApp'
             localStorageService.set('user', user)
 
 .factory 'util', (lodash, HEROFLAG) ->
+
     cannonicalName =  (name) ->
         name.replace(/\s+|\'/g, '').toLowerCase()
 
@@ -140,6 +128,15 @@ angular.module 'cocApp'
         }
 
     return {
+    initUser: (user)->
+        user.upgrade ?= []
+        user.hall ?= 7
+        user.builder ?= 3
+        user.set ?= {}
+        user.set.hideDone ?= false
+        user.set.hideDoneResearch ?= false
+        user.limitTo ?= 5
+        user
     building_list: building_list
 
     upgrade_list: upgrade_list
