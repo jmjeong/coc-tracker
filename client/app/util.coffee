@@ -220,6 +220,22 @@ angular.module 'cocApp'
         requiredCost: requiredCost
         doneCost: doneCost
         }
+    totalProduction: (user)->
+        pB = ['goldmine', 'elixircollector', 'darkelixirdrill']
+        result = [0,0,0]
+        for name in pB
+            availableNum = bD['number available'][name][user.hall-1]
+            continue if (availableNum == 0 )
+            for i in [0..availableNum-1]
+                currentLevel = user[name][i] ? 0
+                continue if (currentLevel == 0)
+                find = lodash.findIndex(user.upgrade, {
+                    name: name,
+                    index: i
+                })
+                continue if (find >= 0)
+                result = addArrays(result, bD[name]['production'][currentLevel-1], '+')
+        lodash.map(result, (n)->n*24)
     totalResearchCostTime: (user) ->
         requiredElixirCost = requiredDarkCost = 0
         doneElixirCost = doneDarkCost = 0

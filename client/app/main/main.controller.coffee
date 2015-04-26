@@ -29,6 +29,7 @@ angular.module 'cocApp'
         $interval.cancel(intervalPromise)
 
     category = if ($scope.activeTab == undefined) then 'all' else $scope.activeTab
+    $scope.isResource = (category=='resource')
     #console.log(category)
     nextUpgrade = (current, maxLevel, timeArray, costArray) ->
         return {} if (current >= maxLevel)
@@ -85,7 +86,9 @@ angular.module 'cocApp'
         $scope.summary = util.totalCostTime(category, user)
         $scope.researchSummary = util.totalResearchCostTime(user)
         $scope.wallSummary = util.totalWallCost(user)
-        # console.log($scope.activeTab)
+        if ($scope.isResource)
+            $scope.totalProduction = util.totalProduction(user)
+
 
     update()
 
@@ -104,6 +107,8 @@ angular.module 'cocApp'
         if oldLevel != currentLevel
             user[name][$scope.detail[name][index].idx] = currentLevel
             $scope.summary = util.totalCostTime(category, user)
+            if ($scope.isResource)
+                $scope.totalProduction = util.totalProduction(user)
             userFactory.set(name, user[name], user)
 
     $scope.timeWithBuilder = (time, builder, maxTime) ->
@@ -210,6 +215,8 @@ angular.module 'cocApp'
         uc = bD[name]['upgrade cost']
         $scope.detail[name][index].nextUpgrade = nextUpgrade(level, maxLevel, ut, uc)
         $scope.summary = util.totalCostTime(category, user)
+        if ($scope.isResource)
+            $scope.totalProduction = util.totalProduction(user)
         # user.upgrade = []
         userFactory.set('upgrade', user.upgrade, user)
 
@@ -229,6 +236,8 @@ angular.module 'cocApp'
         $scope.detail[name][index].nextUpgrade = nextUpgrade(level, maxLevel, ut, uc)
         $scope.summary = util.totalCostTime(category, user)
         $scope.researchSummary = util.totalResearchCostTime(user)
+        if ($scope.isResource)
+            $scope.totalProduction = util.totalProduction(user)
         userFactory.set('upgrade', user.upgrade, user)
 
 angular.module('cocApp')
