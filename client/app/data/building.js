@@ -172,7 +172,6 @@ bD['goldstorage']['type']="Resource"
 bD['goldstorage']['required town hall']=[1,2,2,3,3,3,4,4,5,6,7,]
 bD['goldstorage']['upgrade time']=[1,30,60,120,180,240,360,480,720,1440,2880,]
 bD['goldstorage']['capacity']=[[1500,0,0],[3000,0,0],[6000,0,0],[12000,0,0],[25000,0,0],[50000,0,0],[100000,0,0],[250000,0,0],[500000,0,0],[1000000,0,0],[2000000,0,0],]
-bD['goldstorage']['production']=[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],]
 bD['goldstorage']['upgrade cost']=[[0,300,0],[0,750,0],[0,1500,0],[0,3000,0],[0,6000,0],[0,12000,0],[0,25000,0],[0,50000,0],[0,100000,0],[0,250000,0],[0,500000,0],]
 
 bD['list'].push('Elixir Storage')
@@ -191,7 +190,6 @@ bD['darkelixirstorage']['type']="Resource"
 bD['darkelixirstorage']['required town hall']=[7,7,8,8,9,9,]
 bD['darkelixirstorage']['upgrade time']=[1440,2880,4320,5760,7200,8640,]
 bD['darkelixirstorage']['capacity']=[[0,0,10000],[0,0,20000],[0,0,40000],[0,0,80000],[0,0,150000],[0,0,200000],]
-bD['darkelixirstorage']['production']=[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],]
 bD['darkelixirstorage']['upgrade cost']=[[0,600000,0],[0,1200000,0],[0,1800000,0],[0,2400000,0],[0,3000000,0],[0,3600000,0],]
 
 bD['list'].push('Army Camp')
