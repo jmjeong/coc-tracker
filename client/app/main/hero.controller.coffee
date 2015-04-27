@@ -1,8 +1,8 @@
 'use strict'
 
 angular.module('cocApp')
-.controller 'HeroCtrl', ($scope, $modal, $interval, util, lodash, ngToast, userFactory, HEROFLAG) ->
-    user = userFactory.get()
+.controller 'HeroCtrl', ($scope, $modal, $interval, util, lodash, ngToast, userFactory, HEROFLAG, data) ->
+    user = data
 
     $scope.costStr = util.costStr
     $scope.timeStr = util.timeStr
