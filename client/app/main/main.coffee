@@ -30,7 +30,11 @@ angular.module 'cocApp'
             data: (userFactory)->
                 userFactory.get()
     .when '/p/overview',
-          redirectTo: '/'
+        templateUrl: 'app/main/main.html'
+        controller: 'MainCtrl'
+        resolve:
+            data: (userFactory)->
+                userFactory.get()
     .when '/p/:category',
         templateUrl: 'app/main/category.html'
         controller: 'MainCtrl'

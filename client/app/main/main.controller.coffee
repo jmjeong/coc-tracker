@@ -22,7 +22,6 @@ angular.module 'cocApp'
 
     intervalPromise = $interval ()->
          if !util.checkUpgrade(user)
-            userFactory.set('upgrade', user.upgrade, user)
             update()
     , 5000
     $scope.$on '$destroy', () ->
@@ -109,7 +108,7 @@ angular.module 'cocApp'
             $scope.summary = util.totalCostTime(category, user)
             if ($scope.isResource)
                 $scope.totalProduction = util.totalProduction(user)
-            userFactory.set(name, user[name], user)
+            userFactory.set([{key:name,value:user[name]}], user)
 
     $scope.timeWithBuilder = (time, builder, maxTime) ->
         # console.log($scope.longRequiredTime, $scope.requiredTime)
@@ -119,17 +118,17 @@ angular.module 'cocApp'
 
     $scope.setHall = (hall) ->
         $scope.hall = user.hall = hall
-        userFactory.set('hall', user.hall, user)
+        userFactory.set([{key:'hall', value:user.hall}], user)
         update()
 
     $scope.setBuilder = (builder) ->
         $scope.builder = user.builder = builder
-        userFactory.set('builder', builder, user)
+        userFactory.set([{key:'builder', value:builder}], user)
 
     $scope.settingChanged = () ->
         user.set.hideDone = $scope.set.hideDone
         user.set.hideDoneResearch = $scope.set.hideDoneResearch
-        userFactory.set('set', user.set, user)
+        userFactory.set([{key:'set', value:user.set}], user)
 
     $scope.upgrade = (name, title, index) ->
         idx = $scope.detail[name][index].idx
@@ -218,7 +217,7 @@ angular.module 'cocApp'
         if ($scope.isResource)
             $scope.totalProduction = util.totalProduction(user)
         # user.upgrade = []
-        userFactory.set('upgrade', user.upgrade, user)
+        userFactory.set([{key:'upgrade', value:user.upgrade}], user)
 
         # console.log(find, name, index, idx, level, util.timeStr(ut[level]) )
         # console.log(user.upgrade)
@@ -238,7 +237,7 @@ angular.module 'cocApp'
         $scope.researchSummary = util.totalResearchCostTime(user)
         if ($scope.isResource)
             $scope.totalProduction = util.totalProduction(user)
-        userFactory.set('upgrade', user.upgrade, user)
+        userFactory.set([{key:'upgrade',value:user.upgrade}], user)
 
 angular.module('cocApp')
     .controller 'ModalInstanceCtrl', ($scope, $modalInstance, data) ->

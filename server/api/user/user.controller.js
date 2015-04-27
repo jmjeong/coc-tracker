@@ -113,7 +113,6 @@ exports.putData = function(req, res, next) {
         if (err) return res.send(500, err);
         if (!user) return res.send(404);
 
-        // console.log(req.body.key);
         if (user.data) {
             var data = JSON.parse(user.data);
         }
@@ -121,8 +120,9 @@ exports.putData = function(req, res, next) {
             var data = {}
         }
         // console.log(data[req.body.key]);
-        data[req.body.key] = req.body.value;
-        // console.log(data[req.body.key]);
+        _.map(req.body.updated, function(d) {
+            data[d.key] = d.value
+        });
 
         user.data = JSON.stringify(data);
         user.markModified('data');

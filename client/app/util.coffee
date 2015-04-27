@@ -1,7 +1,16 @@
 'use strict'
 
 angular.module 'cocApp'
-.factory 'userFactory', (localStorageService, $http, Auth, util) ->
+.factory 'userFactory', (localStorageService, $http, Auth) ->
+    initUser = (user)->
+        user.upgrade ?= []
+        user.hall ?= 7
+        user.builder ?= 3
+        user.set ?= {}
+        user.set.hideDone ?= false
+        user.set.hideDoneResearch ?= false
+        user.limitTo ?= 5
+        user
 
     get: ->
         if Auth.isLoggedInAsync()
@@ -12,22 +21,21 @@ angular.module 'cocApp'
                     user = {}
                 else
                     user = JSON.parse(response.data.data)
-                util.initUser(user)
+                initUser(user)
         else
             user = localStorageService.get('user')
             user ?= {}
-            util.initUser(user)
-    set: (key, value, user) ->
+            initUser(user)
+    set: (updated, user) ->
         if Auth.isLoggedInAsync()
             $http.post '/api/users/me/data',
-                key: key
-                value: value
+                updated: updated
             .success (response)->
                 # console.log(response)
         else
             localStorageService.set('user', user)
 
-.factory 'util', (lodash, HEROFLAG) ->
+.factory 'util', (userFactory, lodash, HEROFLAG) ->
 
     cannonicalName =  (name) ->
         name.replace(/\s+|\'/g, '').toLowerCase()
@@ -129,15 +137,7 @@ angular.module 'cocApp'
         }
 
     return {
-    initUser: (user)->
-        user.upgrade ?= []
-        user.hall ?= 7
-        user.builder ?= 3
-        user.set ?= {}
-        user.set.hideDone ?= false
-        user.set.hideDoneResearch ?= false
-        user.limitTo ?= 5
-        user
+
     building_list: building_list
 
     upgrade_list: upgrade_list
@@ -317,13 +317,23 @@ angular.module 'cocApp'
         fired = lodash.filter user.upgrade, (u)->
             now.isAfter(moment(u.due))
         if fired.length > 0
+            updated = []
             for u in fired
                 if u.index >= 0 && u.index != HEROFLAG
                     user[u.name][u.index] = u.level
                 else
                     user[u.name] = u.level
+                updated.push(
+                    key: u.name
+                    value: user[u.name]
+                )
             lodash.remove user.upgrade, (u) ->
                 now.isAfter(moment(u.due))
+            updated.push(
+                key: 'upgrade'
+                value: user.upgrade
+            )
+            userFactory.set(updated, user)
             return 0
         else return 1
 

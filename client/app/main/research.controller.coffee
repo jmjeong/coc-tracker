@@ -15,7 +15,6 @@ angular.module('cocApp')
 
     intervalPromise = $interval ()->
         if !util.checkUpgrade(user)
-            userFactory.set('upgrade',user.upgrade, user)
             update()
     , 5000
     $scope.$on '$destroy', () ->
@@ -76,7 +75,7 @@ angular.module('cocApp')
         if oldLevel != currentLevel
             user[name] = currentLevel
             $scope.summary = util.totalResearchCostTime(user)
-            userFactory.set(name, user[name], user)
+            userFactory.set([{key:name, value:user[name]}], user)
 
     $scope.upgrade = (name, title, index) ->
         level = user[name] ? 0
@@ -136,13 +135,12 @@ angular.module('cocApp')
         else
             due = new moment()
             due = due.add(value, 'minutes')
-            level++
             if (find < 0)
                 user.upgrade.push(
                     name: name
                     title: title
                     index: -1
-                    level: level
+                    level: level+1
                     time: ut[level]*60
                     due: due
                 )
@@ -152,13 +150,13 @@ angular.module('cocApp')
                     name: name
                     title: title
                     index: -1
-                    level: level
+                    level: level+1
                     time: ut[level]*60
                     due: due
                 $scope.data[index].upgradeIdx = find
         maxlevel = util.max_level(labLevel, rD[name]['laboratory level'])
-        $scope.data[index].nextUpgrade = nextUpgrade(level, maxlevel,
+        $scope.data[index].nextUpgrade = nextUpgrade(level+1, maxlevel,
             rD[name]['research time'], rD[name]['research cost'],
             rD[name]['barracks type'])
         $scope.summary = util.totalResearchCostTime(user)
-        userFactory.set('upgrade', user.upgrade, user)
+        userFactory.set([{key:'upgrade', value:user.upgrade}], user)
