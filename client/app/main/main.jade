@@ -25,9 +25,9 @@ div(ng-include='"components/navbar/navbar.html"')
                   td
                       div.row-fluid
                           div.col-md-12
-                              b.text-info(ng-show='u.index<0') {{u.title}} - Lev {{u.level}}
-                              b.text-success(ng-show='u.index==HEROFLAG') {{u.title}} - Lev {{u.level}}
-                              span(ng-show='u.index>=0&&u.index!=HEROFLAG') {{u.title}} - Lev {{u.level}}
+                              b.text-info(ng-show='u.index<0') {{u.title}} \#{{u.level}}
+                              b.text-success(ng-show='u.index==HEROFLAG') {{u.title}} \#{{u.level}}
+                              span(ng-show='u.index>=0&&u.index!=HEROFLAG') {{u.title}} \#{{u.level}}
                   td.text-center {{timeStrMoment(remainTime(u.due))}} / {{timeStr(u.time)}}
                   td
                       div.row-fluid
