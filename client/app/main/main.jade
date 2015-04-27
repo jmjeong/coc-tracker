@@ -18,29 +18,21 @@ div(ng-include='"components/navbar/navbar.html"')
           thead
               tr
                   td.col-md-3 Item
-                  td.col-md-1 Level
                   td.col-md-2.text-center Remaining
-                  td.col-md-1 Total
-                  td.col-md-5 Due Date
+                  td.col-md-4 Due Date
           tbody
               tr(ng-repeat="u in upgradeList | orderBy:'due'")
                   td
                       div.row-fluid
                           div.col-md-12
-                              b.text-info(ng-show='u.index<0') {{u.title}}
-                              b.text-success(ng-show='u.index==HEROFLAG') {{u.title}}
-                              span(ng-show='u.index>=0&&u.index!=HEROFLAG') {{u.title}} # {{u.index+1}}
-                  td.text-center {{u.level}}
-                  td.text-center
-                      span(am-time-ago='u.due')
-                  td.text-center {{timeStr(u.time)}}
+                              b.text-info(ng-show='u.index<0') {{u.title}} - Lev {{u.level}}
+                              b.text-success(ng-show='u.index==HEROFLAG') {{u.title}} - Lev {{u.level}}
+                              span(ng-show='u.index>=0&&u.index!=HEROFLAG') {{u.title}} - Lev {{u.level}}
+                  td.text-center {{timeStrMoment(remainTime(u.due))}} / {{timeStr(u.time)}}
                   td
                       div.row-fluid
                           div.col-md-12
                               {{u.due | amCalendar}}
-                          //div.col-md-2.pull-right
-                          //    a.btn.btn-default.btn-xs(ng-click='cancelUpgrade(u.name,u.index)')
-                          //        span.glyphicon.glyphicon-remove
               tr(ng-show="!upgradeList.length")
                   td(colspan=5).text-center No Upgrades
 

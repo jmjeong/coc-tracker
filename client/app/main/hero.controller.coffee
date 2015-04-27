@@ -9,6 +9,8 @@ angular.module('cocApp')
     $scope.costFormat = util.costFormat
     $scope.upgradeList = user.upgrade
     $scope.limitTo = user.limitTo
+    $scope.remainTime = util.remainTime
+    $scope.timeStrMoment = util.timeStrMoment
 
     intervalPromise = $interval ()->
         if !util.checkUpgrade(user)

@@ -48,16 +48,15 @@ div
                                     span.glyphicon.glyphicon-home
                         td
                             div(ng-show='d.upgradeIdx >= 0')
-                                span.text-primary Upgrade to {{upgradeList[d.upgradeIdx].level}}
+                                span.text-primary Upgrade to {{upgradeList[d.upgradeIdx].level}}.
                                 span.space
-                                b.text-primary
-                                    span(am-time-ago='upgradeList[d.upgradeIdx].due')
+                                b.text-primary {{timeStrMoment(remainTime(upgradeList[d.upgradeIdx].due))}} / {{timeStr(upgradeList[d.upgradeIdx].time)}}
                             div
                                 span(ng-hide='d.nextUpgrade. data.length==0')
                                     icon-elixir(ng-show='d.nextUpgrade.type == "e"')
                                     icon-darkelixir(ng-show='d.nextUpgrade.type == "d"')
                                     icon-gold(ng-show='d.nextUpgrade.type == "g"')
-                                    span.space(ng-repeat='i in d.nextUpgrade.data|limitTo:limitTo') {{costFormat(i[1])}}/{{timeStr(i[2])}} (Lev{{i[0]}})
+                                    span.space(ng-repeat='i in d.nextUpgrade.data|limitTo:limitTo') {{costFormat(i[1])}}/{{timeStr(i[2])}} (Lv{{i[0]}})
                                     span(ng-show='d.nextUpgrade.data.length >= limitTo+1') ...
                     tr
                         td(colspan='3')

@@ -12,6 +12,8 @@ angular.module('cocApp')
     $scope.costFormat = util.costFormat
     $scope.upgradeList = user.upgrade
     $scope.limitTo = user.limitTo
+    $scope.remainTime = util.remainTime
+    $scope.timeStrMoment = util.timeStrMoment
 
     intervalPromise = $interval ()->
         if !util.checkUpgrade(user)
@@ -154,9 +156,12 @@ angular.module('cocApp')
                     time: ut[level]*60
                     due: due
                 $scope.data[index].upgradeIdx = find
+            level++
         maxlevel = util.max_level(labLevel, rD[name]['laboratory level'])
-        $scope.data[index].nextUpgrade = nextUpgrade(level+1, maxlevel,
+        $scope.data[index].nextUpgrade = nextUpgrade(level, maxlevel,
             rD[name]['research time'], rD[name]['research cost'],
             rD[name]['barracks type'])
         $scope.summary = util.totalResearchCostTime(user)
         userFactory.set([{key:'upgrade', value:user.upgrade}], user)
+
+
