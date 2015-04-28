@@ -1,7 +1,7 @@
 div
-    ul.nav.nav-tabs(ng-controller='NavbarCtrl')
-        li(ng-repeat="c in ['Overview', 'Defense', 'Trap', 'Army', 'Resource', 'Walls', 'Research', 'Hero', 'Other']")
-            a(ng-href="/p/{{c|lowercase}}" ng-class='{active: isActive("/p/{{c|lowercase}}")}') {{c}}
+    ul.nav.nav-tabs(ng-controller='subNavbarCtrl')
+        li(ng-repeat="m in menu")
+            a(ng-href="{{m.link}}" ng-class='{active: isActive("{{m.link}}")}') {{m.title}}
 
 p
 

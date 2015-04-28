@@ -12,20 +12,30 @@ angular.module 'cocApp'
         user.limitTo ?= 5
         user
 
-    get: ->
-        if Auth.isLoggedInAsync()
-            $http.get '/api/users/me/data'
-            .then (response)->
-                # console.log(response)
-                if (response.data.data == undefined)
-                    user = {}
-                else
-                    user = JSON.parse(response.data.data)
-                initUser(user)
+    get: (id) ->
+        console.log(id)
+        if (id)
+            $http.get '/api/users/'+id+'/data'
+                .then (response)->
+                    if (response.data.data == undefined)
+                        user = {}
+                    else
+                        user = JSON.parse(response.data)
+                    initUser(user)
         else
-            user = localStorageService.get('user')
-            user ?= {}
-            initUser(user)
+            if Auth.isLoggedInAsync()
+                $http.get '/api/users/me/data'
+                .then (response)->
+                    # console.log(response)
+                    if (response.data == undefined)
+                        user = {}
+                    else
+                        user = JSON.parse(response.data)
+                    initUser(user)
+            else
+                user = localStorageService.get('user')
+                user ?= {}
+                initUser(user)
     set: (updated, user) ->
         if Auth.isLoggedInAsync()
             $http.post '/api/users/me/data',

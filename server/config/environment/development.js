@@ -8,5 +8,5 @@ module.exports = {
     uri: 'mongodb://localhost/coc-dev'
   },
 
-  seedDB: true
+  seedDB: false
 };
