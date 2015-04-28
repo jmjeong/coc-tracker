@@ -20,17 +20,17 @@ angular.module 'cocApp'
                     if (response.data.data == undefined)
                         user = {}
                     else
-                        user = JSON.parse(response.data)
+                        user = JSON.parse(response.data.data)
                     initUser(user)
         else
             if Auth.isLoggedInAsync()
                 $http.get '/api/users/me/data'
                 .then (response)->
                     # console.log(response)
-                    if (response.data == undefined)
+                    if (response.data.data == undefined)
                         user = {}
                     else
-                        user = JSON.parse(response.data)
+                        user = JSON.parse(response.data.data)
                     initUser(user)
             else
                 user = localStorageService.get('user')
