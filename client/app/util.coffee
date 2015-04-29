@@ -2,6 +2,7 @@
 
 angular.module 'cocApp'
 .factory 'userFactory', (localStorageService, $http, Auth) ->
+    _id = undefined
     initUser = (user)->
         user.upgrade ?= []
         user.hall ?= 7
@@ -13,6 +14,7 @@ angular.module 'cocApp'
         user
 
     get: (id) ->
+        _id = id
         if (id)
             $http.get '/api/users/'+id+'/data'
                 .then (response)->
@@ -48,13 +50,14 @@ angular.module 'cocApp'
                     user: user
                 }
     set: (updated, user) ->
-        if Auth.isLoggedInAsync()
-            $http.post '/api/users/me/data',
-                updated: updated
-            .success (response)->
-                # console.log(response)
-        else
-            localStorageService.set('user', user)
+        if (!_id)
+            if Auth.isLoggedInAsync()
+                $http.post '/api/users/me/data',
+                    updated: updated
+                .success (response)->
+                    # console.log(response)
+            else
+                localStorageService.set('user', user)
 
 .factory 'util', (userFactory, lodash, HEROFLAG) ->
 
