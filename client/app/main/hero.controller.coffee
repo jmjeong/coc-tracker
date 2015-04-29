@@ -163,10 +163,10 @@ angular.module('cocApp')
         if (hD[name]['dps'])
             ret += 'dps:'
             ret += hD[name]['dps'][level-1]
-            ret += '('+parseInt((hD[name]['dps'][level-1]-hD[name]['dps'][level-2])*100/hD[name]['dps'][level-2])+'%)' if level>1
+            ret += '(+'+(hD[name]['dps'][level-1]-hD[name]['dps'][level-2])+')' if level>1
             ret += '    '
         if (hD[name]['hitpoints'])
             ret += 'hp:'
             ret += hD[name]['hitpoints'][level-1]
-            ret += '('+parseInt((hD[name]['hitpoints'][level-1]-hD[name]['hitpoints'][level-2])*100/hD[name]['hitpoints'][level-2])+'%)' if level>1
+            ret += '(+'+(hD[name]['hitpoints'][level-1]-hD[name]['hitpoints'][level-2])+')' if level>1
             ret += '    '
