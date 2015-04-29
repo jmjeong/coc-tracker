@@ -363,9 +363,10 @@ angular.module 'cocApp'
 
     remainTime: (researchDue) ->
         due = moment(researchDue)
-        parseInt(moment.duration(due.diff(moment())).asMinutes())
+        moment.duration(due.diff(moment())).asMinutes()
 
     timeStrMoment: (min) ->
+        return 'Finished' if min <= 0
         moment.duration(min, 'minutes').format('d[d] h[h] m[m]')
 
     }

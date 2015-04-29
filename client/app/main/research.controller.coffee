@@ -16,6 +16,7 @@ angular.module('cocApp')
     $scope.timeStrMoment = util.timeStrMoment
 
     intervalPromise = $interval ()->
+        return if $scope.viewname
         if !util.checkUpgrade(user)
             update()
     , 5000

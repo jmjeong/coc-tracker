@@ -23,6 +23,7 @@ angular.module 'cocApp'
     $scope.title = user.name
 
     intervalPromise = $interval ()->
+         return if $scope.viewname
          if !util.checkUpgrade(user)
             update()
     , 5000
