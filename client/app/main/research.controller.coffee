@@ -167,4 +167,20 @@ angular.module('cocApp')
         $scope.summary = util.totalResearchCostTime(user)
         userFactory.set([{key:'upgrade', value:user.upgrade}], user)
 
-
+    $scope.popover = (name, level) ->
+        ret = ''
+        if (rD[name]['dps'])
+            ret += 'dps:'
+            ret += rD[name]['dps'][level-1]
+            ret += '('+parseInt((rD[name]['dps'][level-1]-rD[name]['dps'][level-2])*100/rD[name]['dps'][level-2])+'%)' if level>1
+            ret += '    '
+        if (rD[name]['hps'])
+            ret += 'hps:'
+            ret += rD[name]['hps'][level-1]
+            ret += '('+parseInt((rD[name]['hps'][level-1]-rD[name]['hps'][level-2])*100/rD[name]['hps'][level-2])+'%)' if level>1
+            ret += '    '
+        if (rD[name]['hitpoints'])
+            ret += 'hp:'
+            ret += rD[name]['hitpoints'][level-1]
+            ret += '('+parseInt((rD[name]['hitpoints'][level-1]-rD[name]['hitpoints'][level-2])*100/rD[name]['hitpoints'][level-2])+'%)' if level>1
+            ret += '    '
