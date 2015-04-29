@@ -96,7 +96,7 @@ exports.me = function(req, res, next) {
 };
 
 exports.getData = function(req, res, next) {
-    console.log(req.params.id)
+    // console.log(req.params.id)
     if (req.params.id) {
         var userId = req.params.id;
     }
@@ -106,8 +106,8 @@ exports.getData = function(req, res, next) {
     User.findOne({
         _id: userId
     }, 'data name', function(err, user) { // don't ever give out the password or salt
-        console.log(err)
-        console.log(user)
+        // console.log(err)
+        // console.log(user)
         if (err) return next(err);
         if (!user) return res.json(401);
         res.json(user);

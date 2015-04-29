@@ -34,15 +34,15 @@ div
                         td {{d.title}}
                         td.text-center
                             a.btn.btn-default.btn-xs.pull-left(ng-click='changeLevel(d.name,$index,-1,d.maxLevel)'
-                            ng-disabled="d.level==0 || d.upgradeIdx>=0")
+                            ng-disabled="d.level==0 || d.upgradeIdx>=0 || viewname")
                                 span.glyphicon.glyphicon-minus
                             {{d.level}}/{{d.maxLevel}}
                             span.pull-right
                                 a.btn.btn-default.btn-xs(ng-click='changeLevel(d.name,$index,1,d.maxLevel)'
-                                ng-disabled="d.level>=d.maxLevel || d.upgradeIdx >= 0")
+                                ng-disabled="d.level>=d.maxLevel || d.upgradeIdx >= 0 || viewname")
                                     span.glyphicon.glyphicon-plus
                                 a.btn.btn-default.btn-xs(ng-click='upgrade(d.name,d.title,$index,d.maxLevel)'
-                                ng-disabled="d.level>=d.maxLevel"
+                                ng-disabled="d.level>=d.maxLevel || viewname"
                                 popover='Upgrade'
                                 popover-trigger='mouseenter')
                                     span.glyphicon.glyphicon-home

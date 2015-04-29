@@ -13,7 +13,6 @@ angular.module 'cocApp'
         user
 
     get: (id) ->
-        console.log(id)
         if (id)
             $http.get '/api/users/'+id+'/data'
                 .then (response)->
@@ -22,6 +21,10 @@ angular.module 'cocApp'
                     else
                         user = JSON.parse(response.data.data)
                     initUser(user)
+                    {
+                        viewname: response.data.name
+                        user: user
+                    }
         else
             if Auth.isLoggedInAsync()
                 $http.get '/api/users/me/data'
@@ -32,10 +35,18 @@ angular.module 'cocApp'
                     else
                         user = JSON.parse(response.data.data)
                     initUser(user)
+                    {
+                        viewname: undefined
+                        user: user
+                    }
             else
                 user = localStorageService.get('user')
                 user ?= {}
                 initUser(user)
+                {
+                    viewname: undefined
+                    user: user
+                }
     set: (updated, user) ->
         if Auth.isLoggedInAsync()
             $http.post '/api/users/me/data',
@@ -293,7 +304,7 @@ angular.module 'cocApp'
     timeStr: (time) ->
         switch
             when time == 0 then '0'
-            when time < 60 then time + 'm'
+            when time < 60 then parseInt(time) + 'm'
             when time < 60 * 24 then parseInt(time / 60) + 'h'
             else
                 day = parseInt(time/60/24)

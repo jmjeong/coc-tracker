@@ -4,7 +4,8 @@ angular.module 'cocApp'
 .controller 'MainCtrl', ($scope, $modal, $interval, $log, $route, HEROFLAG,
     util, lodash, userFactory, $routeParams, $http, moment, ngToast, data) ->
 
-    user = data
+    user = data.user
+    $scope.viewname = data.viewname
     $scope.timeStr = util.timeStr
     $scope.costStr = util.costStr
     $scope.costFormat = util.costFormat
@@ -20,8 +21,6 @@ angular.module 'cocApp'
     $scope.remainTime = util.remainTime
     $scope.timeStrMoment = util.timeStrMoment
     $scope.title = user.name
-
-    console.log(data)
 
     intervalPromise = $interval ()->
          if !util.checkUpgrade(user)

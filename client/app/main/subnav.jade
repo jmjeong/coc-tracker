@@ -1,7 +1,7 @@
 div
     ul.nav.nav-tabs(ng-controller='subNavbarCtrl')
-        li.active
-            a(ng-href="") {{name}}
+        li.active(ng-show='viewname')
+            a(ng-href="") {{viewname}}
         li(ng-repeat="m in menu")
             a(ng-href="{{m.link}}" ng-class='{active: isActive("{{m.link}}")}') {{m.title}}
 

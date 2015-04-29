@@ -1,6 +1,3 @@
-//
-   Created by jmjeong on 2015. 4. 16..
-
 div(ng-include='"components/navbar/navbar.html"')
 
 toast
@@ -39,16 +36,16 @@ div
                         td(rowspan="{{detail[item.name].length}}") {{item.title}}
                         td.text-center
                             a.btn.btn-default.btn-xs.pull-left(ng-click='changeLevel(item.name,0,-1,item.maxLevel)'
-                                ng-disabled='detail[item.name][0].level==0 || detail[item.name][0].upgradeIdx>=0')
+                                ng-disabled='detail[item.name][0].level==0 || detail[item.name][0].upgradeIdx>=0 || viewname')
                                 span.glyphicon.glyphicon-minus
                             //a(href='#' editable-text="detail[item.name][0].level" buttons='no' e-style='width: 25px')
                             {{detail[item.name][0].level}}/{{item.maxLevel}}
                             span.pull-right
                                 a.btn.btn-default.btn-xs(ng-click='changeLevel(item.name,0,1,item.maxLevel)'
-                                    ng-disabled="detail[item.name][0].level>=item.maxLevel || detail[item.name][0].upgradeIdx >= 0")
+                                    ng-disabled="detail[item.name][0].level>=item.maxLevel || detail[item.name][0].upgradeIdx >= 0 || viewname")
                                     span.glyphicon.glyphicon-plus
                                 a.btn.btn-default.btn-xs(ng-click='upgrade(item.name,item.title,0)'
-                                    ng-disabled="detail[item.name][0].level>=item.maxLevel")
+                                    ng-disabled="detail[item.name][0].level>=item.maxLevel || viewname")
                                     span.glyphicon.glyphicon-home
                         td
                             div(ng-show='detail[item.name][0].upgradeIdx >= 0')
@@ -66,16 +63,16 @@ div
                     tr(ng-repeat-end ng-repeat="d in detail[item.name].slice(1)")
                         td.text-center
                             a.btn.btn-default.btn-xs.pull-left(ng-click='changeLevel(item.name,$index+1,-1,item.maxLevel)'
-                                ng-disabled="d.level==0 || d.upgradeIdx>=0")
+                                ng-disabled="d.level==0 || d.upgradeIdx>=0 || viewname")
                                 span.glyphicon.glyphicon-minus
                             // a(href='#' editable-text="d.level" buttons='no' e-style='width: 25px')
                             {{d.level}}/{{item.maxLevel}}
                             span.pull-right
                                 a.btn.btn-default.btn-xs(ng-click='changeLevel(item.name,$index+1,1,item.maxLevel)'
-                                    ng-disabled="d.level>=item.maxLevel || d.upgradeIdx >= 0")
+                                    ng-disabled="d.level>=item.maxLevel || d.upgradeIdx >= 0 || viewname")
                                     span.glyphicon.glyphicon-plus
                                 a.btn.btn-default.btn-xs(ng-click='upgrade(item.name,item.title,$index+1)'
-                                    ng-disabled="d.level>=item.maxLevel")
+                                    ng-disabled="d.level>=item.maxLevel || viewname")
                                     span.glyphicon.glyphicon-home
                         td
                             div(ng-show='d.upgradeIdx >= 0')

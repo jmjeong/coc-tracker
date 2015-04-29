@@ -22,7 +22,7 @@ div(ng-include='"components/navbar/navbar.html"')
                                 span  Level {{w.level}}
                             td
                                 input.form-control(type='number' name='count' ng-model='w.count' ng-max-length='3'
-                                ng-change='changeNum(w.level, w.idx, w.count)')
+                                ng-change='changeNum(w.level, w.idx, w.count)' ng-disabled='viewname')
                                 div.error(ng-show='form.count.$dirty && form.count.$invalid')
                                     small Error
                             td

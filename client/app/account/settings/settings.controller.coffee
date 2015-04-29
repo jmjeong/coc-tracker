@@ -1,8 +1,9 @@
 'use strict'
 
 angular.module 'cocApp'
-.controller 'SettingsCtrl', ($scope, User, Auth) ->
+.controller 'SettingsCtrl', ($scope, $location, User, Auth) ->
   $scope.errors = {}
+  $scope.url = '/p/overview?id='+ Auth.getCurrentUser()._id
   $scope.changePassword = (form) ->
     $scope.submitted = true
 

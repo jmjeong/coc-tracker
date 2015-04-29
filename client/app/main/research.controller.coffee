@@ -4,8 +4,8 @@ angular.module('cocApp')
 .controller 'ResearchCtrl', ($scope, $modal, $interval, util, lodash, ngToast, userFactory, data) ->
     # user = userFactory.get()
 
-    user = data
-    labLevel = util.max_level(user.hall, bD['laboratory']['required town hall'])
+    user = data.user
+    $scope.viewname = data.viewname
 
     $scope.costStr = util.costStr
     $scope.timeStr = util.timeStr
@@ -21,6 +21,8 @@ angular.module('cocApp')
     , 5000
     $scope.$on '$destroy', () ->
         $interval.cancel(intervalPromise)
+
+    labLevel = util.max_level(user.hall, bD['laboratory']['required town hall'])
 
     nextUpgrade = (current, maxLevel, timeArray, costArray, type) ->
         return {} if (current >= maxLevel)

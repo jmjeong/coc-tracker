@@ -63,4 +63,4 @@ angular.module 'cocApp'
     $scope.menu = lodash.map menu, (n)->
         title: n
         link: if $routeParams.id then '/p/'+n.toLowerCase()+'?id='+$routeParams.id else '/p/'+n.toLowerCase()
-    $scope.name = "Simil"
+    $scope.name = $scope.$parent.name

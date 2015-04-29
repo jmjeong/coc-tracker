@@ -2,7 +2,17 @@ div(ng-include='"components/navbar/navbar.html"')
 .container
   .row
     .col-sm-12
-      h1 Change Password
+      h3 Share your base
+
+      ul
+          li
+            a(ng-href='{{url}}') Your Base URL
+
+    hr
+
+    .col-sm-12
+      h3 Change Password
+
     .col-sm-12
       form.form(name='form', ng-submit='changePassword(form)', novalidate='')
         .form-group

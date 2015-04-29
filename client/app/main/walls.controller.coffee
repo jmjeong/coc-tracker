@@ -4,7 +4,8 @@ angular.module('cocApp')
 .controller 'WallCtrl', ($scope, util, lodash, userFactory, data) ->
     # user = userFactory.get()
 
-    user = data
+    user = data.user
+    $scope.viewname = data.viewname
 
     name = util.cannonicalName('Walls')
     user[name] ?= []
