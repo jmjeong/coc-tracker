@@ -86,7 +86,6 @@ angular.module 'cocApp'
             costd: hD[name]['training cost'][level]
             upgrade: findUpgrade>=0
     $scope.tableParams = new ngTableParams
-        page: 1
         count: 100
         sorting:
             name: 'asc'

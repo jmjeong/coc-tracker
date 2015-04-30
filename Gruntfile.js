@@ -337,7 +337,7 @@ module.exports = function (grunt) {
         // This should be the name of your apps angular module
         module: 'cocApp',
         htmlmin: {
-          collapseBooleanAttributes: true,
+          collapseBooleanAttributes: false,
           collapseWhitespace: true,
           removeAttributeQuotes: true,
           removeEmptyAttributes: true,
