@@ -242,6 +242,9 @@ angular.module 'cocApp'
             $scope.totalProduction = util.totalProduction(user)
         userFactory.set([{key:'upgrade',value:user.upgrade}], user)
 
+    $scope.pString = ->
+        "may replace elixirs for walls"
+
 angular.module('cocApp')
     .controller 'ModalInstanceCtrl', ($scope, $modalInstance, data) ->
         $scope.sliders = data

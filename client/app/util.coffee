@@ -94,18 +94,18 @@ angular.module 'cocApp'
                 result.push(item)
         return result
 
-    wallCost = (current, maxLevel, costArray) ->
-        doneCost = 0
-        requiredCost = 0
+    wallCost = (current, maxLevel, costArray, count) ->
+        doneCost = [0,0,0]
+        requiredCost = [0,0,0]
         if (maxLevel > 0)
             for i in [0..maxLevel-1]
                 if (i <= current)
-                    doneCost += costArray[i][0]
+                    doneCost = addArrays(doneCost, costArray[i], '+')
                 else
-                    requiredCost += costArray[i][0]
+                    requiredCost = addArrays(requiredCost, costArray[i], '+')
         return {
-        doneCost: doneCost
-        requiredCost: requiredCost
+        doneCost: lodash.map(doneCost, (n)->n*count)
+        requiredCost: lodash.map(requiredCost, (n)->n*count)
         }
     upgrade_list = () ->
         rD.list
@@ -227,19 +227,20 @@ angular.module 'cocApp'
         maxDoneTime: maxDoneTime
         }
     totalWallCost: (user) ->
-        requiredCost = 0
-        doneCost = 0
+        requiredCost = doneCost = [0,0,0]
         name = cannonicalName('Walls')
         user[name] ?= []
 
         uc = bD[name]['upgrade cost']
         maxLevel = max_level(user.hall, bD[name]['required town hall'])
+        elixirLevel = (8-1)
 
         for i in [0..maxLevel-1]
             count = user[name][i] ? 0
-            costVal = wallCost(i, maxLevel, uc)
-            doneCost += count * costVal.doneCost
-            requiredCost += count * costVal.requiredCost
+            costVal = wallCost(i, maxLevel, uc, count)
+            doneCost = addArrays(doneCost, costVal.doneCost, '+')
+            requiredCost = addArrays(requiredCost, costVal.requiredCost, '+')
+
         return {
         requiredCost: requiredCost
         doneCost: doneCost

@@ -11,18 +11,18 @@ angular.module('cocApp')
     user[name] ?= []
 
     $scope.hall = user.hall
-    $scope.costStr = util.costStr
 
     $scope.costFormat = util.costFormat
     $scope.hideDone = user.set.hideDone
 
-    nextUpgrade = (current, maxLevel, costArray) ->
+    nextUpgrade = (current, maxLevel, costArray, user) ->
         return if (current >= maxLevel)
         data = []
+        count = user[name][current-1] ? 0
         for i in [current..maxLevel-1]
-            data.push([i+1, costArray[i]])
+            data.push([i+1, costArray[i][0]*count])
         return {
-        type: util.costType(data[0][1])
+        type: 'g'
         data: data
         }
 
@@ -56,7 +56,7 @@ angular.module('cocApp')
                     idx: i-start
                     level: i+1
                     count: count
-                    upgrade: nextUpgrade(i+1, maxLevel, bD[name]['upgrade cost'])
+                    upgrade: nextUpgrade(i+1, maxLevel, bD[name]['upgrade cost'], user)
                 )
         $scope.summary = util.totalWallCost(user)
 
@@ -66,7 +66,7 @@ angular.module('cocApp')
         return if count == undefined || count < 0
         user['walls'][level-1] = count
         maxLevel = util.max_level(user.hall, bD[name]['required town hall'])
-        $scope.walls.data[idx].upgrade = nextUpgrade(level, maxLevel, bD[name]['upgrade cost'])
+        $scope.walls.data[idx].upgrade = nextUpgrade(level, maxLevel, bD[name]['upgrade cost'], user)
         total = 0
         for i in [0..maxLevel-1]
             total += user['walls'][i]
@@ -74,4 +74,6 @@ angular.module('cocApp')
         $scope.summary = util.totalWallCost(user)
         userFactory.set([{key:'walls', value:user.walls}], user)
 
+    $scope.pString = ->
+        "may replace elixirs for walls"
 

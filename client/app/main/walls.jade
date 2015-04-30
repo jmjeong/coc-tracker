@@ -30,7 +30,7 @@ div(ng-include='"components/navbar/navbar.html"')
                                     icon-gold(ng-show='w.upgrade.type == "g"')
                                     icon-elixir(ng-show='w.upgrade.type == "e"')
                                     icon-darkelixir(ng-show='w.upgrade.type == "d"')
-                                    span.space(ng-repeat='i in w.upgrade.data | limitTo:7') {{costStr(i[1])}} (Lv{{i[0]}})
+                                    span.space(ng-repeat='i in w.upgrade.data | limitTo:7') {{costFormat(i[1])}} (Lv{{i[0]}})
                                     span(ng-show='w.upgrade.data.length >= 8') ...
                     tr
                         td Total
@@ -42,10 +42,18 @@ div(ng-include='"components/navbar/navbar.html"')
                     tr
                         td(colspan=3)
                             strong.space Upgrade Cost:
-                            span
-                                span {{costFormat(summary.requiredCost)}}
-                                icon-gold.space
+                            span(ng-hide='summary.requiredCost[0] == 0')
+                                span {{costFormat(summary.requiredCost[0])}}
+                                    icon-gold.space
+                            span(ng-hide='summary.requiredCost[1] == 0' popover='{{pString()}}' popover-trigger='mouseenter')
+                                span ~{{costFormat(summary.requiredCost[1])}}
+                                    icon-elixir.space
                             div.small
                                 span.space Done Cost:
-                                {{costFormat(summary.doneCost)}}
-                                icon-gold.space
+                                span(ng-hide='summary.doneCost[0] == 0')
+                                    span {{costFormat(summary.doneCost[0])}}
+                                    icon-gold.space
+                                span(ng-hide='summary.doneCost[1] == 0' popover='{{pString()}}' popover-trigger='mouseenter')
+                                    span ~{{costFormat(summary.doneCost[1])}}
+                                    icon-elixir.space
+

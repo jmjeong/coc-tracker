@@ -82,9 +82,12 @@ div(ng-include='"components/navbar/navbar.html"')
               tr
                   td.col-md-2 Wall
                   td.col-md-8
-                      span(ng-hide='wallSummary.requiredCost == 0')
-                          {{costFormat(wallSummary.requiredCost)}}
-                          icon-gold.space
+                        span(ng-hide='wallSummary.requiredCost[0] == 0')
+                            span {{costFormat(wallSummary.requiredCost[0])}}
+                                icon-gold.space
+                        span(ng-hide='wallSummary.requiredCost[1] == 0' popover='{{pString()}}' popover-trigger='mouseenter')
+                            span ~{{costFormat(wallSummary.requiredCost[1])}}
+                                icon-elixir.space
 
           thead
               tr
@@ -126,9 +129,12 @@ div(ng-include='"components/navbar/navbar.html"')
               tr
                   td.col-md-2 Wall
                   td.col-md-8
-                      span(ng-hide='wallSummary.doneCost == 0')
-                          {{costFormat(wallSummary.doneCost)}}
-                          icon-gold.space
+                    span(ng-hide='wallSummary.doneCost[0] == 0')
+                        span {{costFormat(wallSummary.doneCost[0])}}
+                        icon-gold.space
+                    span(ng-hide='wallSummary.doneCost[1] == 0' popover='{{pString()}}' popover-trigger='mouseenter')
+                        span ~{{costFormat(wallSummary.doneCost[1])}}
+                        icon-elixir.space
 
       h4.page-header Setting
 
