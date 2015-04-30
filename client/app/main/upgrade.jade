@@ -1,0 +1,13 @@
+div(ng-include='"components/navbar/navbar.html"')
+
+.container
+    .row
+        .col-md-12
+            div(ng-include="'app/main/subnav.html'")
+            table.table.row-border.hover(ng-table='tableParams')
+                tr(ng-repeat='e in $data')
+                    td(data-title="'Name'" sortable="'name'") {{e.name}}
+                    td(data-title="'Time'" sortable="'time'") {{timeStr(e.time)}}
+                    td(data-title="'Gold'" sortable="'costg'") {{costFormat(e.costg)}}
+                    td(data-title="'Elixir'" sortable="'coste'") {{costFormat(e.coste)}}
+                    td(data-title="'Dark Elixir'" sortable="'costd'") {{costFormat(e.costd)}}

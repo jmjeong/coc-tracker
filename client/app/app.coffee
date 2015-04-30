@@ -10,7 +10,8 @@ angular.module 'cocApp', [
   'angularMoment',
   'ngLodash',
   'ui.bootstrap-slider',
-  'ngToast'
+  'ngToast',
+  'ngTable'
 ]
 .config ($routeProvider, $locationProvider, $httpProvider) ->
   $routeProvider

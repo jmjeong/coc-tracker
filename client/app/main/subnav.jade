@@ -4,6 +4,8 @@ div
             a(ng-href="") {{viewname}}
         li(ng-repeat="m in menu")
             a(ng-href="{{m.link}}" ng-class='{active: isActive("{{m.link}}")}') {{m.title}}
+        li(ng-show='!isAdmin()', ng-class='{active: isActive("/admin")}')
+            a(href='/p/upgrade') [Upgrades]
 
 p
 

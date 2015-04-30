@@ -11,6 +11,12 @@ angular.module 'cocApp'
                 userFactory.get($route.current.params.id)
     .when '/about',
         templateUrl: 'app/main/about.html'
+    .when '/p/upgrade',
+        templateUrl: 'app/main/upgrade.html'
+        controller: 'UpgradeCtrl'
+        resolve:
+            data: (userFactory, $route)->
+                userFactory.get($route.current.params.id)
     .when '/p/walls',
         templateUrl: 'app/main/walls.html'
         controller: 'WallCtrl'
