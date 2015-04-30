@@ -66,7 +66,9 @@ angular.module 'cocApp'
         route is $location.url()
 
     menu = ['Overview', 'Defense', 'Trap', 'Army', 'Resource', 'Walls', 'Research', 'Hero', 'Other']
+    $scope.link = (n)->
+        if $routeParams.id then '/p/'+n.toLowerCase()+'?id='+$routeParams.id else '/p/'+n.toLowerCase()
     $scope.menu = lodash.map menu, (n)->
         title: n
-        link: if $routeParams.id then '/p/'+n.toLowerCase()+'?id='+$routeParams.id else '/p/'+n.toLowerCase()
+        link: $scope.link(n)
     $scope.name = $scope.$parent.name

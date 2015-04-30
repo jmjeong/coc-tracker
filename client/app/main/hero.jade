@@ -1,6 +1,8 @@
 div(ng-include='"components/navbar/navbar.html"')
+div(ng-include="'app/main/subnav.html'")
 
 toast
+
 div
     script(type='text/ng-template' id='myModalContent.html')
         .modal-header
@@ -17,78 +19,74 @@ div
             button.btn.btn-primary(ng-click='ok()' ng-show='update') Update
             button.btn.btn-primary(ng-click='ok()' ng-show='!update') Upgrade
             button.btn.btn-danger(ng-click='stop()' ng-show='update') Stop
-            //button.btn.btn-warning(ng-click='cancel()') Cancel
 
 .container
-    .row
-        .col-md-12
-            div(ng-include="'app/main/subnav.html'")
-            table.table.table-bordered.table-condensed
-                thead
-                    tr
-                        th.col-md-2 HERO
-                        th.col-md-3
-                        th.col-md-7 Upgrade Costs
-                tbody
-                    tr(ng-repeat='d in data')
-                        td {{d.title}}
-                        td.text-center
-                            a.btn.btn-default.btn-xs.pull-left(ng-click='changeLevel(d.name,$index,-1,d.maxLevel)'
-                            ng-disabled="d.level==0 || d.upgradeIdx>=0 || viewname")
-                                span.glyphicon.glyphicon-minus
-                            {{d.level}}/{{d.maxLevel}}
-                            span.pull-right
-                                a.btn.btn-default.btn-xs(ng-click='changeLevel(d.name,$index,1,d.maxLevel)'
-                                ng-disabled="d.level>=d.maxLevel || d.upgradeIdx >= 0 || viewname")
-                                    span.glyphicon.glyphicon-plus
-                                a.btn.btn-default.btn-xs(ng-click='upgrade(d.name,d.title,$index,d.maxLevel)'
-                                ng-disabled="d.level>=d.maxLevel || viewname"
-                                popover='Upgrade'
-                                popover-trigger='mouseenter')
-                                    span.glyphicon.glyphicon-home
-                        td
-                            div(ng-show='d.upgradeIdx >= 0')
-                                span.text-primary Upgrade to {{upgradeList[d.upgradeIdx].level}}.
-                                span.space
-                                b.text-primary {{timeStrMoment(remainTime(upgradeList[d.upgradeIdx].due))}} / {{timeStr(upgradeList[d.upgradeIdx].time)}}
-                            div
-                                span(ng-hide='d.nextUpgrade. data.length==0')
-                                    icon-elixir(ng-show='d.nextUpgrade.type == "e"')
-                                    icon-darkelixir(ng-show='d.nextUpgrade.type == "d"')
-                                    icon-gold(ng-show='d.nextUpgrade.type == "g"')
-                                    span.space(ng-repeat='i in d.nextUpgrade.data|limitTo:limitTo')
-                                        span(popover='{{popover(d.name,i[0])}}' popover-trigger='mouseenter')
-                                            {{costFormat(i[1])}}/{{timeStr(i[2])}} (Lv{{i[0]}})
-                                    span(ng-show='d.nextUpgrade.data.length >= limitTo+1') ...
-                    tr
-                        td(colspan='3')
-                            div
-                                strong.space(popover='Total time to upgrade all Research' popover-trigger='mouseenter') Upgrade Time:
-                                span {{timeStr(summary.requiredTime)}}
-                                span(ng-hide='data.length<2')
-                                    span(popover='with {{data.length}} builders' popover-trigger='mouseenter' style='margin: 10px')
-                                        {{timeWithBuilder(summary.requiredTime, data.length, summary.maxRequiredTime)}}
-                                        small.glyphicon.glyphicon-home(style='margin:5px')
-                            div
-                                strong.space(popover='Total cost to upgrade all Research' popover-trigger='mouseenter') Upgrade Cost:
-                                span(ng-hide='summary.requiredCost[1]==0')
-                                    span {{costFormat(summary.requiredCost[1])}}
-                                        icon-elixir.space
-                                span(ng-hide='summary.requiredCost[2]==0')
-                                    span {{costFormat(summary.requiredCost[2])}}
-                                        icon-darkelixir.space
-                            div.small
-                                span.space Done Time:
-                                span {{timeStr(summary.doneTime)}}
-                                span(ng-hide='data.length<2')
-                                    span(popover='with {{data.length}} builders' popover-trigger='mouseenter' style='margin: 10px')
-                                        {{timeWithBuilder(summary.doneTime, data.length, summary.maxDoneTime)}}
-                                        span.glyphicon.glyphicon-home(style='margin:5px')
-                            div.small
-                                span.space Done Cost:
-                                span(ng-hide='summary.doneCost[1]==0')
-                                    span {{costFormat(summary.doneCost[1])}}
-                                    icon-elixir.space
-                                span(ng-hide='summary.doneCost[2]==0')
-                                    span {{costFormat(summary.doneCost[2])}}
-                                    icon-darkelixir.space
+    table.table.table-bordered.table-condensed.col-md-12.top-margin
+        thead
+            tr
+                th.col-md-2 HERO
+                th.col-md-3
+                th.col-md-7 Upgrade Costs
+        tbody
+            tr(ng-repeat='d in data')
+                td {{d.title}}
+                td.text-center
+                    a.btn.btn-default.btn-xs.pull-left(ng-click='changeLevel(d.name,$index,-1,d.maxLevel)'
+                    ng-disabled="d.level==0 || d.upgradeIdx>=0 || viewname")
+                        span.glyphicon.glyphicon-minus
+                    {{d.level}}/{{d.maxLevel}}
+                    span.pull-right
+                        a.btn.btn-default.btn-xs(ng-click='changeLevel(d.name,$index,1,d.maxLevel)'
+                        ng-disabled="d.level>=d.maxLevel || d.upgradeIdx >= 0 || viewname")
+                            span.glyphicon.glyphicon-plus
+                        a.btn.btn-default.btn-xs(ng-click='upgrade(d.name,d.title,$index,d.maxLevel)'
+                        ng-disabled="d.level>=d.maxLevel || viewname"
+                        popover='Upgrade'
+                        popover-trigger='mouseenter')
+                            span.glyphicon.glyphicon-home
+                td
+                    div(ng-show='d.upgradeIdx >= 0')
+                        span.text-primary Upgrade to {{upgradeList[d.upgradeIdx].level}}.
+                        span.space
+                        b.text-primary {{timeStrMoment(remainTime(upgradeList[d.upgradeIdx].due))}} / {{timeStr(upgradeList[d.upgradeIdx].time)}}
+                    div
+                        span(ng-hide='d.nextUpgrade. data.length==0')
+                            icon-elixir(ng-show='d.nextUpgrade.type == "e"')
+                            icon-darkelixir(ng-show='d.nextUpgrade.type == "d"')
+                            icon-gold(ng-show='d.nextUpgrade.type == "g"')
+                            span.space(ng-repeat='i in d.nextUpgrade.data|limitTo:limitTo')
+                                span(popover='{{popover(d.name,i[0])}}' popover-trigger='mouseenter')
+                                    {{costFormat(i[1])}}/{{timeStr(i[2])}} (Lv{{i[0]}})
+                            span(ng-show='d.nextUpgrade.data.length >= limitTo+1') ...
+            tr
+                td(colspan='3')
+                    div
+                        strong.space(popover='Total time to upgrade all Research' popover-trigger='mouseenter') Upgrade Time:
+                        span {{timeStr(summary.requiredTime)}}
+                        span(ng-hide='data.length<2')
+                            span(popover='with {{data.length}} builders' popover-trigger='mouseenter' style='margin: 10px')
+                                {{timeWithBuilder(summary.requiredTime, data.length, summary.maxRequiredTime)}}
+                                small.glyphicon.glyphicon-home(style='margin:5px')
+                    div
+                        strong.space(popover='Total cost to upgrade all Research' popover-trigger='mouseenter') Upgrade Cost:
+                        span(ng-hide='summary.requiredCost[1]==0')
+                            span {{costFormat(summary.requiredCost[1])}}
+                                icon-elixir.space
+                        span(ng-hide='summary.requiredCost[2]==0')
+                            span {{costFormat(summary.requiredCost[2])}}
+                                icon-darkelixir.space
+                    div.small
+                        span.space Done Time:
+                        span {{timeStr(summary.doneTime)}}
+                        span(ng-hide='data.length<2')
+                            span(popover='with {{data.length}} builders' popover-trigger='mouseenter' style='margin: 10px')
+                                {{timeWithBuilder(summary.doneTime, data.length, summary.maxDoneTime)}}
+                                span.glyphicon.glyphicon-home(style='margin:5px')
+                    div.small
+                        span.space Done Cost:
+                        span(ng-hide='summary.doneCost[1]==0')
+                            span {{costFormat(summary.doneCost[1])}}
+                            icon-elixir.space
+                        span(ng-hide='summary.doneCost[2]==0')
+                            span {{costFormat(summary.doneCost[2])}}
+                            icon-darkelixir.space

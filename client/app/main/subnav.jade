@@ -1,12 +1,9 @@
-div
-    ul.nav.nav-tabs(ng-controller='subNavbarCtrl')
-        li.active(ng-show='viewname')
-            a(ng-href="") {{viewname}}
-        li(ng-repeat="m in menu")
-            a(ng-href="{{m.link}}" ng-class='{active: isActive("{{m.link}}")}') {{m.title}}
-        li(ng-show='!isAdmin()', ng-class='{active: isActive("/admin")}')
-            a(href='/p/upgrade') [Upgrades]
-
-p
-
-div.col-md-12
+div.container
+    div
+        ul.nav.nav-tabs(ng-controller='subNavbarCtrl')
+            li.active(ng-show='viewname')
+                a(ng-href="") {{viewname}}
+            li(ng-repeat="m in menu")
+                a(ng-href="{{m.link}}" ng-class='{active: isActive("{{m.link}}")}') {{m.title}}
+            li(ng-show='!isAdmin()', ng-class='{active: isActive("/admin")}')
+                a(ng-href="{{link('upgrade')}}") [Upgrades]

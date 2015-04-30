@@ -2,58 +2,55 @@
    Created by jmjeong on 2015. 4. 16..
 
 div(ng-include='"components/navbar/navbar.html"')
+div(ng-include="'app/main/subnav.html'")
 
 .container
-    .row
-        .col-md-12
-            div(ng-include="'app/main/subnav.html'")
-
-            table.table.table-bordered.table-condensed
-                thead
-                    tr
-                        th.col-md-2.col-sm-2 WALL
-                        th.col-md-3.col-sm-3
-                        th.col-md-7.col-sm-7 Upgrade Costs
-                tbody
-                    form.form-group(novalidate name='form')
-                        tr(ng-repeat='w in walls.data')
-                            td
-                                img(ng-src="/assets/walls{{w.level}}.png" width='30')
-                                span  Level {{w.level}}
-                            td
-                                input.form-control(type='number' name='count' ng-model='w.count' ng-max-length='3'
-                                ng-change='changeNum(w.level, w.idx, w.count)' ng-disabled='viewname')
-                                div.error(ng-show='form.count.$dirty && form.count.$invalid')
-                                    small Error
-                            td
-                                span(ng-hide='w.count <= 0')
-                                    icon-gold(ng-show='w.upgrade.type == "g"')
-                                    icon-elixir(ng-show='w.upgrade.type == "e"')
-                                    icon-darkelixir(ng-show='w.upgrade.type == "d"')
-                                    span.space(ng-repeat='i in w.upgrade.data | limitTo:7') {{costFormat(i[1])}} (Lv{{i[0]}})
-                                    span(ng-show='w.upgrade.data.length >= 8') ...
-                    tr
-                        td Total
-                        td(colspan=2)
-                            b.text-success(ng-show='walls.total==walls.available').space {{walls.total}}
-                            b.text-danger(ng-show='walls.total>walls.available').space {{walls.total}}
-                            b.text-default(ng-show='walls.total<walls.available').space {{walls.total}}
-                            span walls built of {{walls.available}} available
-                    tr
-                        td(colspan=3)
-                            strong.space Upgrade Cost:
-                            span(ng-hide='summary.requiredCost[0] == 0')
-                                span {{costFormat(summary.requiredCost[0])}}
-                                    icon-gold.space
-                            span(ng-hide='summary.requiredCost[1] == 0' popover='{{pString()}}' popover-trigger='mouseenter')
-                                span ~{{costFormat(summary.requiredCost[1])}}
-                                    icon-elixir.space
-                            div.small
-                                span.space Done Cost:
-                                span(ng-hide='summary.doneCost[0] == 0')
-                                    span {{costFormat(summary.doneCost[0])}}
-                                    icon-gold.space
-                                span(ng-hide='summary.doneCost[1] == 0' popover='{{pString()}}' popover-trigger='mouseenter')
-                                    span ~{{costFormat(summary.doneCost[1])}}
-                                    icon-elixir.space
+    table.table.table-bordered.table-condensed.col-md-12.top-margin
+        thead
+            tr
+                th.col-md-2.col-sm-2 WALL
+                th.col-md-3.col-sm-3
+                th.col-md-7.col-sm-7 Upgrade Costs
+        tbody
+            form.form-group(novalidate name='form')
+                tr(ng-repeat='w in walls.data')
+                    td
+                        img(ng-src="/assets/walls{{w.level}}.png" width='30')
+                        span  Level {{w.level}}
+                    td
+                        input.form-control(type='number' name='count' ng-model='w.count' ng-max-length='3'
+                        ng-change='changeNum(w.level, w.idx, w.count)' ng-disabled='viewname')
+                        div.error(ng-show='form.count.$dirty && form.count.$invalid')
+                            small Error
+                    td
+                        span(ng-hide='w.count <= 0')
+                            icon-gold(ng-show='w.upgrade.type == "g"')
+                            icon-elixir(ng-show='w.upgrade.type == "e"')
+                            icon-darkelixir(ng-show='w.upgrade.type == "d"')
+                            span.space(ng-repeat='i in w.upgrade.data | limitTo:7') {{costFormat(i[1])}} (Lv{{i[0]}})
+                            span(ng-show='w.upgrade.data.length >= 8') ...
+            tr
+                td Total
+                td(colspan=2)
+                    b.text-success(ng-show='walls.total==walls.available').space {{walls.total}}
+                    b.text-danger(ng-show='walls.total>walls.available').space {{walls.total}}
+                    b.text-default(ng-show='walls.total<walls.available').space {{walls.total}}
+                    span walls built of {{walls.available}} available
+            tr
+                td(colspan=3)
+                    strong.space Upgrade Cost:
+                    span(ng-hide='summary.requiredCost[0] == 0')
+                        span {{costFormat(summary.requiredCost[0])}}
+                            icon-gold.space
+                    span(ng-hide='summary.requiredCost[1] == 0' popover='{{pString()}}' popover-trigger='mouseenter')
+                        span ~{{costFormat(summary.requiredCost[1])}}
+                            icon-elixir.space
+                    div.small
+                        span.space Done Cost:
+                        span(ng-hide='summary.doneCost[0] == 0')
+                            span {{costFormat(summary.doneCost[0])}}
+                            icon-gold.space
+                        span(ng-hide='summary.doneCost[1] == 0' popover='{{pString()}}' popover-trigger='mouseenter')
+                            span ~{{costFormat(summary.doneCost[1])}}
+                            icon-elixir.space
 

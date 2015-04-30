@@ -35,7 +35,6 @@ angular.module('cocApp')
             data.push([i+1, costArray[i], timeArray[i]*60])
         return {
         type: type
-        # popover: util.costFormat(data[0][1]) + ' / ' + util.timeStr(data[0][2])
         data: data
         }
 
