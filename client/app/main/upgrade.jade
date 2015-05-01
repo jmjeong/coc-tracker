@@ -1,11 +1,38 @@
 div(ng-include='"components/navbar/navbar.html"')
 div(ng-include="'app/main/subnav.html'")
 
-.container.center
+toast
+
+div
+    script(type='text/ng-template' id='myModalContent.html')
+        .modal-header
+            h4.modal-title Upgrade to {{sliders.title}} \#{{sliders.level}}
+        .modal-body
+            span.space Time: {{origin}}
+            span.text-primary ({{changed}})
+            p
+            p
+            span.text-iinfo Adjust Completion Time
+            span(slider ng-model="sliders.sliderValue" min=0 max="sliders.sliderMax"
+            value='sliders.sliderValue' formater='format' on-slide='sliderDelegate(value,$event)')
+        .modal-footer
+            button.btn.btn-primary(ng-click='ok()' ng-show='update') Update
+            button.btn.btn-primary(ng-click='ok()' ng-show='!update') Upgrade
+            button.btn.btn-danger(ng-click='stop()' ng-show='update') Stop
+
+.container
     table.table-bordered.table-condensed.row-border.hover.top-margin(ng-table='tableParams')
-        tr(ng-repeat='e in $data' ng-class="{'upgrade': e.upgrade}")
-            td(data-title="'Name'" sortable="'name'") {{e.name}}
+        tr(ng-repeat='e in $data' ng-class="{'upgrade':e.upgrade}")
+            td(data-title="'Name'" sortable="'title'" ng-class="{'text-info':e.index<0, 'text-success':e.index==HEROFLAG}")
+                a.btn.btn-default.btn-xs.space(ng-click='upgrade(e.name,e.title,e.level,e.index,e.time)'
+                    ng-disabled="viewname || e.upgrade || !e.available")
+                    span.glyphicon.glyphicon-home
+                span
+                    {{e.title}} - Lev {{e.level}}
             td(data-title="'Time'" sortable="'time'") {{timeStr(e.time)}}
-            td(data-title="'Gold'" sortable="'costg'") {{costFormat(e.costg)}}
-            td(data-title="'Elixir'" sortable="'coste'") {{costFormat(e.coste)}}
-            td(data-title="'Dark Elixir'" sortable="'costd'") {{costFormat(e.costd)}}
+            td(data-title="'Gold'" sortable="'costg'")
+                span.g {{costFormat(e.costg)}}
+            td(data-title="'Elixir'" sortable="'coste'")
+                span.e {{costFormat(e.coste)}}
+            td(data-title="'Dark Elixir'" sortable="'costd'")
+                span.d {{costFormat(e.costd)}}

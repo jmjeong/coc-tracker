@@ -51,31 +51,31 @@ div(ng-include="'app/main/subnav.html'")
               td.col-md-2 Building
               td.col-md-8
                   span(ng-hide='summary.requiredCost[0] == 0')
-                      {{costFormat(summary.requiredCost[0])}}
+                      span.g {{costFormat(summary.requiredCost[0])}}
                       icon-gold.space
                   span(ng-hide='summary.requiredCost[1] == 0')
-                      {{costFormat(summary.requiredCost[1])}}
+                      span.e {{costFormat(summary.requiredCost[1])}}
                       icon-elixir.space
                   span(ng-hide='summary.requiredCost[2] == 0')
-                      {{costFormat(summary.requiredCost[2])}}
+                      span.d {{costFormat(summary.requiredCost[2])}}
                       icon-darkelixir
           tr
               td.col-md-2 Research
               td.col-md-8
                   span(ng-hide='researchSummary.requiredCost[1]==0')
-                      {{costFormat(researchSummary.requiredCost[1])}}
+                      span.e {{costFormat(researchSummary.requiredCost[1])}}
                       icon-elixir.space
                   span(ng-hide='researchSummary.requiredCost[2]==0')
-                      {{costFormat(researchSummary.requiredCost[2])}}
+                      span.d {{costFormat(researchSummary.requiredCost[2])}}
                       icon-darkelixir.space
           tr
               td.col-md-2 Wall
               td.col-md-8
                     span(ng-hide='wallSummary.requiredCost[0] == 0')
-                        span {{costFormat(wallSummary.requiredCost[0])}}
+                        span.g {{costFormat(wallSummary.requiredCost[0])}}
                             icon-gold.space
                     span(ng-hide='wallSummary.requiredCost[1] == 0' popover='{{pString()}}' popover-trigger='mouseenter')
-                        span ~{{costFormat(wallSummary.requiredCost[1])}}
+                        span.e ~{{costFormat(wallSummary.requiredCost[1])}}
                             icon-elixir.space
 
       thead
@@ -98,31 +98,31 @@ div(ng-include="'app/main/subnav.html'")
               td.col-md-2 Building
               td.col-md-8
                   span(ng-hide='summary.doneCost[0] == 0')
-                      {{costFormat(summary.doneCost[0])}}
+                      span.g {{costFormat(summary.doneCost[0])}}
                       icon-gold.space
                   span.sp5(ng-hide='summary.doneCost[1] == 0')
-                      {{costFormat(summary.doneCost[1])}}
+                      span.e {{costFormat(summary.doneCost[1])}}
                       icon-elixir.space
                   span(ng-hide='summary.doneCost[2] == 0')
-                      {{costFormat(summary.doneCost[2])}}
+                      span.d {{costFormat(summary.doneCost[2])}}
                       icon-darkelixir
           tr
               td.col-md-2 Research
               td.col-md-8
                   span(ng-hide='researchSummary.doneCost[1] == 0')
-                      {{costFormat(researchSummary.doneCost[1])}}
+                      span.e {{costFormat(researchSummary.doneCost[1])}}
                       icon-elixir.space
                   span(ng-hide='researchSummary.doneCost[2] == 0')
-                      {{costFormat(researchSummary.doneCost[2])}}
+                      span.d {{costFormat(researchSummary.doneCost[2])}}
                       icon-darkelixir.space
           tr
               td.col-md-2 Wall
               td.col-md-8
                 span(ng-hide='wallSummary.doneCost[0] == 0')
-                    span {{costFormat(wallSummary.doneCost[0])}}
+                    span.g {{costFormat(wallSummary.doneCost[0])}}
                     icon-gold.space
                 span(ng-hide='wallSummary.doneCost[1] == 0' popover='{{pString()}}' popover-trigger='mouseenter')
-                    span ~{{costFormat(wallSummary.doneCost[1])}}
+                    span.e span ~{{costFormat(wallSummary.doneCost[1])}}
                     icon-elixir.space
 
   h4.page-header Setting

@@ -40,9 +40,7 @@ div
                         ng-disabled="d.level>=d.maxLevel || d.upgradeIdx >= 0 || viewname")
                             span.glyphicon.glyphicon-plus
                         a.btn.btn-default.btn-xs(ng-click='upgrade(d.name,d.title,$index,d.maxLevel)'
-                        ng-disabled="d.level>=d.maxLevel || viewname"
-                        popover='Upgrade'
-                        popover-trigger='mouseenter')
+                                        ng-disabled="d.level>=d.maxLevel || viewname")
                             span.glyphicon.glyphicon-home
                 td
                     div(ng-show='d.upgradeIdx >= 0')
@@ -56,7 +54,8 @@ div
                             icon-gold(ng-show='d.nextUpgrade.type == "g"')
                             span.space(ng-repeat='i in d.nextUpgrade.data|limitTo:limitTo')
                                 span(popover='{{popover(d.name,i[0])}}' popover-trigger='mouseenter')
-                                    {{costFormat(i[1])}}/{{timeStr(i[2])}} (Lv{{i[0]}})
+                                    span(ng-class='d.nextUpgrade.type') {{costFormat(i[1])}}
+                                    span /{{timeStr(i[2])}} (Lv{{i[0]}})
                             span(ng-show='d.nextUpgrade.data.length >= limitTo+1') ...
             tr
                 td(colspan='3')

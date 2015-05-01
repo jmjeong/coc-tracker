@@ -40,7 +40,7 @@ div
                         ng-disabled="d.level>=d.maxLevel || d.upgradeIdx >= 0 || viewname")
                             span.glyphicon.glyphicon-plus
                         a.btn.btn-default.btn-xs(ng-click='upgrade(d.name,d.title,$index,d.maxLevel)'
-                        ng-disabled="d.level>=d.maxLevel || viewname")
+                                                ng-disabled="d.level>=d.maxLevel || viewname")
                             span.glyphicon.glyphicon-home
                 td
                     div(ng-show='d.upgradeIdx >= 0')
@@ -53,7 +53,9 @@ div
                             icon-darkelixir(ng-show='d.nextUpgrade.type == "d"')
                             icon-gold(ng-show='d.nextUpgrade.type == "g"')
                             span.space(ng-repeat='i in d.nextUpgrade.data')
-                                span(popover='{{popover(d.name,i[0])}}' popover-trigger='mouseenter') {{costFormat(i[1])}}/{{timeStr(i[2])}} (Lv{{i[0]}})
+                                span(popover='{{popover(d.name,i[0])}}' popover-trigger='mouseenter')
+                                    span(ng-class='d.nextUpgrade.type') {{costFormat(i[1])}}
+                                    span /{{timeStr(i[2])}} (Lv{{i[0]}})
                             // span(ng-show='d.nextUpgrade.data.length >= 4') ...
             tr
                 td(colspan='3')
@@ -63,10 +65,10 @@ div
                     div
                         strong.space(popover='Total cost to upgrade all Research' popover-trigger='mouseenter') Upgrade Cost:
                         span(ng-hide='summary.requiredCost[1]==0')
-                            span {{costFormat(summary.requiredCost[1])}}
+                            span.e {{costFormat(summary.requiredCost[1])}}
                                 icon-elixir.space
                         span(ng-hide='summary.requiredCost[2]==0')
-                            span {{costFormat(summary.requiredCost[2])}}
+                            span.d {{costFormat(summary.requiredCost[2])}}
                                 icon-darkelixir.space
                     div.small
                         span.space Done Time:
@@ -74,8 +76,8 @@ div
                     div.small
                         span.space Done Cost:
                         span(ng-hide='summary.doneCost[1]==0')
-                            span {{costFormat(summary.doneCost[1])}}
+                            span.e {{costFormat(summary.doneCost[1])}}
                             icon-elixir.space
                         span(ng-hide='summary.doneCost[2]==0')
-                            span {{costFormat(summary.doneCost[2])}}
+                            span.d {{costFormat(summary.doneCost[2])}}
                             icon-darkelixir.space
