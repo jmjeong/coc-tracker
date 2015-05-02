@@ -155,3 +155,11 @@ angular.module 'cocApp'
 
         userFactory.set([{key:'upgrade', value:user.upgrade}], user)
 
+    $scope.gemPrice = (time) ->
+        time *= 60
+        switch
+            when time==0 then 0
+            when time<=60 then 1
+            when time<=3600 then parseInt((time-60)*(20-1)/(3600-60))+1
+            when time<=8400 then parseInt((time-3600)*(260-20)/(86400-3600))+20
+            else parseInt((time-86400)*(1000-260)/(604800-86400))+260
