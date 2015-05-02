@@ -13,6 +13,3 @@ angular.module 'cocApp'
     return
     User.remove id: user._id
     _.remove $scope.users, user
-
-  $scope.goto = (user) ->
-      console.log(user)

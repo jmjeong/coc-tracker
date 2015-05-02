@@ -42,19 +42,21 @@ angular.module 'cocApp'
                     name: name
                     level: level+1
                 })
-                continue if (findEntry >= 0)
-                data.push({
-                    title: item
-                    name: name
-                    level: level+1
-                    index: i
-                    time: ut[level]
-                    costg: uc[level][0]
-                    coste: uc[level][1]
-                    costd: uc[level][2]
-                    upgrade: findUpgrade>=0
-                    available: activeBuilder.length < user.builder
-                })
+                if (findEntry >= 0)
+                    data[findEntry].num++
+                else
+                    data.push
+                        title: item
+                        name: name
+                        level: level+1
+                        index: i
+                        time: ut[level]
+                        costg: uc[level][0]
+                        coste: uc[level][1]
+                        costd: uc[level][2]
+                        upgrade: findUpgrade>=0
+                        available: activeBuilder.length < user.builder
+                        num: 1
         labLevel = util.max_level(user.hall, bD['laboratory']['required town hall'])
         for item in util.upgrade_list()
             name = util.cannonicalName(item)
@@ -82,6 +84,7 @@ angular.module 'cocApp'
                 costd: if darkUnit then uc else 0
                 upgrade: findUpgrade>=0
                 available: activeResearch.length==0
+                num: 1
         for item in util.hero_list()
             name = util.cannonicalName(item)
             user[name] ?= 0
@@ -105,6 +108,7 @@ angular.module 'cocApp'
                 costd: hD[name]['training cost'][level]
                 upgrade: findUpgrade>=0
                 available: activeBuilder.length < user.builder
+                num: 1
 
         $scope.tableParams = new ngTableParams
             count: 100

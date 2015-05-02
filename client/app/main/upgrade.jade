@@ -27,6 +27,7 @@ div
                 a.btn.btn-default.btn-xs.space(ng-click='upgrade(e.name,e.title,e.level,e.index,e.time)'
                     ng-disabled="viewname || e.upgrade || !e.available")
                     span.glyphicon.glyphicon-home
+                sup(ng-show='e.num>1') {{e.num}} &nbsp;
                 span
                     {{e.title}} - Lev {{e.level}}
             td(data-title="'Time'" sortable="'time'") {{timeStr(e.time)}}

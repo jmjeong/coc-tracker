@@ -6,7 +6,7 @@ div(ng-include='"components/navbar/navbar.html"')
     li.list-group-item(ng-repeat='user in users')
       strong.space {{user.name}}
       span.text-muted
-      a(ng-click='goto(user)' ng-href='/p/overview?id={{user._id}}')
+      a(ng-href='/p/overview?id={{user._id}}')
         {{user.email}}
 //a.trash(ng-click='delete(user)')
 //  span.glyphicon.glyphicon-trash.pull-right
