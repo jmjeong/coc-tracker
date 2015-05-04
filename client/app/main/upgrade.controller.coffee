@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'cocApp'
-.controller 'UpgradeCtrl', ($scope, $filter, $modal, util, lodash,  data, HEROFLAG, ngTableParams, userFactory) ->
+.controller 'UpgradeCtrl', ($scope, $filter, $modal, $interval, util, lodash,  data, HEROFLAG, ngTableParams, userFactory) ->
 
     user = data.user
     $scope.viewname = data.viewname
@@ -11,12 +11,14 @@ angular.module 'cocApp'
     $scope.title = user.name
     $scope.HEROFLAG = HEROFLAG
 
+
     update = ->
+        if (typeof $scope.tableParams != 'undefined')
+            $scope.tableParams.$params.count = 0
         activeBuilder = lodash.filter user.upgrade, (u) ->
             return u.index >= 0
         activeResearch = lodash.filter user.upgrade, (u) ->
             return u.index < 0
-
         data = []
         for item in util.building_list('all')
             name = util.cannonicalName(item)
@@ -41,6 +43,7 @@ angular.module 'cocApp'
                 findEntry = lodash.findIndex(data, {
                     name: name
                     level: level+1
+                    upgrade: findUpgrade>=0
                 })
                 if (findEntry >= 0)
                     data[findEntry].num++
@@ -67,6 +70,7 @@ angular.module 'cocApp'
                 name: name,
                 index: -1
             })
+
             level = user[name]
             level++ if findUpgrade>=0
             ut = rD[name]['research time'][level]
@@ -119,6 +123,8 @@ angular.module 'cocApp'
             getData: ($defer, params) ->
                 orderedData = if params.sorting() then $filter('orderBy')(data, params.orderBy()) else data
                 $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()))
+        $scope.tableParams.reload()
+
     update()
 
     $scope.upgrade = (name, title, level, index, time) ->
@@ -148,11 +154,7 @@ angular.module 'cocApp'
             level: level
             time: value
             due: due
-
-        $scope.tableParams.$params.count = 0
         update()
-        $scope.tableParams.reload()
-
         userFactory.set([{key:'upgrade', value:user.upgrade}], user)
 
     $scope.gemPrice = (time) ->
@@ -161,5 +163,7 @@ angular.module 'cocApp'
             when time==0 then 0
             when time<=60 then 1
             when time<=3600 then parseInt((time-60)*(20-1)/(3600-60))+1
-            when time<=8400 then parseInt((time-3600)*(260-20)/(86400-3600))+20
+            when time<=84000 then parseInt((time-3600)*(260-20)/(86400-3600))+20
             else parseInt((time-86400)*(1000-260)/(604800-86400))+260
+
+    util.registerTimer($interval, $scope, user, update)

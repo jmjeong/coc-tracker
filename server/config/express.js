@@ -28,7 +28,6 @@ module.exports = function(app) {
   app.use(methodOverride());
   app.use(cookieParser());
 
-  app.use(session({ secret: 'keyboard cat', cookie:{maxAge:60000000}}));
   app.use(passport.initialize());
   if ('production' === env) {
     app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));

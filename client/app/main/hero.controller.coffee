@@ -13,14 +13,6 @@ angular.module('cocApp')
     $scope.remainTime = util.remainTime
     $scope.timeStrMoment = util.timeStrMoment
 
-    intervalPromise = $interval ()->
-        return if $scope.viewname
-        if !util.checkUpgrade(user)
-            update()
-    , 5000
-    $scope.$on '$destroy', () ->
-        $interval.cancel(intervalPromise)
-
     nextUpgrade = (current, maxLevel, timeArray, costArray, type) ->
         return {} if (current >= maxLevel)
         data = []
@@ -170,3 +162,5 @@ angular.module('cocApp')
             ret += hD[name]['hitpoints'][level-1]
             ret += '(+'+(hD[name]['hitpoints'][level-1]-hD[name]['hitpoints'][level-2])+')' if level>1
             ret += '    '
+
+    util.registerTimer($interval, $scope, user, update);

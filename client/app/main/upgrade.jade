@@ -30,11 +30,11 @@ div
                 sup(ng-show='e.num>1') {{e.num}} &nbsp;
                 span
                     {{e.title}} - Lev {{e.level}}
-            td(data-title="'Time'" sortable="'time'") {{timeStr(e.time)}}
-            td(data-title="'Gold'" sortable="'costg'")
+            td.text-center(data-title="'Time'" sortable="'time'") {{timeStr(e.time)}}
+            td.text-center(data-title="'Gold'" sortable="'costg'")
                 span.g {{costFormat(e.costg)}}
-            td(data-title="'Elixir'" sortable="'coste'")
+            td.text-center(data-title="'Elixir'" sortable="'coste'")
                 span.e {{costFormat(e.coste)}}
-            td(data-title="'D.E.'" sortable="'costd'")
+            td.text-center(data-title="'D.E.'" sortable="'costd'")
                 span.d {{costFormat(e.costd)}}
-            td(data-title="'Gem'") {{gemPrice(e.time)}}
+            td.text-center(data-title="'Gem'") {{gemPrice(e.time)}}

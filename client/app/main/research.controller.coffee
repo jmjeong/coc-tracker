@@ -15,13 +15,7 @@ angular.module('cocApp')
     $scope.remainTime = util.remainTime
     $scope.timeStrMoment = util.timeStrMoment
 
-    intervalPromise = $interval ()->
-        return if $scope.viewname
-        if !util.checkUpgrade(user)
-            update()
-    , 5000
-    $scope.$on '$destroy', () ->
-        $interval.cancel(intervalPromise)
+
 
     labLevel = util.max_level(user.hall, bD['laboratory']['required town hall'])
 
@@ -183,3 +177,5 @@ angular.module('cocApp')
             ret += rD[name]['hitpoints'][level-1]
             ret += '('+parseInt((rD[name]['hitpoints'][level-1]-rD[name]['hitpoints'][level-2])*100/rD[name]['hitpoints'][level-2])+'%)' if level>1
             ret += '    '
+
+    util.registerTimer($interval, $scope, user, update)

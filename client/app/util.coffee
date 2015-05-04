@@ -159,6 +159,30 @@ angular.module 'cocApp'
         maxRequiredTime: maxRequiredTime
         maxDoneTime: maxDoneTime
         }
+    checkUpgrade= (user)->
+        now = new moment()
+        fired = lodash.filter user.upgrade, (u)->
+            now.isAfter(moment(u.due))
+        if fired.length > 0
+            updated = []
+            for u in fired
+                if u.index >= 0 && u.index != HEROFLAG
+                    user[u.name][u.index] = u.level
+                else
+                    user[u.name] = u.level
+                updated.push(
+                    key: u.name
+                    value: user[u.name]
+                            )
+            lodash.remove user.upgrade, (u) ->
+                now.isAfter(moment(u.due))
+            updated.push(
+                key: 'upgrade'
+                value: user.upgrade
+                        )
+            userFactory.set(updated, user)
+            return 0
+        else return 1
 
     return {
 
@@ -337,30 +361,16 @@ angular.module 'cocApp'
 
     addArrays: addArrays
 
-    checkUpgrade: (user)->
-        now = new moment()
-        fired = lodash.filter user.upgrade, (u)->
-            now.isAfter(moment(u.due))
-        if fired.length > 0
-            updated = []
-            for u in fired
-                if u.index >= 0 && u.index != HEROFLAG
-                    user[u.name][u.index] = u.level
-                else
-                    user[u.name] = u.level
-                updated.push(
-                    key: u.name
-                    value: user[u.name]
-                )
-            lodash.remove user.upgrade, (u) ->
-                now.isAfter(moment(u.due))
-            updated.push(
-                key: 'upgrade'
-                value: user.upgrade
-            )
-            userFactory.set(updated, user)
-            return 0
-        else return 1
+    checkUpgrade: checkUpgrade
+
+    registerTimer: ($interval, $scope, user, cb)->
+        intervalPromise = $interval ()->
+            return if $scope.viewname
+            if !checkUpgrade(user)
+                cb()
+        , 3000
+        $scope.$on '$destroy', () ->
+            $interval.cancel(intervalPromise)
 
     remainTime: (researchDue) ->
         due = moment(researchDue)

@@ -22,14 +22,6 @@ angular.module 'cocApp'
     $scope.timeStrMoment = util.timeStrMoment
     $scope.title = user.name
 
-    intervalPromise = $interval ()->
-         return if $scope.viewname
-         if !util.checkUpgrade(user)
-            update()
-    , 5000
-    $scope.$on '$destroy', () ->
-        $interval.cancel(intervalPromise)
-
     category = if ($scope.activeTab == undefined) then 'all' else $scope.activeTab
     $scope.isResource = (category=='resource')
     #console.log(category)
@@ -244,6 +236,8 @@ angular.module 'cocApp'
 
     $scope.pString = ->
         "may replace elixirs for walls"
+
+    util.registerTimer($interval, $scope, user, update);
 
 angular.module('cocApp')
     .controller 'ModalInstanceCtrl', ($scope, $modalInstance, data) ->
