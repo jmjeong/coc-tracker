@@ -1,11 +1,12 @@
 div(ng-include='"components/navbar/navbar.html"')
 .container
-  p
-    span.space(ng-repeat='user in users')
-      a(ng-href='/p/overview?id={{user._id}}')
-          strong{{user.name}}
-          span(ng-show='user.hall') &nbsp;({{user.hall}})
-          span.text-muted
-            &nbsp; {{user.email}}
-//a.trash(ng-click='delete(user)')
-//  span.glyphicon.glyphicon-trash.pull-right
+    .col-md-12
+    p
+        div Total users : {{users.length}}
+        span(ng-repeat='user in users')
+          a.col-md-2(ng-href='/p/overview?id={{user._id}}')
+            span.space
+              strong{{user.name}}
+              span(ng-show='user.hall') &nbsp;({{user.hall}})
+    //a.trash(ng-click='delete(user)')
+    //  span.glyphicon.glyphicon-trash.pull-right

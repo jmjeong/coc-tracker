@@ -58,6 +58,7 @@ angular.module 'cocApp'
                         coste: uc[level][1]
                         costd: uc[level][2]
                         upgrade: findUpgrade>=0
+                        due: user.upgrade[findUpgrade].due if findUpgrade>=0
                         available: activeBuilder.length < user.builder
                         num: 1
         labLevel = util.max_level(user.hall, bD['laboratory']['required town hall'])
@@ -87,6 +88,7 @@ angular.module 'cocApp'
                 coste: if darkUnit then 0 else uc
                 costd: if darkUnit then uc else 0
                 upgrade: findUpgrade>=0
+                due: user.upgrade[findUpgrade].due if findUpgrade>=0
                 available: activeResearch.length==0
                 num: 1
         for item in util.hero_list()
@@ -111,6 +113,7 @@ angular.module 'cocApp'
                 coste: 0
                 costd: hD[name]['training cost'][level]
                 upgrade: findUpgrade>=0
+                due: user.upgrade[findUpgrade].due if findUpgrade>=0
                 available: activeBuilder.length < user.builder
                 num: 1
 
@@ -155,7 +158,7 @@ angular.module 'cocApp'
             time: value
             due: due
         update()
-        userFactory.set([{key:'upgrade', value:user.upgrade}], user)
+        userFactory.set('change-upgrade',[{name:name,title:title,index:index,level:level,time:value,due:due}],user)
 
     $scope.gemPrice = (time) ->
         time *= 60

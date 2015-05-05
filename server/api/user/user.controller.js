@@ -5,6 +5,7 @@ var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var _ = require('lodash');
+var moment = require('moment');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -121,17 +122,76 @@ exports.putData = function(req, res, next) {
         if (err) return res.send(500, err);
         if (!user) return res.send(404);
 
-        if (user.data) {
-            var data = JSON.parse(user.data);
+        var data = {}
+        if (user.data)
+            data = JSON.parse(user.data);
+        // console.log(data)
+        if (req.body.updated) { // not used anymore
+            return res.send(500, 'obsolete api');
+            //_.map(req.body.updated, function(d) {
+            //    data[d.key] = d.value
+            //});
         }
-        else {
-            var data = {}
+        var HEROFLAG = 100;
+        if (req.body.action) {
+            switch (req.body.action) {
+                case 'changeLevel':
+                    _.map(req.body.data, function (d) {
+                        var name = d.name;
+                        var index = d.index;
+                        var level = d.level;
+                        if (index < 0 || index == HEROFLAG) {
+                            data[name] = level;
+                        }
+                        else {
+                            if (typeof data[name] == 'undefined') {
+                                data[name] = [];
+                            }
+                            data[name][index] = level;
+                        }
+                    });
+                    break
+                case 'completeUpgrade':
+                    var now = new moment()
+                    _.map(data.upgrade, function(u) {
+                        if (now.isAfter(moment(u.due))) {
+                            if (u.index < 0 || u.index == HEROFLAG)
+                                data[u.name] = u.level
+                            else
+                                data[u.name][u.index] = u.level
+                        }
+                    });
+                    _.remove(data.upgrade, function(u) {
+                        return now.isAfter(moment(u.due));
+                    });
+                    break;
+                case 'changeUpgrade':
+                    _.map(req.body.data, function(d) {
+                        var find = _.findIndex(data.upgrade, {
+                            name: d.name,
+                            index: d.index
+                        });
+                        if (find < 0) data.upgrade.push(d);
+                        else data.upgrade[find] = d;
+                    });
+                    break;
+                case 'cancelUpgrade':
+                    _.map(req.body.data, function(d) {
+                        var name = d.name;
+                        var index = d.index;
+                        _.remove(data.upgrade, {
+                            name: name,
+                            index: index
+                        })
+                    });
+                    break;
+                case 'set':
+                    _.map(req.body.data, function(d) {
+                        data[d.name] = d.value;
+                    });
+                    break;
+            }
         }
-        // console.log(data[req.body.key]);
-        _.map(req.body.updated, function(d) {
-            data[d.key] = d.value
-        });
-
         user.data = JSON.stringify(data);
         user.markModified('data');
         user.save(function (err) {

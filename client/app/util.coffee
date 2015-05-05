@@ -49,11 +49,12 @@ angular.module 'cocApp'
                     viewname: undefined
                     user: user
                 }
-    set: (updated, user) ->
+    set: (action, data, user) ->
         if (!_id)
             if Auth.isLoggedInAsync()
                 $http.post '/api/users/me/data',
-                    updated: updated
+                    action: action
+                    data: data
                 .success (response)->
                     # console.log(response)
             else
@@ -164,23 +165,14 @@ angular.module 'cocApp'
         fired = lodash.filter user.upgrade, (u)->
             now.isAfter(moment(u.due))
         if fired.length > 0
-            updated = []
             for u in fired
                 if u.index >= 0 && u.index != HEROFLAG
                     user[u.name][u.index] = u.level
                 else
                     user[u.name] = u.level
-                updated.push(
-                    key: u.name
-                    value: user[u.name]
-                            )
             lodash.remove user.upgrade, (u) ->
                 now.isAfter(moment(u.due))
-            updated.push(
-                key: 'upgrade'
-                value: user.upgrade
-                        )
-            userFactory.set(updated, user)
+            userFactory.set('completeUpgrade', [], user);
             return 0
         else return 1
 

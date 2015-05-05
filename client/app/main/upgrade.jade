@@ -30,6 +30,7 @@ div
                 sup(ng-show='e.num>1') {{e.num}} &nbsp;
                 span
                     {{e.title}} - Lev {{e.level}}
+                div.text-center(ng-show='e.upgrade') {{e.due | amCalendar}}
             td.text-center(data-title="'Time'" sortable="'time'") {{timeStr(e.time)}}
             td.text-center(data-title="'Gold'" sortable="'costg'")
                 span.g {{costFormat(e.costg)}}
