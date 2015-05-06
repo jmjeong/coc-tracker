@@ -172,7 +172,12 @@ exports.putData = function(req, res, next) {
                             name: d.name,
                             index: d.index
                         });
-                        if (find < 0) data.upgrade.push(d);
+                        if (find < 0) {
+                            if (!('upgrade' in data)) {
+                                data.upgrade = [];
+                            }
+                            data.upgrade.push(d);
+                        }
                         else data.upgrade[find] = d;
                     });
                     break;
