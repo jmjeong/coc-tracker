@@ -12,6 +12,7 @@ var UserSchema = new Schema({
     default: 'user'
   },
   data: Schema.Types.Mixed,
+  lastUpdated: Date,
   hashedPassword: String,
   provider: String,
   salt: String

@@ -134,6 +134,7 @@ exports.putData = function(req, res, next) {
         }
         var HEROFLAG = 100;
         if (req.body.action) {
+            user.lastUpdated = new moment();
             switch (req.body.action) {
                 case 'changeLevel':
                     _.map(req.body.data, function (d) {
@@ -150,15 +151,15 @@ exports.putData = function(req, res, next) {
                             data[name][index] = level;
                         }
                     });
-                    break
+                    break;
                 case 'completeUpgrade':
-                    var now = new moment()
+                    var now = new moment();
                     _.map(data.upgrade, function(u) {
                         if (now.isAfter(moment(u.due))) {
                             if (u.index < 0 || u.index == HEROFLAG)
-                                data[u.name] = u.level
+                                data[u.name] = u.level;
                             else
-                                data[u.name][u.index] = u.level
+                                data[u.name][u.index] = u.level;
                         }
                     });
                     _.remove(data.upgrade, function(u) {
