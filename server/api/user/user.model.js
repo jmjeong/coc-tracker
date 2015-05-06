@@ -13,6 +13,11 @@ var UserSchema = new Schema({
   },
   data: Schema.Types.Mixed,
   lastUpdated: Date,
+  log: [ {
+      title: String,
+      level: Number,
+      complete: Date
+  }],
   hashedPassword: String,
   provider: String,
   salt: String

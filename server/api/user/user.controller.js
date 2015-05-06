@@ -160,6 +160,7 @@ exports.putData = function(req, res, next) {
                                 data[u.name] = u.level;
                             else
                                 data[u.name][u.index] = u.level;
+                            user.log.push({title:u.title, level:u.level, complete:u.due});
                         }
                     });
                     _.remove(data.upgrade, function(u) {

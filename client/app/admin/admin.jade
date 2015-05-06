@@ -3,7 +3,7 @@ div(ng-include='"components/navbar/navbar.html"')
     .col-md-12
     p
         div Total users : {{users.length}}
-        span(ng-repeat='user in users')
+        span(ng-repeat="user in users|orderBy:'-lastUpdated'" ng-show="user.lastUpdated")
           a.col-md-3.col-xs-6(ng-href='/p/overview?id={{user._id}}')
             span
               strong{{user.name|limitTo:13}}
