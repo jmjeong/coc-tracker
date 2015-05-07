@@ -7,3 +7,5 @@ div.container
                 a(ng-href="{{m.link}}" ng-class='{active: isActive("{{m.link}}")}') {{m.title}}
             li
                 a(ng-href="{{link('upgrade')}}") [Upgrade]
+            li
+                a(ng-href="{{link('log')}}" ng-show='isLoggedIn()',) [Log]

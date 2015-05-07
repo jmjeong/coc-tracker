@@ -41,6 +41,12 @@ angular.module 'cocApp'
         resolve:
             data: (userFactory, $route)->
                 userFactory.get($route.current.params.id)
+    .when '/p/log',
+        templateUrl: 'app/main/log.html'
+        controller: 'LogCtrl'
+        resolve:
+            data: (userFactory, $route)->
+                userFactory.getLog($route.current.params.id)
     .when '/p/:category',
         templateUrl: 'app/main/category.html'
         controller: 'MainCtrl'
@@ -61,10 +67,11 @@ angular.module 'cocApp'
 .directive 'iconDarkelixir', () ->
     restrict: 'E',
     template: '<img src="assets/images/darkelixir.png" width="10" style="margin: 3px">'
-.controller 'subNavbarCtrl', ($scope, $location, lodash, $routeParams) ->
+.controller 'subNavbarCtrl', ($scope, $location, lodash, Auth, $routeParams) ->
     $scope.isActive = (route) ->
         route is $location.url()
 
+    $scope.isLoggedIn = Auth.isLoggedIn
     menu = ['Overview', 'Defense', 'Trap', 'Army', 'Resource', 'Walls', 'Research', 'Hero', 'Other']
     $scope.link = (n)->
         if $routeParams.id then '/p/'+n.toLowerCase()+'?id='+$routeParams.id else '/p/'+n.toLowerCase()

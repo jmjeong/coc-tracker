@@ -15,7 +15,9 @@ router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
 
 router.get('/me/data', auth.isAuthenticated(), controller.getData);
+router.get('/me/log', auth.isAuthenticated(), controller.getLog);
 router.get('/:id/data', controller.getData);
+router.get('/:id/log', controller.getLog);
 router.post('/me/data', auth.isAuthenticated(), controller.putData);
 
 module.exports = router;

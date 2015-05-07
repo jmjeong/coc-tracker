@@ -49,6 +49,29 @@ angular.module 'cocApp'
                     viewname: undefined
                     user: user
                 }
+
+    getLog: (id)->
+        if (id)
+            $http.get '/api/users/'+id+'/log'
+            .then (response)->
+                {
+                viewname: response.data.name
+                log: response.data.log
+                }
+        else
+            if Auth.isLoggedInAsync()
+                $http.get '/api/users/me/log'
+                .then (response)->
+                    {
+                    viewname: undefined
+                    log: response.data.log
+                    }
+            else
+                {
+                    viewname: undefined
+                    log: []
+                }
+
     set: (action, data, user) ->
         if (!_id)
             if Auth.isLoggedInAsync()

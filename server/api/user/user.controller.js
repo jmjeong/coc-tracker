@@ -107,8 +107,23 @@ exports.getData = function(req, res, next) {
     User.findOne({
         _id: userId
     }, 'data name', function(err, user) { // don't ever give out the password or salt
-        // console.log(err)
-        // console.log(user)
+        if (err) return next(err);
+        if (!user) return res.json(401);
+        res.json(user);
+    });
+};
+
+exports.getLog = function(req, res, next) {
+    // console.log(req.params.id)
+    if (req.params.id) {
+        var userId = req.params.id;
+    }
+    else {
+        var userId = req.user._id;
+    }
+    User.findOne({
+        _id: userId
+    }, 'log name', function(err, user) {
         if (err) return next(err);
         if (!user) return res.json(401);
         res.json(user);
@@ -161,6 +176,7 @@ exports.putData = function(req, res, next) {
                             else
                                 data[u.name][u.index] = u.level;
                             user.log.push({title:u.title, level:u.level, complete:u.due});
+                            // console.log(user.log);
                         }
                     });
                     _.remove(data.upgrade, function(u) {
