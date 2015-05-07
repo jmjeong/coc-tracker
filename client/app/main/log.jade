@@ -2,9 +2,9 @@ div(ng-include='"components/navbar/navbar.html"')
 div(ng-include="'app/main/subnav.html'")
 
 .container
-    table.table.table-bordered.table-condensed.row-border.hover.top-margin(ng-table='tableParams')
+    table.table.table-bordered.table-condensed.row-border.hover.top-margin(ng-table='tableParams' show-filter='true')
         tr(ng-repeat='e in $data|orderBy:"-complete"')
-            td.col-md-3(data-title="'Name'")
+            td.col-md-3(data-title="'Name'" filter="{'title': 'text'}")
                 {{e.title}} - Lev {{e.level}}
             td.col-md-9(data-title="'Completed'") {{e.complete|amCalendar}}
         tr(ng-show="!$data.length")
