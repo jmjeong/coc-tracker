@@ -7,5 +7,3 @@ div(ng-include="'app/main/subnav.html'")
             td.col-md-3(data-title="'Name'" filter="{'title': 'text'}")
                 {{e.title}} - Lev {{e.level}}
             td.col-md-9(data-title="'Completed'") {{e.complete|amCalendar}}
-        tr(ng-show="!$data.length")
-            td(colspan=2) No Information
