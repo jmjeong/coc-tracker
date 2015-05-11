@@ -174,6 +174,9 @@ exports.putData = function(req, res, next) {
                             if (u.index < 0 || u.index == HEROFLAG)
                                 data[u.name] = u.level;
                             else
+                                if (typeof data[u.name] == 'undefined') {
+                                    data[u.name] = [];
+                                }
                                 data[u.name][u.index] = u.level;
                             user.log.push({title:u.title, level:u.level, complete:u.due});
                             // console.log(user.log);
