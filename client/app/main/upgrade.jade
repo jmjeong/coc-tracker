@@ -20,21 +20,44 @@ div
             button.btn.btn-danger(ng-click='stop()' ng-show='update') Stop
 
 .container
-    table.table-bordered.table-condensed.row-border.hover.top-margin(ng-table='tableParams')
-        tr(ng-repeat='e in $data' ng-class="{'upgrade':e.upgrade}")
-            td(data-title="'Name'" sortable="'title'" ng-class="{'text-info':e.index<0, 'text-success':e.index==HEROFLAG}")
-                a.btn.btn-default.btn-xs.space(ng-click='upgrade(e.name,e.title,e.level,e.index,e.time)'
-                    ng-disabled="viewname || e.upgrade || !e.available")
-                    span.glyphicon.glyphicon-home
-                sup(ng-show='e.num>1') {{e.num}} &nbsp;
-                span
-                    {{e.title}} - Lev {{e.level}}
-                div.text-center(ng-show='e.upgrade') {{e.due | amCalendar}}
-            td.text-center(data-title="'Time'" sortable="'time'") {{timeStr(e.time)}}
-            td.text-center(data-title="'Gold'" sortable="'costg'")
-                span.g {{costFormat(e.costg)}}
-            td.text-center(data-title="'Elixir'" sortable="'coste'")
-                span.e {{costFormat(e.coste)}}
-            td.text-center(data-title="'D.E.'" sortable="'costd'")
-                span.d {{costFormat(e.costd)}}
-            td.text-center(data-title="'Gem'") {{gemPrice(e.time)}}
+    .row
+        .col.col-sm-6
+
+            table.table-bordered.table-condensed.row-border.hover.top-margin(ng-table='tableParams')
+                tr(ng-repeat='e in $data' ng-class="{'upgrade':e.upgrade}")
+                    td(data-title="'Name'" sortable="'title'" ng-class="{'text-info':e.index<0, 'text-success':e.index==HEROFLAG}")
+                        a.btn.btn-default.btn-xs.space(ng-click='upgrade(e.name,e.title,e.level,e.index,e.time)'
+                            ng-disabled="viewname || e.upgrade || !e.available")
+                            span.glyphicon.glyphicon-home
+                        sup(ng-show='e.num>1') {{e.num}} &nbsp;
+                        span
+                            {{e.title}} - Lev {{e.level}}
+                        div.text-center(ng-show='e.upgrade') {{e.due | amCalendar}}
+                    td.text-center(data-title="'Time'" sortable="'time'") {{timeStr(e.time)}}
+                    td.text-center(data-title="'Gold'" sortable="'costg'")
+                        span.g {{costFormat(e.costg)}}
+                    td.text-center(data-title="'Elixir'" sortable="'coste'")
+                        span.e {{costFormat(e.coste)}}
+                    td.text-center(data-title="'D.E.'" sortable="'costd'")
+                        span.d {{costFormat(e.costd)}}
+                    td.text-center(data-title="'Gem'") {{gemPrice(e.time)}}
+        .col.col-sm-6
+
+            table.table-bordered.table-condensed.row-border.hover.top-margin(ng-table='tableParams2')
+                tr(ng-repeat='e in $data' ng-class="{'upgrade':e.upgrade}")
+                    td(data-title="'Name'" sortable="'title'" ng-class="{'text-info':e.index<0, 'text-success':e.index==HEROFLAG}")
+                        a.btn.btn-default.btn-xs.space(ng-click='upgrade(e.name,e.title,e.level,e.index,e.time)'
+                        ng-disabled="viewname || e.upgrade || !e.available")
+                            span.glyphicon.glyphicon-home
+                        sup(ng-show='e.num>1') {{e.num}} &nbsp;
+                        span
+                            {{e.title}} - Lev {{e.level}}
+                        div.text-center(ng-show='e.upgrade') {{e.due | amCalendar}}
+                    td.text-center(data-title="'Time'" sortable="'time'") {{timeStr(e.time)}}
+                    td.text-center(data-title="'Gold'" sortable="'costg'")
+                        span.g {{costFormat(e.costg)}}
+                    td.text-center(data-title="'Elixir'" sortable="'coste'")
+                        span.e {{costFormat(e.coste)}}
+                    td.text-center(data-title="'D.E.'" sortable="'costd'")
+                        span.d {{costFormat(e.costd)}}
+                    td.text-center(data-title="'Gem'") {{gemPrice(e.time)}}
