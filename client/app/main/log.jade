@@ -5,5 +5,7 @@ div(ng-include="'app/main/subnav.html'")
     table.table.table-bordered.table-condensed.row-border.hover.top-margin(ng-table='tableParams' show-filter='true')
         tr(ng-repeat='e in $data')
             td.col-md-3(data-title="'Name'" filter="{'title': 'text'}")
-                {{e.title}} - Lev {{e.level}}
+                b.text-info(ng-show='category(e.title)=="research"') {{e.title}} - Lev {{e.level}}
+                b.text-success(ng-show='category(e.title)=="hero"') {{e.title}} - Lev {{e.level}}
+                span(ng-show='category(e.title)=="building"') {{e.title}} - Lev {{e.level}}
             td.col-md-9(data-title="'Completed'") {{e.complete|amCalendar}}
