@@ -171,8 +171,9 @@ exports.putData = function(req, res, next) {
                     var now = new moment();
                     _.map(data.upgrade, function(u) {
                         if (now.isAfter(moment(u.due))) {
-                            if (u.index < 0 || u.index == HEROFLAG)
+                            if (u.index < 0 || u.index == HEROFLAG) {
                                 data[u.name] = u.level;
+                            }
                             else {
                                 if (typeof data[u.name] == 'undefined') {
                                     data[u.name] = [];

@@ -395,5 +395,13 @@ angular.module 'cocApp'
         return 'Finished' if min <= 0
         moment.duration(min, 'minutes').format('d[d] h[h] m[m]')
 
+    category: (name) ->
+        for item in building_list('all')
+            return 'building' if item == name
+        for item in hero_list()
+            return 'hero' if item == name
+        for item in upgrade_list()
+            return 'research' if item == name
+        return 'error'
     }
 

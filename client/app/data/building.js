@@ -38,7 +38,7 @@ bD['list'].push('Air Sweeper')
 bD['number available']['airsweeper']=[0,0,0,0,0,1,1,1,1,1,]
 bD['airsweeper']=[]
 bD['airsweeper']['type']="Defense"
-bD['airsweeper']['required town hall']=[6,6,6,6,9,10,]
+bD['airsweeper']['required town hall']=[6,6,7,8,9,10,]
 bD['airsweeper']['upgrade time']=[1440,1440*3,1440*5,1440*7,1440*8,1440*9,]
 bD['airsweeper']['upgrade cost']=[[500000,0,0],[750000,0,0],[1250000,0,0],[2400000,0,0],[4800000,0,0],[7200000,0,0],]
 
