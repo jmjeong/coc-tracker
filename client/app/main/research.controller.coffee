@@ -36,7 +36,6 @@ angular.module('cocApp')
             name = util.cannonicalName(title)
             user[name] ?= 0
             maxlevel = util.max_level(labLevel, rD[name]['laboratory level'])
-            console.log(title,labLevel,maxlevel);
             continue if (typeof rD[name].subtype != 'undefined' || maxlevel < 1)
             continue if (user.set.hideDoneResearch && user[name] >= maxlevel)
             find = lodash.findIndex(user.upgrade, {
