@@ -130,6 +130,25 @@ exports.getLog = function(req, res, next) {
     });
 };
 
+exports.getUpgrade = function(req, res, next) {
+    // console.log(req.params.id)
+    if (req.params.id) {
+        var userId = req.params.id;
+    }
+    else {
+        var userId = req.user._id;
+    }
+    User.findOne({
+        _id: userId
+    }, 'data name', function(err, user) {
+        if (err) return next(err);
+        if (!user) return res.json(401);
+		// console.log(user);
+		var data = JSON.parse(user.data);
+        res.json(data.upgrade);
+    });
+};
+
 exports.putData = function(req, res, next) {
     var userId = req.user._id;
     // console.log(userId);
