@@ -146,7 +146,7 @@ angular.module 'cocApp'
         for item in hero_list()
             name = cannonicalName(item)
             maxlevel = max_level(user.hall, hD[name]['required town hall'])
-            continue if (maxlevel <= 1)
+            continue if (maxlevel < 1)
             uc = hD[name]['training cost']
             ut = hD[name]['training time']
 
@@ -309,7 +309,7 @@ angular.module 'cocApp'
         for item in upgrade_list()
             name = cannonicalName(item)
             maxlevel = max_level(labLevel, rD[name]['laboratory level'])
-            continue if (typeof rD[name].subtype != 'undefined' || maxlevel <= 1)
+            continue if (typeof rD[name].subtype != 'undefined' || maxlevel < 1)
             uc = rD[name]['research cost']
             ut = rD[name]['research time']
 

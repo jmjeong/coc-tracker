@@ -15,8 +15,6 @@ angular.module('cocApp')
     $scope.remainTime = util.remainTime
     $scope.timeStrMoment = util.timeStrMoment
 
-
-
     labLevel = util.max_level(user.hall, bD['laboratory']['required town hall'])
 
     nextUpgrade = (current, maxLevel, timeArray, costArray, type) ->
@@ -38,7 +36,8 @@ angular.module('cocApp')
             name = util.cannonicalName(title)
             user[name] ?= 0
             maxlevel = util.max_level(labLevel, rD[name]['laboratory level'])
-            continue if (typeof rD[name].subtype != 'undefined' || maxlevel <= 1)
+            console.log(title,labLevel,maxlevel);
+            continue if (typeof rD[name].subtype != 'undefined' || maxlevel < 1)
             continue if (user.set.hideDoneResearch && user[name] >= maxlevel)
             find = lodash.findIndex(user.upgrade, {
                 name: name,
