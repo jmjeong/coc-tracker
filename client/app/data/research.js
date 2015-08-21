@@ -43,4 +43,4 @@ rD['list'].push('Poison');rD['poison']=[];rD['poison']['available']=true;rD['poi
 
 rD['list'].push('Earthquake');rD['earthquake']=[];rD['earthquake']['available']=true;rD['earthquake']['creation time']=15;rD['earthquake']['research cost']=[0,30000,60000,90000];rD['earthquake']['research time']=[0,24*6,24*8,24*12];rD['earthquake']['laboratory level']=[6,6,7,8];rD['earthquake']['barracks type']='Dark';
 
-rD['list'].push('Haste');rD['haste']=[];rD['haste']['available']=true;rD['haste']['creation time']=15;rD['haste']['research cost']=[0,40000,80000,120000];rD['haste']['research time']=[0,24*6,24*8,24*10];rD['haste']['laboratory level']=[7,8,8,8];rD['haste']['barracks type']='Dark';
+rD['list'].push('Haste');rD['haste']=[];rD['haste']['available']=true;rD['haste']['creation time']=15;rD['haste']['research cost']=[0,40000,80000,120000];rD['haste']['research time']=[0,24*6,24*8,24*10];rD['haste']['laboratory level']=[7,7,8,8];rD['haste']['barracks type']='Dark';
