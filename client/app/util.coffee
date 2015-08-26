@@ -72,7 +72,7 @@ angular.module 'cocApp'
                     log: []
                 }
 
-    set: (action, data, user) ->
+    set: (action, data, user, cb) ->
         if (!_id)
             if Auth.isLoggedInAsync()
                 $http.post '/api/users/me/data',
@@ -80,8 +80,10 @@ angular.module 'cocApp'
                     data: data
                 .success (response)->
                     # console.log(response)
+                    cb() if cb            
             else
                 localStorageService.set('user', user)
+                cb() if cb      
 
 .factory 'util', (userFactory, lodash, HEROFLAG) ->
 
@@ -195,7 +197,6 @@ angular.module 'cocApp'
                     user[u.name] = u.level
             lodash.remove user.upgrade, (u) ->
                 now.isAfter(moment(u.due))
-            userFactory.set('completeUpgrade', [], user);
             return 0
         else return 1
 
@@ -382,7 +383,10 @@ angular.module 'cocApp'
         intervalPromise = $interval ()->
             return if $scope.viewname
             if !checkUpgrade(user)
-                cb()
+                userFactory.set('completeUpgrade', [], user, ()->
+                    cb();
+                );
+
         , 3000
         $scope.$on '$destroy', () ->
             $interval.cancel(intervalPromise)
