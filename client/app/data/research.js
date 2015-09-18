@@ -29,7 +29,7 @@
 			'lavapup']['description']='Thrust out in big numbers after a Lava Hound dies, these tiny creatures '+'keep up the fight for a little while longer.';rD['lavapup']['dps']=[35];rD['lavapup']['hitpoints']=[50];rD['lavapup']['training cost']=[0];rD['lavapup']['laboratory level']=[0];rD['lavapup']['research time']=[0];rD['lavapup']['research cost']=[0];
 
  
-var i=0;rD['list'].push('Lightning');rD['lightning']=[];rD['lightning']['available']=true;rD['lightning']['creation time']=30;rD['lightning']['spell factory']=1;rD['lightning']['creation cost']=[15000,16500,18000,20000,22000,24000];rD['lightning']['research cost']=[0,200000,500000,1000000,2000000,8000000];rD['lightning']['research time']=[0,24,48,72,96,336];rD['lightning']['laboratory level']=[1,1,2,3,6,8];
+ var i=0;rD['list'].push('Lightning');rD['lightning']=[];rD['lightning']['available']=true;rD['lightning']['creation time']=30;rD['lightning']['spell factory']=1;rD['lightning']['creation cost']=[15000,16500,18000,20000,22000,24000,26000];rD['lightning']['research cost']=[0,200000,500000,1000000,2000000,6000000,8000000];rD['lightning']['research time']=[0,24,48,72,96,240,336];rD['lightning']['laboratory level']=[1,1,2,3,6,7,8];
 
  rD['list'].push('Healing');rD['healing']=[];rD['healing']['available']=true;rD['healing']['creation time']=30;rD['healing']['spell factory']=2;rD['healing']['creation cost']=[15000,16500,18000,20000,22000,24000];rD['healing']['research cost']=[0,300000,600000,1200000,2400000,4800000];rD['healing']['research time']=[0,24,48,72,120,168];rD['healing']['laboratory level']=[4,4,4,5,6,7];
 
