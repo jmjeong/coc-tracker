@@ -74,6 +74,7 @@ angular.module 'cocApp'
 
     set: (action, data, user, cb) ->
         if (!_id)
+            # console.log(action, data);
             if Auth.isLoggedInAsync()
                 $http.post '/api/users/me/data',
                     action: action
@@ -140,8 +141,8 @@ angular.module 'cocApp'
         hD.list
 
     totalHeroCostTime = (user) ->
-        requiredDarkCost = 0
-        doneDarkCost = 0
+        requiredElixirCost = requiredDarkCost = 0
+        doneElixirCost = doneDarkCost = 0
         requiredTime = maxRequiredTime = 0
         doneTime = maxDoneTime = 0
 
@@ -159,12 +160,15 @@ angular.module 'cocApp'
 
             mrt = mdt = 0
             for i in [0..maxlevel-1]
+                type = hD[name]['cost type']
                 if i < level
-                    doneDarkCost += uc[i]
+                    doneDarkCost += uc[i] if type == 'd'
+                    doneElixirCost += uc[i] if type == 'e'
                     doneTime += ut[i]
                     mdt += ut[i]
                 else if find >= 0 && i+1 == user.upgrade[find].level
-                    doneDarkCost += uc[i]
+                    doneDarkCost += uc[i] if type == 'd'
+                    doneDarkCost += uc[i] if type == 'e'                    
                     due = moment(user.upgrade[find].due)
                     dueMinutes = parseInt(moment.duration(due.diff(moment())).asMinutes())
                     requiredTime += dueMinutes
@@ -172,14 +176,15 @@ angular.module 'cocApp'
                     doneTime += ut[i]-dueMinutes
                     mdt += ut[i]-dueMinutes
                 else
-                    requiredDarkCost += uc[i]
+                    requiredDarkCost += uc[i] if type == 'd'
+                    requiredElixirCost += uc[i] if type == 'e'                    
                     requiredTime += ut[i]
                     mrt += ut[i]
             maxRequiredTime = lodash.max([maxRequiredTime, mrt])
             maxDoneTime = lodash.max([maxDoneTime, mdt])
         return {
-        requiredCost: [0, 0, requiredDarkCost]
-        doneCost: [0, 0, doneDarkCost]
+        requiredCost: [0, requiredElixirCost, requiredDarkCost]
+        doneCost: [0, doneElixirCost, doneDarkCost]
         requiredTime: requiredTime
         doneTime: doneTime
         maxRequiredTime: maxRequiredTime
@@ -317,7 +322,7 @@ angular.module 'cocApp'
             level = user[name]
             find = lodash.findIndex user.upgrade,
                                     name: name,
-                                        index: -1
+                                    index: -1
             for i in [0..maxlevel-1]
                 type = if rD[name]['barracks type'] == 'Dark' then 'd' else 'e'
                 if i < level

@@ -151,7 +151,6 @@ exports.getUpgrade = function(req, res, next) {
 
 exports.putData = function(req, res, next) {
     var userId = req.user._id;
-    // console.log(userId);
     User.findById(req.user._id, function (err, user) {
         if (err) return res.send(500, err);
         if (!user) return res.send(404);
@@ -159,34 +158,36 @@ exports.putData = function(req, res, next) {
         var data = {}
         if (user.data)
             data = JSON.parse(user.data);
-        // console.log(data)
+        console.log('putData', userId, req.body.action, req.body.data);
         if (req.body.updated) { // not used anymore
             return res.send(500, 'obsolete api');
             //_.map(req.body.updated, function(d) {
             //    data[d.key] = d.value
             //});
         }
+		console.log('userdata', data);
         var HEROFLAG = 100;
         if (req.body.action) {
             user.lastUpdated = new moment();
             switch (req.body.action) {
-                case 'changeLevel':
-                    _.map(req.body.data, function (d) {
-                        var name = d.name;
-                        var index = d.index;
-                        var level = d.level;
-                        if (index < 0 || index == HEROFLAG) {
-                            data[name] = level;
+            case 'changeLevel':
+                _.map(req.body.data, function (d) {
+                    var name = d.name;
+                    var index = d.index;
+                    var level = d.level;
+                    if (index < 0 || index == HEROFLAG) {
+                        data[name] = level;
+                    }
+                    else {
+                        if (typeof data[name] == 'undefined') {
+                            data[name] = [];
                         }
-                        else {
-                            if (typeof data[name] == 'undefined') {
-                                data[name] = [];
-                            }
-                            data[name][index] = level;
-                        }
-                    });
-                    break;
-                case 'completeUpgrade':
+                        data[name][index] = level;
+                    }
+                });
+                break;
+            case 'completeUpgrade':
+				console.log('complete Upgrade', data.upgrade);
                     var now = new moment();
                     _.map(data.upgrade, function(u) {
                         if (now.isAfter(moment(u.due))) {
@@ -207,36 +208,36 @@ exports.putData = function(req, res, next) {
                         return now.isAfter(moment(u.due));
                     });
                     break;
-                case 'changeUpgrade':
-                    _.map(req.body.data, function(d) {
-                        var find = _.findIndex(data.upgrade, {
-                            name: d.name,
-                            index: d.index
-                        });
-                        if (find < 0) {
-                            if (!('upgrade' in data)) {
-                                data.upgrade = [];
-                            }
-                            data.upgrade.push(d);
+            case 'changeUpgrade':
+                _.map(req.body.data, function(d) {
+                    var find = _.findIndex(data.upgrade, {
+                        name: d.name,
+                        index: d.index
+                    });
+                    if (find < 0) {
+                        if (!('upgrade' in data)) {
+                            data.upgrade = [];
                         }
-                        else data.upgrade[find] = d;
-                    });
-                    break;
-                case 'cancelUpgrade':
-                    _.map(req.body.data, function(d) {
-                        var name = d.name;
-                        var index = d.index;
-                        _.remove(data.upgrade, {
-                            name: name,
-                            index: index
-                        })
-                    });
-                    break;
-                case 'set':
-                    _.map(req.body.data, function(d) {
-                        data[d.name] = d.value;
-                    });
-                    break;
+                        data.upgrade.push(d);
+                    }
+                    else data.upgrade[find] = d;
+                });
+                break;
+            case 'cancelUpgrade':
+                _.map(req.body.data, function(d) {
+                    var name = d.name;
+                    var index = d.index;
+                    _.remove(data.upgrade, {
+                        name: name,
+                        index: index
+                    })
+                });
+                break;
+            case 'set':
+                _.map(req.body.data, function(d) {
+                    data[d.name] = d.value;
+                });
+                break;
             }
         }
         user.data = JSON.stringify(data);
@@ -254,3 +255,4 @@ exports.putData = function(req, res, next) {
 exports.authCallback = function(req, res, next) {
   res.redirect('/');
 };
+

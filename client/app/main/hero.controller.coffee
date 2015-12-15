@@ -42,7 +42,7 @@ angular.module('cocApp')
                 name: name
                 level: user[name]
                 maxLevel: maxlevel
-                nextUpgrade: nextUpgrade(level, maxlevel,hD[name]['training time'], hD[name]['training cost'], 'd')
+                nextUpgrade: nextUpgrade(level, maxlevel,hD[name]['training time'], hD[name]['training cost'], hD[name]['cost type'])
 
                 upgradeIdx: find
 
