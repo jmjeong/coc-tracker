@@ -62,9 +62,9 @@ bD['list'].push('Wizard Tower')
 bD['number available']['wizardtower']=[0,0,0,0,1,2,2,3,4,4,5,]
 bD['wizardtower']=[]
 bD['wizardtower']['type']="Defense"
-bD['wizardtower']['required town hall']=[5,5,6,7,8,8,9,10,]
-bD['wizardtower']['upgrade time']=[720,1440,2880,4320,5760,7200,10080,14400,]
-bD['wizardtower']['upgrade cost']=[[180000,0,0],[360000,0,0],[720000,0,0],[1280000,0,0],[1960000,0,0],[2680000,0,0],[5360000,0,0],[6480000,0,0],]
+bD['wizardtower']['required town hall']=[5,5,6,7,8,8,9,10,11,]
+bD['wizardtower']['upgrade time']=[720,1440,2880,4320,5760,7200,10080,14400,17280]
+bD['wizardtower']['upgrade cost']=[[180000,0,0],[360000,0,0],[720000,0,0],[1280000,0,0],[1960000,0,0],[2680000,0,0],[5360000,0,0],[6480000,0,0],[8560000,0,0]]
 
 bD['list'].push('Hidden Tesla')
 bD['number available']['hiddentesla']=[0,0,0,0,0,0,2,3,4,4,]
