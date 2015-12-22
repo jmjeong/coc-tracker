@@ -110,8 +110,8 @@ angular.module 'cocApp'
                 index: HEROFLAG
                 time: hD[name]['training time'][level]
                 costg: 0
-                coste: 0
-                costd: hD[name]['training cost'][level]
+                coste: if hD[name]['cost type'] == 'e' then hD[name]['training cost'][level] else 0
+                costd: if hD[name]['cost type'] == 'd' then hD[name]['training cost'][level] else 0
                 upgrade: findUpgrade>=0
                 due: user.upgrade[findUpgrade].due if findUpgrade>=0
                 available: activeBuilder.length < user.builder
