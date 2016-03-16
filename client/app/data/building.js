@@ -51,7 +51,7 @@ bD['mortar']['upgrade time']=[480,720,1440,2880,5760,7200,10080,14400,]
 bD['mortar']['upgrade cost']=[[8000,0,0],[32000,0,0],[120000,0,0],[400000,0,0],[800000,0,0],[1600000,0,0],[3200000,0,0],[6400000,0,0],]
 
 bD['list'].push('Air Defense')
-bD['number available']['airdefense']=[0,0,0,1,1,1,2,3,4,4,4,]
+bD['number available']['airdefense']=[0,0,0,1,1,2,3,3,4,4,4,]
 bD['airdefense']=[]
 bD['airdefense']['type']="Defense"
 bD['airdefense']['required town hall']=[4,4,5,6,7,8,9,10,]
