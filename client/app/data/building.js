@@ -46,9 +46,9 @@ bD['list'].push('Mortar')
 bD['number available']['mortar']=[0,0,1,1,1,2,3,4,4,4,4,]
 bD['mortar']=[]
 bD['mortar']['type']="Defense"
-bD['mortar']['required town hall']=[3,4,5,6,7,8,9,10,]
-bD['mortar']['upgrade time']=[480,720,1440,2880,5760,7200,10080,14400,]
-bD['mortar']['upgrade cost']=[[8000,0,0],[32000,0,0],[120000,0,0],[400000,0,0],[800000,0,0],[1600000,0,0],[3200000,0,0],[6400000,0,0],]
+bD['mortar']['required town hall']=[3,4,5,6,7,8,9,10,11]
+bD['mortar']['upgrade time']=[480,720,1440,2880,5760,7200,10080,14400,17280]
+bD['mortar']['upgrade cost']=[[8000,0,0],[32000,0,0],[120000,0,0],[400000,0,0],[800000,0,0],[1600000,0,0],[3200000,0,0],[6400000,0,0],[9000000,0,0]]
 
 bD['list'].push('Air Defense')
 bD['number available']['airdefense']=[0,0,0,1,1,2,3,3,4,4,4,]
@@ -86,9 +86,9 @@ bD['list'].push('Inferno Tower')
 bD['number available']['infernotower']=[0,0,0,0,0,0,0,0,0,2,2,]
 bD['infernotower']=[]
 bD['infernotower']['type']="Defense"
-bD['infernotower']['required town hall']=[10,10,10,]
-bD['infernotower']['upgrade time']=[10080,14400,20160,]
-bD['infernotower']['upgrade cost']=[[5000000,0,0],[6500000,0,0],[8000000,0,0],]
+bD['infernotower']['required town hall']=[10,10,10,11]
+bD['infernotower']['upgrade time']=[10080,14400,17280,20160]
+bD['infernotower']['upgrade cost']=[[5000000,0,0],[6500000,0,0],[8000000,0,0],[10000000,0,0]]
 
 bD['list'].push('Eagle Artillery')
 bD['number available']['eagleartillery']=[0,0,0,0,0,0,0,0,0,0,1,]

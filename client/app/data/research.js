@@ -18,13 +18,13 @@
     rD['barbarian']['range']=0.4;
 
     rD['barbarian']['death range']=-1;
-    rD['barbarian']['description']='This fearless warrior relies on his bulging muscles and striking '+'mustache to wreak havoc in enemy villages. Release a horde of '+'Barbarians and enjoy the mayhem!';
     rD['barbarian']['dps']=[8,11,14,18,23,26,30];
     rD['barbarian']['hitpoints']=[45,54,65,78,95,110,125];
     rD['barbarian']['training cost']=[25,40,60,80,100,150,200];
     rD['barbarian']['laboratory level']=[1,1,3,5,6,7,8];
     rD['barbarian']['research time']=[0,6,24,72,120,240,336];
     rD['barbarian']['research cost']=[0,50000,150000,500000,1500000,4500000,6000000];
+
     rD['list'].push('Archer');
     rD['archer']=[];
     rD['archer']['type']="Ground";
@@ -42,7 +42,6 @@
     rD['archer']['trainable']=true;
     rD['archer']['range']=3.5;
     rD['archer']['death range']=-1;
-    rD['archer']['description']='These sharpshooters like to keep their distance on the battlefield '+'and in life. Nothing makes them happier than single-mindedly taking '+'down their target.';
     rD['archer']['dps']=[7,9,12,16,20,22,25];
     rD['archer']['hitpoints']=[20,23,28,33,40,44,48];
     rD['archer']['training cost']=[50,80,120,160,200,300,400];
@@ -67,13 +66,12 @@
     rD['goblin']['trainable']=true;
     rD['goblin']['range']=0.4;
     rD['goblin']['death range']=-1;
-    rD['goblin']['description']='These peaky little creatures only have eyes for one thing: LOOT! '+'They are faster than a Spring Trap, and their hunger for resources '+'is limitless.';
-    rD['goblin']['dps']=[11,14,19,24,32,42];
-    rD['goblin']['hitpoints']=[25,30,36,43,52,68];
-    rD['goblin']['training cost']=[25,40,60,80,100,150];
-    rD['goblin']['laboratory level']=[1,1,3,5,6,8];
-    rD['goblin']['research time']=[0,12,48,72,120,240];
-    rD['goblin']['research cost']=[0,50000,250000,750000,2250000,4500000];
+    rD['goblin']['dps']=[11,14,19,24,32,42,52];
+    rD['goblin']['hitpoints']=[25,30,36,43,52,68,74];
+    rD['goblin']['training cost']=[25,40,60,80,100,150,200];
+    rD['goblin']['laboratory level']=[1,1,3,5,6,7,8];
+    rD['goblin']['research time']=[0,12,48,72,120,192,240];
+    rD['goblin']['research cost']=[0,50000,250000,750000,2250000,4500000,6750000];
 
     rD['list'].push('Giant');
     rD['giant']=[];
@@ -92,7 +90,6 @@
     rD['giant']['trainable']=true;
     rD['giant']['range']=1;
     rD['giant']['death range']=-1;
-    rD['giant']['description']='These big guys may seem calm, but show them a turret or cannon and '+'you\'ll see their fury unleashed! Slow yet durable, these warriors '+'are best used to soak up hits.';
     rD['giant']['dps']=[11,14,19,24,31,43,50];
     rD['giant']['hitpoints']=[300, 360,430,520,670,940,1100];
     rD['giant']['training cost']=[250,750,1250,1750,2250,3000,3500];
@@ -117,7 +114,6 @@
     rD['wallbreaker']['trainable']=true;
     rD['wallbreaker']['range']=1;
     rD['wallbreaker']['death range']=-1;
-    rD['wallbreaker']['description']='Nothing warms a Wall Breaker\'s cold and undead heart like blowing '+'up walls. A squad of them will make way for your ground units, and '+'they will do it with a BANG!';
     rD['wallbreaker']['dps']=[12,16,24,32,46,60];
     rD['wallbreaker']['hitpoints']=[20,24,29,35,42,54];
     rD['wallbreaker']['training cost']=[1000,1500,2000,2500,3000,3500];
@@ -142,7 +138,6 @@
     rD['balloon']['trainable']=true;
     rD['balloon']['range']=0.5;
     rD['balloon']['death range']=1.2;
-    rD['balloon']['description']='These promoted skeletons have traded in their joy of destroying '+'walls for a joy of destroying defenses. Deploy them to take out '+'pesky mortars and cannons!';
     rD['balloon']['dps']=[25,32,48,72,108,162];
     rD['balloon']['death damage']=[25,32,48,72,108,162];
     rD['balloon']['hitpoints']=[150,180,216,280,390,545];
@@ -168,7 +163,6 @@
     rD['wizard']['trainable']=true;
     rD['wizard']['range']=3;
     rD['wizard']['death range']=-1;
-    rD['wizard']['description']='The wizard is a terrifying presence on the battlefield. Pair him '+'up with some of his fellows and cast concentrated blasts of '+'destruction on anything, land or sky!';
     rD['wizard']['dps']=[50,70,90,125,170,180];
     rD['wizard']['hitpoints']=[75,90,108,130,156,164];
     rD['wizard']['training cost']=[1500,2000,2500,3000,3500,4000];
@@ -195,7 +189,6 @@
     rD['healer']['trainable']=true;
     rD['healer']['range']=5;
     rD['healer']['death range']=-1;
-    rD['healer']['description']='This majestic creature lives to protect and aid her fellow troops. '+'Any army is improved with her healing support, but make sure to '+'protect her from air defenses!';
     rD['healer']['hps']=[35,42,55,71];
     rD['healer']['hitpoints']=[500,600,840,1176];
     rD['healer']['training cost']=[5000,6000,8000,10000];
@@ -220,7 +213,6 @@
     rD['dragon']['trainable']=true;
     rD['dragon']['range']=3;
     rD['dragon']['death range']=-1;
-    rD['dragon']['description']='The might of the dragons are known throughout the land. The scaly '+'terror of the skies feels no mercy and nothing will escape the fiery '+'splashes of his breath.';
     rD['dragon']['dps']=[140,160,180,200,220];
     rD['dragon']['hitpoints']=[1900,2100,2300,2500,2700];
     rD['dragon']['training cost']=[25000,29000,33000,37000,41000];
@@ -245,7 +237,6 @@
     rD['p.e.k.k.a']['trainable']=true;
     rD['p.e.k.k.a']['range']=0.8;
     rD['p.e.k.k.a']['death range']=-1;
-    rD['p.e.k.k.a']['description']='Is P.E.K.K.A a knight? A samurai? A robot? No one knows! '+'P.E.K.K.A\'s armor absorbs even the mightiest of blows, but '+'it doesn\'t handle electricity too well.';
     rD['p.e.k.k.a']['dps']=[240,270,300,340,380];
     rD['p.e.k.k.a']['hitpoints']=[2800,3100,3500,4000,4500];
     rD['p.e.k.k.a']['training cost']=[30000,35000,40000,45000,50000];
@@ -270,7 +261,6 @@
     rD['minion']['trainable']=true;
     rD['minion']['range']=2.75;
     rD['minion']['death range']=-1;
-    rD['minion']['description']='This terror of the skies was born out of Dark Elixir. Undetectable '+'by the Seeking Air Mine, Minions materialize with ease, but are '+'fragile in our world.';
     rD['minion']['dps']=[35,38,42,46,50,54,57];
     rD['minion']['hitpoints']=[55,60,66,72,78,84,90];
     rD['minion']['training cost']=[6,7,8,9,10,11,12];
@@ -295,13 +285,12 @@
     rD['hogrider']['trainable']=true;
     rD['hogrider']['range']=0.6;
     rD['hogrider']['death range']=-1;
-    rD['hogrider']['description']='Having tamed the fierce leaping hog, the Hog Rider punishes those '+'who hide behind their puny walls! Fueled by Dark Elixir, these '+'warriors have never known defeat!';
-    rD['hogrider']['dps']=[60,70,80,92,105];
-    rD['hogrider']['hitpoints']=[270,312,360,415,475];
-    rD['hogrider']['training cost']=[40,45,52,58,65];
-    rD['hogrider']['laboratory level']=[5,5,6,6,7];
-    rD['hogrider']['research time']=[0,192,240,288,336];
-    rD['hogrider']['research cost']=[0,20000,30000,40000,50000];
+    rD['hogrider']['dps']=[60,70,80,92,105,118];
+    rD['hogrider']['hitpoints']=[270,312,360,415,475,535];
+    rD['hogrider']['training cost']=[40,45,52,58,65,90];
+    rD['hogrider']['laboratory level']=[5,5,6,6,7,8];
+    rD['hogrider']['research time']=[0,192,240,288,336,336];
+    rD['hogrider']['research cost']=[0,20000,30000,40000,50000,100000];
 
     rD['list'].push('Valkyrie');
     rD['valkyrie']=[];
@@ -320,13 +309,12 @@
     rD['valkyrie']['trainable']=true;
     rD['valkyrie']['range']=0.5;
     rD['valkyrie']['death range']=-1;
-    rD['valkyrie']['description']='A master of the two-handed axe, this glorious warrior runs '+'between nearby buildings and can shred several troops or '+'buildings at once with her whirlwind blow!';
-    rD['valkyrie']['dps']=[88,99,111,124];
-    rD['valkyrie']['hitpoints']=[900,1000,1100,1200];
-    rD['valkyrie']['training cost']=[70,100,130,160];
-    rD['valkyrie']['laboratory level']=[6,6,7,7];
-    rD['valkyrie']['research time']=[0,240,288,336];
-    rD['valkyrie']['research cost']=[0,50000,60000,70000];
+    rD['valkyrie']['dps']=[94,106,119,133,148];
+    rD['valkyrie']['hitpoints']=[750,825,910,1000,1100];
+    rD['valkyrie']['training cost']=[70,100,130,160,190];
+    rD['valkyrie']['laboratory level']=[6,6,7,7,8];
+    rD['valkyrie']['research time']=[0,192,240,288,336];
+    rD['valkyrie']['research cost']=[0,50000,60000,70000,110000];
 
     rD['list'].push('Golem');
     rD['golem']=[];
@@ -347,7 +335,6 @@
     rD['golem']['death range']=1.2;
     rD['golem']['subtroop']='Golemite';
     rD['golem']['subtroop cooldown']='death';
-    rD['golem']['description']='The mighty Golem loves to soak up damage! When destroyed, it '+'explodes and splits in two. The resulting Golemites have one-fifth '+'the Golem\'s strength and hitpoints.';
     rD['golem']['dps']=[38,42,46,50,54];
     rD['golem']['death damage']=[350,400,450,500,550];
     rD['golem']['hitpoints']=[4500,5000,5500,6000,6300];
@@ -376,7 +363,6 @@
     rD['golemite']['trainable']=false;
     rD['golemite']['range']=0.5;
     rD['golemite']['death range']=1.2;
-    rD['golemite']['description']='Golemites are smaller Golems constructed within the gargantuan creature. '+'When the Golem is destroyed, the Golemites spring to life and keep fighting!';
     rD['golemite']['dps']=[7,8,9,10,11];
     rD['golemite']['death damage']=[70,80,90,100,110];
     rD['golemite']['hitpoints']=[900,1000,1100,1200,1260];
@@ -404,7 +390,6 @@
     rD['witch']['death range']=-1;
     rD['witch']['subtroop']='Skeleton';
     rD['witch']['subtroop cooldown']=6;
-    rD['witch']['description']='The Witch never fights alone, constantly raising dead warriors. '+'Upgraded Witches raise more skeletons at a time.';
     rD['witch']['dps']=[25,30];
     rD['witch']['hitpoints']=[75,100];
     rD['witch']['training cost']=[250,350];
@@ -432,7 +417,6 @@
     rD['skeleton']['trainable']=false;
     rD['skeleton']['range']=0.4;
     rD['skeleton']['death range']=-1;
-    rD['skeleton']['description']='This undead creature poses little threat by itself. But it never '+'fights alone, since the Witch can summon an endless horde of '+'Skeletons against your enemy!';
     rD['skeleton']['dps']=[25];
     rD['skeleton']['hitpoints']=[45];
     rD['skeleton']['training cost']=[0];
@@ -459,7 +443,6 @@
     rD['lavahound']['death range']=1.2;
     rD['lavahound']['subtroop']='Lava Pup';
     rD['lavahound']['subtroop cooldown']='death';
-    rD['lavahound']['description']='These fiery beasts can\'t resist chasing after Air Defenses, providing excellent '+'protection for other troops. Once destroyed, they erupt into many smaller, '+'weaker menaces.';
     rD['lavahound']['dps']=[10,12,14];
     rD['lavahound']['death damage']=[100,120,140];
     rD['lavahound']['hitpoints']=[5700,6200,6700];
@@ -487,13 +470,36 @@
     rD['lavapup']['barracks level']=6;
     rD['lavapup']['trainable']=false;
     rD['lavapup']['range']=2;
-    rD['lavapup']['description']='Thrust out in big numbers after a Lava Hound dies, these tiny creatures '+'keep up the fight for a little while longer.';
     rD['lavapup']['dps']=[35];
     rD['lavapup']['hitpoints']=[50];
     rD['lavapup']['training cost']=[0];
     rD['lavapup']['laboratory level']=[0];
     rD['lavapup']['research time']=[0];
     rD['lavapup']['research cost']=[0];
+
+    rD['list'].push('Bowler');
+    rD['bowler']=[];
+    rD['bowler']['type']="Ground";
+    rD['bowler']['preferred target']="Defenses";
+    rD['bowler']['multiplier']=1;
+    rD['bowler']['ground attack']=true;
+    rD['bowler']['air attack']=false;
+    rD['bowler']['splash radius']=-1;
+    rD['bowler']['housing space']=8;
+    rD['bowler']['training time']=480;
+    rD['bowler']['movement speed']=14;
+    rD['bowler']['attack speed']=1.5;
+    rD['bowler']['barracks type']="Dark";
+    rD['bowler']['barracks level']=2;
+    rD['bowler']['trainable']=true;
+    rD['bowler']['range']=0.6;
+    rD['bowler']['death range']=-1;
+    rD['bowler']['dps']=[65,75,85];
+    rD['bowler']['hitpoints']=[320,350,380];
+    rD['bowler']['training cost']=[130,150,170];
+    rD['bowler']['laboratory level']=[8,8,9];
+    rD['bowler']['research time']=[0,240,336];
+    rD['bowler']['research cost']=[0,120000,200000];
 
     var i=0;
     rD['list'].push('Lightning');
