@@ -228,9 +228,9 @@ bD['list'].push('Dark Barracks')
 bD['number available']['darkbarracks']=[0,0,0,0,0,0,1,2,2,2,2,]
 bD['darkbarracks']=[]
 bD['darkbarracks']['type']="Army"
-bD['darkbarracks']['required town hall']=[7,7,8,8,9,9,]
-bD['darkbarracks']['upgrade time']=[4320,7200,8640,10080,11520,12960,]
-bD['darkbarracks']['upgrade cost']=[[0,750000,0],[0,1250000,0],[0,1750000,0],[0,2250000,0],[0,2750000,0],[0,3500000,0],]
+bD['darkbarracks']['required town hall']=[7,7,8,8,9,9,10]
+bD['darkbarracks']['upgrade time']=[4320,7200,8640,10080,11520,12960,17280]
+bD['darkbarracks']['upgrade cost']=[[0,750000,0],[0,1250000,0],[0,1750000,0],[0,2250000,0],[0,2750000,0],[0,3500000,0],[0,6000000,0]]
 
 bD['list'].push('Laboratory')
 bD['number available']['laboratory']=[0,0,1,1,1,1,1,1,1,1,1,]
