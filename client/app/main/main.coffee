@@ -53,6 +53,7 @@ angular.module 'cocApp'
         resolve:
             data: (userFactory, $route)->
                 userFactory.get($route.current.params.id)
+                
 .config (localStorageServiceProvider) ->
     localStorageServiceProvider
     .setPrefix('coc-tracker')

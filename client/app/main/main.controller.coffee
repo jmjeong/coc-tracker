@@ -12,8 +12,8 @@ angular.module 'cocApp'
     $scope.costFormat = util.costFormat
     $scope.builder ?= user.setting.builder
     $scope.hall ?= user.setting.hall
-    $scope.hideDoneBuilding ?= user.setting.hideDoneBuilding
-    $scope.hideDoneResearch ?= user.setting.hideDoneResearch
+    $scope.hideDoneBuilding = user.setting.hideDoneBuilding
+    $scope.hideDoneResearch = user.setting.hideDoneResearch
     $scope.limitTo = user.setting.limitTo
     $scope.upgradeList = user.upgrade
     $scope.activeTab = $routeParams.category
@@ -122,12 +122,13 @@ angular.module 'cocApp'
         $scope.builder = user.setting.builder = builder
         userFactory.set('set', [{name:'builder', value:builder}], user)
 
-    $scope.setHideDoneBuilding = () ->
-        user.setting.hideDoneBuilding = $scope.hideDoneBuilding
+    $scope.setHideDoneBuilding = (flag) ->
+        user.setting.hideDoneBuilding = $scope.hideDoneBuilding = flag
+        console.log($scope.hideDoneBuilding, $scope.hideDoneResearch);
         userFactory.set('set', [{name:'hideDoneBuilding', value:$scope.hideDoneBuilding}], user)
 
-    $scope.setHideDoneResearch = () ->
-        user.setting.hideDoneResearch = $scope.hideDoneResearch
+    $scope.setHideDoneResearch = (flag) ->
+        user.setting.hideDoneResearch = $scope.hideDoneResearch = flag
         userFactory.set('set', [{name:'hideDoneResearch', value:$scope.hideDoneResearch}], user)
 
     $scope.upgrade = (name, title, index) ->
