@@ -6,17 +6,18 @@ angular.module 'cocApp'
 
     user = data.user
     $scope.viewname = data.viewname
+
     $scope.timeStr = util.timeStr
     $scope.costStr = util.costStr
     $scope.costFormat = util.costFormat
-    $scope.builder = user.builder
-    $scope.hall = user.hall
+    $scope.builder ?= user.setting.builder
+    $scope.hall ?= user.setting.hall
+    $scope.hideDoneBuilding ?= user.setting.hideDoneBuilding
+    $scope.hideDoneResearch ?= user.setting.hideDoneResearch
+    $scope.limitTo = user.setting.limitTo
     $scope.upgradeList = user.upgrade
     $scope.activeTab = $routeParams.category
-    $scope.set = {}
-    $scope.set.hideDone ?= user.set.hideDone
-    $scope.set.hideDoneResearch ?= user.set.hideDoneResearch
-    $scope.limitTo = user.limitTo
+
     $scope.HEROFLAG = HEROFLAG
     $scope.remainTime = util.remainTime
     $scope.timeStrMoment = util.timeStrMoment
@@ -24,7 +25,7 @@ angular.module 'cocApp'
 
     category = if ($scope.activeTab == undefined) then 'all' else $scope.activeTab
     $scope.isResource = (category=='resource')
-    #console.log(category)
+    # console.log(category)
     nextUpgrade = (current, maxLevel, timeArray, costArray) ->
         return {} if (current >= maxLevel)
         data = []
@@ -45,17 +46,18 @@ angular.module 'cocApp'
         # $scope.activeTab = undefined
         for item in lodash.sortBy(util.building_list(category))
             name = util.cannonicalName(item)
-            availableNum = bD['number available'][name][user.hall-1]
+            availableNum = bD['number available'][name][user.setting.hall-1]
             continue if (availableNum == 0 )
 
-            maxLevel = util.max_level(user.hall, bD[name]['required town hall'])
+            maxLevel = util.max_level(user.setting.hall, bD[name]['required town hall'])
             detail[name] = []
             uc = bD[name]['upgrade cost']
             ut = bD[name]['upgrade time']
             for i in [0..availableNum-1]
-                user[name] ?= []
-                currentLevel = user[name][i] ? 0
-                continue if ($scope.set.hideDone && currentLevel >= maxLevel)
+                user.building ?= {}
+                user.building[name] ?= []
+                currentLevel = user.building[name][i] ? 0
+                continue if ($scope.hideDoneBuilding && currentLevel >= maxLevel)
                 find = lodash.findIndex(user.upgrade, {
                     name: name,
                     index: i
@@ -91,7 +93,7 @@ angular.module 'cocApp'
         currentLevel += inc
         currentLevel = 0 if currentLevel < 0
         currentLevel = maxLevel if currentLevel > maxLevel
-        # maxLevel = util.max_level(user.hall, bD[name]['required town hall'])
+        # maxLevel = util.max_level(user.setting.hall, bD[name]['required town hall'])
         uc = bD[name]['upgrade cost']
         ut = bD[name]['upgrade time']
         $scope.detail[name][index] =
@@ -99,7 +101,7 @@ angular.module 'cocApp'
             level: currentLevel
             nextUpgrade: nextUpgrade(currentLevel, maxLevel, ut, uc)
         if oldLevel != currentLevel
-            user[name][$scope.detail[name][index].idx] = currentLevel
+            user.building[name][$scope.detail[name][index].idx] = currentLevel
             $scope.summary = util.totalCostTime(category, user)
             if ($scope.isResource)
                 $scope.totalProduction = util.totalProduction(user)
@@ -112,22 +114,25 @@ angular.module 'cocApp'
         return util.timeStr(max)
 
     $scope.setHall = (hall) ->
-        $scope.hall = user.hall = hall
-        userFactory.set('set', [{name:'hall',value:user.hall}], user)
+        $scope.hall = user.setting.hall = hall
+        userFactory.set('set', [{name:'hall',value:user.setting.hall}], user)
         update()
 
     $scope.setBuilder = (builder) ->
-        $scope.builder = user.builder = builder
+        $scope.builder = user.setting.builder = builder
         userFactory.set('set', [{name:'builder', value:builder}], user)
 
-    $scope.settingChanged = () ->
-        user.set.hideDone = $scope.set.hideDone
-        user.set.hideDoneResearch = $scope.set.hideDoneResearch
-        userFactory.set('set', [{name:'set', value:user.set}], user)
+    $scope.setHideDoneBuilding = () ->
+        user.setting.hideDoneBuilding = $scope.hideDoneBuilding
+        userFactory.set('set', [{name:'hideDoneBuilding', value:$scope.hideDoneBuilding}], user)
+
+    $scope.setHideDoneResearch = () ->
+        user.setting.hideDoneResearch = $scope.hideDoneResearch
+        userFactory.set('set', [{name:'hideDoneResearch', value:$scope.hideDoneResearch}], user)
 
     $scope.upgrade = (name, title, index) ->
         idx = $scope.detail[name][index].idx
-        level = user[name][idx] ? 0
+        level = user.building[name][idx] ? 0
         user.upgrade ?= []
         find = lodash.findIndex(user.upgrade, {
             name: name,
@@ -136,7 +141,7 @@ angular.module 'cocApp'
         if (find < 0)
             upgradeNum = lodash.filter user.upgrade, (u) ->
                 return u.index >= 0
-            if (user.builder <= upgradeNum.length)
+            if (user.setting.builder <= upgradeNum.length)
                 ngToast.create(
                     className: 'warning'
                     content: 'need more builders...')
@@ -166,7 +171,7 @@ angular.module 'cocApp'
 
     $scope.upgradeAction = (name, title, index, value) ->
         idx = $scope.detail[name][index].idx
-        level = user[name][idx] ? 0
+        level = user.building[name][idx] ? 0
         user.upgrade ?= []
 
         find = lodash.findIndex(user.upgrade, {
@@ -207,7 +212,7 @@ angular.module 'cocApp'
                 }
             userFactory.set('changeUpgrade',[{name:name,title:title,index:idx,level:level+1,time:ut[level],due:due}],user)
             level++
-        maxLevel = util.max_level(user.hall, bD[name]['required town hall'])
+        maxLevel = util.max_level(user.setting.hall, bD[name]['required town hall'])
         uc = bD[name]['upgrade cost']
         $scope.detail[name][index].nextUpgrade = nextUpgrade(level, maxLevel, ut, uc)
         $scope.summary = util.totalCostTime(category, user)
@@ -220,7 +225,7 @@ angular.module 'cocApp'
         })
         level = $scope.detail[name][index].level
         $scope.detail[name][index].upgradeIdx = -1
-        maxLevel = util.max_level(user.hall, bD[name]['required town hall'])
+        maxLevel = util.max_level(user.setting.hall, bD[name]['required town hall'])
         ut = bD[name]['upgrade time']
         uc = bD[name]['upgrade cost']
         $scope.detail[name][index].nextUpgrade = nextUpgrade(level, maxLevel, ut, uc)

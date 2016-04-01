@@ -11,11 +11,11 @@ angular.module('cocApp')
     $scope.timeStr = util.timeStr
     $scope.costFormat = util.costFormat
     $scope.upgradeList = user.upgrade
-    $scope.limitTo = user.limitTo
+    $scope.limitTo = user.setting.limitTo
     $scope.remainTime = util.remainTime
     $scope.timeStrMoment = util.timeStrMoment
 
-    labLevel = util.max_level(user.hall, bD['laboratory']['required town hall'])
+    labLevel = util.max_level(user.setting.hall, bD['laboratory']['required town hall'])
 
     nextUpgrade = (current, maxLevel, timeArray, costArray, type) ->
         return {} if (current >= maxLevel)
@@ -34,20 +34,21 @@ angular.module('cocApp')
         $scope.data = []
         for title in util.upgrade_list()
             name = util.cannonicalName(title)
-            user[name] ?= 0
+            user.research ?= {}
+            user.research[name] ?= 0
             maxlevel = util.max_level(labLevel, rD[name]['laboratory level'])
             continue if (typeof rD[name].subtype != 'undefined' || maxlevel < 1)
-            continue if (user.set.hideDoneResearch && user[name] >= maxlevel)
+            continue if (user.setting.hideDoneResearch && user.research[name] >= maxlevel)
             find = lodash.findIndex(user.upgrade, {
                 name: name,
                 index: -1
             })
-            level = user[name]
+            level = user.research[name]
             level++ if find >= 0
             $scope.data.push
                 title: title
                 name: name
-                level: user[name]
+                level: user.research[name]
                 maxLevel: maxlevel
                 nextUpgrade: nextUpgrade(level, maxlevel,
                     rD[name]['research time'], rD[name]['research cost'],
@@ -69,12 +70,12 @@ angular.module('cocApp')
             rD[name]['research time'], rD[name]['research cost'],
             rD[name]['barracks type'])
         if oldLevel != currentLevel
-            user[name] = currentLevel
+            user.research[name] = currentLevel
             $scope.summary = util.totalResearchCostTime(user)
             userFactory.set('changeLevel', [{name:name,index:-1,level:currentLevel}], user)
 
     $scope.upgrade = (name, title, index) ->
-        level = user[name] ? 0
+        level = user.research[name] ? 0
         user.upgrade ?= []
 
         find = lodash.findIndex(user.upgrade, {
@@ -113,7 +114,7 @@ angular.module('cocApp')
             $scope.upgradeAction(name, title, index, value)
 
     $scope.upgradeAction = (name, title, index, value) ->
-        level = user[name] ? 0
+        level = user.research[name] ? 0
         user.upgrade ?= []
 
         find = lodash.findIndex(user.upgrade, {

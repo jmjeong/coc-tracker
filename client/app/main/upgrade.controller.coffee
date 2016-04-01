@@ -11,7 +11,6 @@ angular.module 'cocApp'
     $scope.title = user.name
     $scope.HEROFLAG = HEROFLAG
 
-
     update = ->
         if (typeof $scope.tableParams != 'undefined')
             $scope.tableParams.$params.count = 0
@@ -22,10 +21,10 @@ angular.module 'cocApp'
         data = []
         for item in util.building_list('all')
             name = util.cannonicalName(item)
-            availableNum = bD['number available'][name][user.hall-1]
+            availableNum = bD['number available'][name][user.setting.hall-1]
             continue if (availableNum == 0 )
 
-            maxLevel = util.max_level(user.hall, bD[name]['required town hall'])
+            maxLevel = util.max_level(user.setting.hall, bD[name]['required town hall'])
             uc = bD[name]['upgrade cost']
             ut = bD[name]['upgrade time']
             for i in [0..availableNum-1]
@@ -61,7 +60,7 @@ angular.module 'cocApp'
                         due: user.upgrade[findUpgrade].due if findUpgrade>=0
                         available: activeBuilder.length < user.builder
                         num: 1
-        labLevel = util.max_level(user.hall, bD['laboratory']['required town hall'])
+        labLevel = util.max_level(user.setting.hall, bD['laboratory']['required town hall'])
         for item in util.upgrade_list()
             name = util.cannonicalName(item)
             user[name] ?= 0
@@ -94,7 +93,7 @@ angular.module 'cocApp'
         for item in util.hero_list()
             name = util.cannonicalName(item)
             user[name] ?= 0
-            maxlevel = util.max_level(user.hall, hD[name]['required town hall'])
+            maxlevel = util.max_level(user.setting.hall, hD[name]['required town hall'])
             continue if (maxlevel <= 1)
             findUpgrade = lodash.findIndex(user.upgrade, {
                 name: name,

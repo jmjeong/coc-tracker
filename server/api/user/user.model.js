@@ -11,13 +11,40 @@ var UserSchema = new Schema({
     type: String,
     default: 'user'
   },
-  data: Schema.Types.Mixed,
   lastUpdated: Date,
+  setting: {
+    hideDoneBuilding: Boolean,
+    hideDoneResearch: Boolean,
+    hall: Number,
+    limitTo: Number,
+    builder: Number
+  },
+  building: [ {
+    name: String,
+    level: [ Number ]
+  } ],
+  research: [ {
+    name: String,
+    level: Number
+  }],
+  walls: [ Number],
   log: [ {
       title: String,
       level: Number,
       complete: Date
   }],
+  hero: [ {
+    title: String, 
+    level: Number
+  }], 
+  upgrade: [ {
+    name: String,
+    title: String,
+    index: Number,
+    level: Number,
+    time: Number,
+    due: Date
+    } ],
   hashedPassword: String,
   provider: String,
   salt: String

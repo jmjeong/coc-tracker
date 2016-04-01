@@ -6,6 +6,9 @@ var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var _ = require('lodash');
 var moment = require('moment');
+var logger = require('log4js').getLogger('user.controller');
+
+logger.setLevel('INFO');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -89,7 +92,7 @@ exports.me = function(req, res, next) {
   var userId = req.user._id;
   User.findOne({
     _id: userId
-  }, '-salt -hashedPassword -data', function(err, user) { // don't ever give out the password or salt
+  }, 'name email role lastUpdated', function(err, user) { // don't ever give out the password or salt
     if (err) return next(err);
     if (!user) return res.json(401);
     res.json(user);
@@ -106,9 +109,10 @@ exports.getData = function(req, res, next) {
     }
     User.findOne({
         _id: userId
-    }, 'data name', function(err, user) { // don't ever give out the password or salt
+    }, 'name log upgrade settting research building', function(err, user) { // don't ever give out the password or salt
         if (err) return next(err);
         if (!user) return res.json(401);
+        logger.info(user);
         res.json(user);
     });
 };
@@ -123,7 +127,7 @@ exports.getLog = function(req, res, next) {
     }
     User.findOne({
         _id: userId
-    }, 'log name', function(err, user) {
+    }, 'name log', function(err, user) {
         if (err) return next(err);
         if (!user) return res.json(401);
         res.json(user);
@@ -140,17 +144,32 @@ exports.getUpgrade = function(req, res, next) {
     }
     User.findOne({
         _id: userId
-    }, 'data name', function(err, user) {
+    }, 'name upgrade', function(err, user) {
         if (err) return next(err);
         if (!user) return res.json(401);
-		// console.log(user);
-		var data = JSON.parse(user.data);
-        res.json(data.upgrade);
+		logger.info(user);
+        res.json(user);
     });
 };
 
 exports.putData = function(req, res, next) {
-    var userId = req.user._id;
+    logger.info('putData', req.user._id, req.body.action, req.body.data);
+    var lastUpdated = new moment();
+
+    switch (req.body.action) {
+        case 'setting': {
+            User.findById(req.user._id, function(err, user) {
+                if (err) return res.send(500,err);
+                if (!user) return res.send(404);
+
+                _.map(req.body.data, function(d) {
+                    user.setting[d.name] = d.value;
+                });
+                user.lastUpdated = lastUpdated;
+            });
+        }
+    }
+/*
     User.findById(req.user._id, function (err, user) {
         if (err) return res.send(500, err);
         if (!user) return res.send(404);
@@ -158,14 +177,8 @@ exports.putData = function(req, res, next) {
         var data = {}
         if (user.data)
             data = JSON.parse(user.data);
-        console.log('putData', userId, req.body.action, req.body.data);
-        if (req.body.updated) { // not used anymore
-            return res.send(500, 'obsolete api');
-            //_.map(req.body.updated, function(d) {
-            //    data[d.key] = d.value
-            //});
-        }
-		console.log('userdata', data);
+
+		logger.info('userdata', data);
         var HEROFLAG = 100;
         if (req.body.action) {
             user.lastUpdated = new moment();
@@ -247,6 +260,7 @@ exports.putData = function(req, res, next) {
             res.send(200);
         });
     });
+    */
 };
 
 /**

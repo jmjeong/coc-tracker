@@ -5,13 +5,15 @@ angular.module 'cocApp'
     _id = undefined
     initUser = (user)->
         user.upgrade ?= []
-        user.hall ?= 7
-        user.builder ?= 3
-        user.set ?= {}
-        user.set.hideDone ?= false
-        user.set.hideDoneResearch ?= false
-        user.limitTo ?= 5
-        user
+        user.setting ?= {}
+        user.setting.hall ?= 8
+        user.setting.builder ?= 4
+        user.setting.hideDoneBuilding ?= false
+        user.setting.hideDoneResearch ?= false
+        user.setting.limitTo ?= 5
+        user.building ?= {}
+        user.building.townhall = [user.setting.hall];
+        #console.log(user);
 
     get: (id) ->
         _id = id
@@ -31,15 +33,11 @@ angular.module 'cocApp'
             if Auth.isLoggedInAsync()
                 $http.get '/api/users/me/data'
                 .then (response)->
-                    # console.log(response)
-                    if (response.data.data == undefined)
-                        user = {}
-                    else
-                        user = JSON.parse(response.data.data)
-                    initUser(user)
+                    console.log(response)
+                    initUser(response.data)
                     {
                         viewname: undefined
-                        user: user
+                        user: response.data
                     }
             else
                 user = localStorageService.get('user')
@@ -74,17 +72,17 @@ angular.module 'cocApp'
 
     set: (action, data, user, cb) ->
         if (!_id)
-            # console.log(action, data);
+            console.log(action, data);
             if Auth.isLoggedInAsync()
                 $http.post '/api/users/me/data',
                     action: action
                     data: data
                 .success (response)->
                     # console.log(response)
-                    cb() if cb            
+                    cb() if cb
             else
                 localStorageService.set('user', user)
-                cb() if cb      
+                cb() if cb
 
 .factory 'util', (userFactory, lodash, HEROFLAG) ->
 
@@ -148,11 +146,12 @@ angular.module 'cocApp'
 
         for item in hero_list()
             name = cannonicalName(item)
-            maxlevel = max_level(user.hall, hD[name]['required town hall'])
+            maxlevel = max_level(user.setting.hall, hD[name]['required town hall'])
             continue if (maxlevel < 1)
             uc = hD[name]['training cost']
             ut = hD[name]['training time']
 
+            console.log(user);
             level = user[name]
             find = lodash.findIndex user.upgrade,
                                     name: name,
@@ -168,7 +167,7 @@ angular.module 'cocApp'
                     mdt += ut[i]
                 else if find >= 0 && i+1 == user.upgrade[find].level
                     doneDarkCost += uc[i] if type == 'd'
-                    doneDarkCost += uc[i] if type == 'e'                    
+                    doneDarkCost += uc[i] if type == 'e'
                     due = moment(user.upgrade[find].due)
                     dueMinutes = parseInt(moment.duration(due.diff(moment())).asMinutes())
                     requiredTime += dueMinutes
@@ -177,7 +176,7 @@ angular.module 'cocApp'
                     mdt += ut[i]-dueMinutes
                 else
                     requiredDarkCost += uc[i] if type == 'd'
-                    requiredElixirCost += uc[i] if type == 'e'                    
+                    requiredElixirCost += uc[i] if type == 'e'
                     requiredTime += ut[i]
                     mrt += ut[i]
             maxRequiredTime = lodash.max([maxRequiredTime, mrt])
@@ -277,7 +276,7 @@ angular.module 'cocApp'
         user[name] ?= []
 
         uc = bD[name]['upgrade cost']
-        maxLevel = max_level(user.hall, bD[name]['required town hall'])
+        maxLevel = max_level(user.setting.hall, bD[name]['required town hall'])
         elixirLevel = (8-1)
 
         for i in [0..maxLevel-1]
@@ -310,7 +309,7 @@ angular.module 'cocApp'
         requiredElixirCost = requiredDarkCost = 0
         doneElixirCost = doneDarkCost = 0
         requiredTime = doneTime = 0
-        labLevel = max_level(user.hall, bD['laboratory']['required town hall'])
+        labLevel = max_level(user.setting.hall, bD['laboratory']['required town hall'])
 
         for item in upgrade_list()
             name = cannonicalName(item)

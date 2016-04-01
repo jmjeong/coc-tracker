@@ -9,7 +9,7 @@ angular.module('cocApp')
     $scope.timeStr = util.timeStr
     $scope.costFormat = util.costFormat
     $scope.upgradeList = user.upgrade
-    $scope.limitTo = user.limitTo
+    $scope.limitTo = user.setting.limitTo
     $scope.remainTime = util.remainTime
     $scope.timeStrMoment = util.timeStrMoment
 
@@ -27,20 +27,22 @@ angular.module('cocApp')
         $scope.data = []
         for title in util.hero_list()
             name = util.cannonicalName(title)
-            user[name] ?= 0
-            maxlevel = util.max_level(user.hall, hD[name]['required town hall'])
+            user.hero ?= {}
+            user.hero[name] ?= 0
+
+            maxlevel = util.max_level(user.setting.hall, hD[name]['required town hall'])
             continue if (maxlevel <= 1)
-            continue if (user.set.hideDone && user[name] >= maxlevel)
+            continue if (user.setting.hideDoneBuilding && user.hero[name] >= maxlevel)
             find = lodash.findIndex(user.upgrade, {
                 name: name,
                 index: HEROFLAG
             })
-            level = user[name]
+            level = user.hero[name]
             level++ if find >= 0
             $scope.data.push
                 title: title
                 name: name
-                level: user[name]
+                level: user.hero[name]
                 maxLevel: maxlevel
                 nextUpgrade: nextUpgrade(level, maxlevel,hD[name]['training time'], hD[name]['training cost'], hD[name]['cost type'])
 
@@ -62,12 +64,12 @@ angular.module('cocApp')
         $scope.data[index].nextUpgrade = nextUpgrade(currentLevel, maxLevel,
                                                      hD[name]['training time'], hD[name]['training cost'],'d')
         if oldLevel != currentLevel
-            user[name] = currentLevel
+            user.hero[name] = currentLevel
             $scope.summary = util.totalHeroCostTime(user)
             userFactory.set('changeLevel', [{name:name,index:HEROFLAG,level:currentLevel}], user)
 
     $scope.upgrade = (name, title, index) ->
-        level = user[name] ? 0
+        level = user.hero[name] ? 0
         user.upgrade ?= []
 
         find = lodash.findIndex(user.upgrade, {
@@ -106,7 +108,7 @@ angular.module('cocApp')
             $scope.upgradeAction(name, title, index, value)
 
     $scope.upgradeAction = (name, title, index, value) ->
-        level = user[name] ? 0
+        level = user.hero[name] ? 0
         user.upgrade ?= []
 
         find = lodash.findIndex(user.upgrade, {
@@ -146,7 +148,7 @@ angular.module('cocApp')
                 $scope.data[index].upgradeIdx = find
             userFactory.set('changeUpgrade',[{name:name,title:title,index:HEROFLAG,level:level+1,time:ut[level],due:due}],user)
             level++
-        maxlevel = util.max_level(user.hall, hD[name]['required town hall'])
+        maxlevel = util.max_level(user.setting.hall, hD[name]['required town hall'])
         $scope.data[index].nextUpgrade = nextUpgrade(level, maxlevel,
                                                      hD[name]['training time'], hD[name]['training cost'],'d')
         $scope.summary = util.totalHeroCostTime(user)

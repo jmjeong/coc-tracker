@@ -11,9 +11,9 @@ ul
     li
         div.form-group
             div.checkbox-inline
-                input(type='checkbox' ng-model='set.hideDone' ng-click='settingChanged()' ng-disabled='viewname')
+                input(type='checkbox' ng-model='hideDoneBuilding' ng-click='setHideDoneBuilding()' ng-disabled='viewname')
                 span Hide max upgraded building
             div
             div.checkbox-inline
-                input(type='checkbox' ng-model='set.hideDoneResearch' ng-click='settingChanged()' ng-disabled='viewname')
+                input(type='checkbox' ng-model='hideDoneResearch' ng-click='setHideDoneResearch()' ng-disabled='viewname')
                 span Hide max upgraded research
