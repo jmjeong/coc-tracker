@@ -54,7 +54,6 @@ angular.module('cocApp')
                 # continue if ($scope.hideDoneBuilding && currentLevel >= maxLevel)
                 walls.data.push(
                     idx: i-start
-                    level: i+1
                     count: count
                     upgrade: nextUpgrade(i+1, maxLevel, bD[name]['upgrade cost'], user)
                 )
@@ -62,17 +61,20 @@ angular.module('cocApp')
 
     update()
 
-    $scope.changeNum = (level, idx, count) ->
-        return if count == undefined || count < 0
-        user['walls'][level-1] = count
+    $scope.changeNum = (idx, count) ->
+        if (count == undefined || count < 0)
+            $scope.walls.data[idx].count = 0;
+            return;
+
+        user['walls'][idx] = count
         maxLevel = util.max_level(user.setting.hall, bD[name]['required town hall'])
-        $scope.walls.data[idx].upgrade = nextUpgrade(level, maxLevel, bD[name]['upgrade cost'], user)
+        $scope.walls.data[idx].upgrade = nextUpgrade(idx+1, maxLevel, bD[name]['upgrade cost'], user)
         total = 0
         for i in [0..maxLevel-1]
             total += user['walls'][i]
         $scope.walls.total = total
         $scope.summary = util.totalWallCost(user)
-        userFactory.set('changeLevel', [{name:'walls',index:level-1,level:count}], user)
+        userFactory.set({'action':'changeLevel','data':{name:'walls',index:idx,level:count}}, user)
 
     $scope.pString = ->
         "may replace elixirs for walls"

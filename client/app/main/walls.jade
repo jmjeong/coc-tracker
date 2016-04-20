@@ -16,10 +16,10 @@ div(ng-include="'app/main/subnav.html'")
                 tr(ng-repeat='w in walls.data')
                     td
                         img(ng-src="/assets/walls{{w.level}}.png" width='30')
-                        span  Level {{w.level}}
+                        span  Level {{w.idx+1}}
                     td
                         input.form-control(type='number' name='count' ng-model='w.count' ng-max-length='3'
-                        ng-change='changeNum(w.level, w.idx, w.count)' ng-disabled='viewname')
+                        ng-change='changeNum(w.idx, w.count)' ng-disabled='viewname')
                         div.error(ng-show='form.count.$dirty && form.count.$invalid')
                             small Error
                     td

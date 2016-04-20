@@ -236,7 +236,7 @@ exports.putData = function(req, res, next) {
                     else data.upgrade[find] = d;
                 });
                 break;
-            case 'cancelUpgrade':
+            case 'removeUpgrade':
                 _.map(req.body.data, function(d) {
                     var name = d.name;
                     var index = d.index;

@@ -70,19 +70,18 @@ angular.module 'cocApp'
                     log: []
                 }
 
-    set: (action, data, user, cb) ->
+    set: (actLists, user, cb) ->
         if (!_id)
-            console.log(action, data);
+            console.log(actLists);
             if Auth.isLoggedInAsync()
                 $http.post '/api/users/me/data',
-                    action: action
-                    data: data
+                    actLists
                 .success (response)->
                     # console.log(response)
-                    cb() if cb
+                    cb && cb()
             else
                 localStorageService.set('user', user)
-                cb() if cb
+                cb && cb()
 
 .factory 'util', (userFactory, lodash, HEROFLAG) ->
 
@@ -151,7 +150,6 @@ angular.module 'cocApp'
             uc = hD[name]['training cost']
             ut = hD[name]['training time']
 
-            console.log(user);
             level = user[name]
             find = lodash.findIndex user.upgrade,
                                     name: name,
@@ -193,16 +191,27 @@ angular.module 'cocApp'
         now = new moment()
         fired = lodash.filter user.upgrade, (u)->
             now.isAfter(moment(u.due))
-        if fired.length > 0
-            for u in fired
-                if u.index >= 0 && u.index != HEROFLAG
-                    user[u.name][u.index] = u.level
-                else
-                    user[u.name] = u.level
-            lodash.remove user.upgrade, (u) ->
-                now.isAfter(moment(u.due))
-            return 0
-        else return 1
+
+        return 1 if fired.length == 0
+
+        upgradeDone = []
+
+        for u in fired
+            upgradeDone.push({name:u.name,index:u.index,level:u.level})
+            if u.index == HEROFLAG
+                user.hero[u.name] = u.level
+            else if u.index >= 0
+                user.building[u.name][u.index] = u.level
+            else
+                user.research[u.name] = u.level
+
+        lodash.remove user.upgrade, (u) ->
+            now.isAfter(moment(u.due))
+
+
+        console.log(upgradeDone)
+
+        return 0
 
     return {
 
@@ -351,7 +360,7 @@ angular.module 'cocApp'
     max_level: max_level
     timeStr: (time) ->
         switch
-            when time == 0 then '0'
+            when time == 0 || time == undefined then '0'
             when time < 60 then parseInt(time) + 'm'
             when time < 60 * 24 then parseInt(time / 60) + 'h'
             else
@@ -387,7 +396,7 @@ angular.module 'cocApp'
         intervalPromise = $interval ()->
             return if $scope.viewname
             if !checkUpgrade(user)
-                userFactory.set('completeUpgrade', [], user, ()->
+                userFactory.set({'action':'completeUpgrade', 'data':[]}, user, ()->
                     cb();
                 );
 

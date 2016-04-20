@@ -157,7 +157,7 @@ angular.module 'cocApp'
             time: value
             due: due
         update()
-        userFactory.set('changeUpgrade',[{name:name,title:title,index:index,level:level,time:value,due:due}],user)
+        userFactory.set({'action':'changeUpgrade','data':{name:name,title:title,index:index,level:level,time:value,due:due}},user)
 
     $scope.gemPrice = (time) ->
         time *= 60

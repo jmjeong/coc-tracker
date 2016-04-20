@@ -66,7 +66,7 @@ angular.module('cocApp')
         if oldLevel != currentLevel
             user.hero[name] = currentLevel
             $scope.summary = util.totalHeroCostTime(user)
-            userFactory.set('changeLevel', [{name:name,index:HEROFLAG,level:currentLevel}], user)
+            userFactory.set({'action': 'changeLevel', data: {name:name,index:HEROFLAG,level:currentLevel}}, user)
 
     $scope.upgrade = (name, title, index) ->
         level = user.hero[name] ? 0
@@ -122,7 +122,7 @@ angular.module('cocApp')
                 index: HEROFLAG
             })
             $scope.data[index].upgradeIdx = -1
-            userFactory.set('cancelUpgrade',[{name:name,index:HEROFLAG}],user)
+            userFactory.set({'action':'removeUpgrade','data':{name:name,index:HEROFLAG}},user)
         else
             due = new moment()
             due = due.add(value, 'minutes')
@@ -146,7 +146,7 @@ angular.module('cocApp')
                     time: ut[level]
                     due: due
                 $scope.data[index].upgradeIdx = find
-            userFactory.set('changeUpgrade',[{name:name,title:title,index:HEROFLAG,level:level+1,time:ut[level],due:due}],user)
+            userFactory.set({'action':'changeUpgrade', 'data':{name:name,title:title,index:HEROFLAG,level:level+1,time:ut[level],due:due}},user)
             level++
         maxlevel = util.max_level(user.setting.hall, hD[name]['required town hall'])
         $scope.data[index].nextUpgrade = nextUpgrade(level, maxlevel,

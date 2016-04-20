@@ -72,7 +72,7 @@ angular.module('cocApp')
         if oldLevel != currentLevel
             user.research[name] = currentLevel
             $scope.summary = util.totalResearchCostTime(user)
-            userFactory.set('changeLevel', [{name:name,index:-1,level:currentLevel}], user)
+            userFactory.set({'action':'changeLevel', 'data':{name:name,index:-1,level:currentLevel}}, user)
 
     $scope.upgrade = (name, title, index) ->
         level = user.research[name] ? 0
@@ -128,7 +128,7 @@ angular.module('cocApp')
                 index: -1
             })
             $scope.data[index].upgradeIdx = -1
-            userFactory.set('cancelUpgrade',[{name:name,index:-1}],user)
+            userFactory.set({'action':'removeUpgrade','data':{name:name,index:-1}},user)
         else
             due = new moment()
             due = due.add(value, 'minutes')
@@ -151,7 +151,7 @@ angular.module('cocApp')
                     time: ut[level]*60
                     due: due
                 $scope.data[index].upgradeIdx = find
-            userFactory.set('changeUpgrade',[{name:name,title:title,index:-1,level:level+1,time:ut[level]*60,due:due}],user)
+            userFactory.set({'action':'changeUpgrade','data':{name:name,title:title,index:-1,level:level+1,time:ut[level]*60,due:due}},user)
             level++
         maxlevel = util.max_level(labLevel, rD[name]['laboratory level'])
         $scope.data[index].nextUpgrade = nextUpgrade(level, maxlevel,

@@ -105,7 +105,7 @@ angular.module 'cocApp'
             $scope.summary = util.totalCostTime(category, user)
             if ($scope.isResource)
                 $scope.totalProduction = util.totalProduction(user)
-            userFactory.set('changeLevel', [{name:name,index:$scope.detail[name][index].idx,level:currentLevel}], user)
+            userFactory.set({'action':'changeLevel','data':{name:name,index:$scope.detail[name][index].idx,level:currentLevel}}, user)
 
     $scope.timeWithBuilder = (time, builder, maxTime) ->
         # console.log($scope.longRequiredTime, $scope.requiredTime)
@@ -115,21 +115,21 @@ angular.module 'cocApp'
 
     $scope.setHall = (hall) ->
         $scope.hall = user.setting.hall = hall
-        userFactory.set('set', [{name:'hall',value:user.setting.hall}], user)
+        userFactory.set({'action':'set', 'data':{name:'hall',value:user.setting.hall}}, user)
         update()
 
     $scope.setBuilder = (builder) ->
         $scope.builder = user.setting.builder = builder
-        userFactory.set('set', [{name:'builder', value:builder}], user)
+        userFactory.set({'action':'set', 'data':{name:'builder', value:builder}}, user)
 
     $scope.setHideDoneBuilding = (flag) ->
         user.setting.hideDoneBuilding = $scope.hideDoneBuilding = flag
-        console.log($scope.hideDoneBuilding, $scope.hideDoneResearch);
-        userFactory.set('set', [{name:'hideDoneBuilding', value:$scope.hideDoneBuilding}], user)
+        # console.log($scope.hideDoneBuilding, $scope.hideDoneResearch);
+        userFactory.set({'action':'set', 'data':{name:'hideDoneBuilding', value:$scope.hideDoneBuilding}}, user)
 
     $scope.setHideDoneResearch = (flag) ->
         user.setting.hideDoneResearch = $scope.hideDoneResearch = flag
-        userFactory.set('set', [{name:'hideDoneResearch', value:$scope.hideDoneResearch}], user)
+        userFactory.set({'action':'set', 'data':{name:'hideDoneResearch', value:$scope.hideDoneResearch}}, user)
 
     $scope.upgrade = (name, title, index) ->
         idx = $scope.detail[name][index].idx
@@ -186,7 +186,7 @@ angular.module 'cocApp'
                 index: idx
             })
             $scope.detail[name][index].upgradeIdx = -1
-            userFactory.set('cancelUpgrade',[{name:name,index:idx}],user)
+            userFactory.set({'action':'removeUpgrade','data':{name:name,index:idx}},user)
         else
             due = new moment()
             due = due.add(value, 'minutes')
@@ -211,7 +211,7 @@ angular.module 'cocApp'
                     time: ut[level]
                     due: due
                 }
-            userFactory.set('changeUpgrade',[{name:name,title:title,index:idx,level:level+1,time:ut[level],due:due}],user)
+            userFactory.set({'action':'changeUpgrade','data':{name:name,title:title,index:idx,level:level+1,time:ut[level],due:due}},user)
             level++
         maxLevel = util.max_level(user.setting.hall, bD[name]['required town hall'])
         uc = bD[name]['upgrade cost']
@@ -219,7 +219,7 @@ angular.module 'cocApp'
         $scope.summary = util.totalCostTime(category, user)
         if ($scope.isResource)
             $scope.totalProduction = util.totalProduction(user)
-    $scope.cancelUpgrade = (name, index) ->
+    $scope.removeUpgrade = (name, index) ->
         lodash.remove(user.upgrade, {
                name: name,
                index: index
@@ -234,7 +234,7 @@ angular.module 'cocApp'
         $scope.researchSummary = util.totalResearchCostTime(user)
         if ($scope.isResource)
             $scope.totalProduction = util.totalProduction(user)
-        userFactory.set('cancelUpgrade',[{name:name,index:index}],user)
+        userFactory.set({'action':'removeUpgrade','data':{name:name,index:index}},user)
 
     $scope.pString = ->
         "may replace elixirs for walls"
