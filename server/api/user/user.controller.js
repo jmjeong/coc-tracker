@@ -109,7 +109,7 @@ exports.getData = function(req, res, next) {
     }
     User.findOne({
         _id: userId
-    }, 'name log upgrade settting research building', function(err, user) { // don't ever give out the password or salt
+    }, 'name log upgrade settting research building walls', function(err, user) { // don't ever give out the password or salt
         if (err) return next(err);
         if (!user) return res.json(401);
         logger.info(user);
@@ -153,22 +153,51 @@ exports.getUpgrade = function(req, res, next) {
 };
 
 exports.putData = function(req, res, next) {
-    logger.info('putData', req.user._id, req.body.action, req.body.data);
+    logger.info('putData', req.user._id, req.body);
     var lastUpdated = new moment();
+    var HEROFLAG = 100;
 
-    switch (req.body.action) {
-        case 'setting': {
-            User.findById(req.user._id, function(err, user) {
-                if (err) return res.send(500,err);
-                if (!user) return res.send(404);
+    User.findById(req.user._id, function(err, user) {
+        if (err) return res.send(500,err);
+        if (!user) return res.send(404);
+        _.map(req.body, function(d) {
+            console.log(d);
+            switch (d.action) {
+                case 'changeLevel':
+                {
+                    if (d.data.index == HEROFLAG) {
+                        user.hero[d.data.name] = d.data.level;
+                    }
+                    else if (d.data.index < 0) {
+                        user.research[d.data.name] = d.data.level;
+                        console.log(user.research);
+                    }
+                    else {
+                        // console.log(user.building, user.building.airdefense, user.building['airdefense'], d.name)
+                        user.building[d.data.name].set(d.data.index, d.data.level);
+                        console.log(user.building);
+                    }
 
-                _.map(req.body.data, function(d) {
-                    user.setting[d.name] = d.value;
-                });
-                user.lastUpdated = lastUpdated;
-            });
-        }
-    }
+                    break;
+                }
+                case 'changeWall': {
+                    user.walls.set(d.data.index, d.data.level);
+                    break;
+                }
+                case 'set': {
+
+                }
+
+            }
+        });
+        user.lastUpdated = lastUpdated;
+        user.save(function (err) {
+            err & console.error(err);
+
+            if (err) return res.send(500, err);
+            res.send(200);
+        });
+    });
 /*
     User.findById(req.user._id, function (err, user) {
         if (err) return res.send(500, err);
@@ -179,7 +208,7 @@ exports.putData = function(req, res, next) {
             data = JSON.parse(user.data);
 
 		logger.info('userdata', data);
-        var HEROFLAG = 100;
+
         if (req.body.action) {
             user.lastUpdated = new moment();
             switch (req.body.action) {

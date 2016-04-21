@@ -74,7 +74,7 @@ angular.module('cocApp')
             total += user['walls'][i]
         $scope.walls.total = total
         $scope.summary = util.totalWallCost(user)
-        userFactory.set({'action':'changeLevel','data':{name:'walls',index:idx,level:count}}, user)
+        userFactory.set({'action':'changeWall','data':{name:'walls',index:idx,level:count}}, user)
 
     $scope.pString = ->
         "may replace elixirs for walls"

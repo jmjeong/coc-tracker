@@ -19,24 +19,68 @@ var UserSchema = new Schema({
     limitTo: Number,
     builder: Number
   },
-  building: [ {
-    name: String,
-    level: [ Number ]
-  } ],
-  research: [ {
-    name: String,
-    level: Number
-  }],
+  building: {
+      townhall: [Number],
+      airdefense: [Number],
+      airsweeper: [Number],
+      archertower: [Number],
+      cannon: [Number],
+      hiddentesla: [Number],
+      mortar: [Number],
+      wizardtower: [Number],
+
+      airbomb: [Number],
+      bomb: [Number],
+      giantbomb: [Number],
+      seekingairmine: [Number],
+      skeletontrap: [Number],
+      springtrap: [Number],
+
+      armycamp: [Number],
+      barracks: [Number],
+      darkbarracks: [Number],
+      darkspellfactory: [Number],
+      laboratory: [Number],
+      spellfactory: [Number],
+
+      darkelixirdrill: [Number],
+      darkelixirstorage: [Number],
+      elixircollector: [Number],
+      elixirstorage: [Number],
+      goldmine: [Number],
+      goldstorage: [Number]
+  } ,
+  research: {
+      barbarian: Number,
+      archer: Number,
+      goblin: Number,
+      giant: Number,
+      wallbreaker: Number,
+      balloon: Number,
+      wizard: Number,
+      healer: Number,
+      dragon: Number,
+      pekka : Number,
+      minion: Number,
+      hogrider: Number,
+      valkyrie: Number,
+      golem: Number,
+      lightning: Number,
+      healing: Number,
+      rage: Number,
+      poison: Number,
+      earthquake: Number
+  },
   walls: [ Number],
   log: [ {
       title: String,
       level: Number,
       complete: Date
   }],
-  hero: [ {
-    title: String, 
-    level: Number
-  }], 
+  hero: {
+      barbarianking: Number,
+      archerqueen: Number
+  },
   upgrade: [ {
     name: String,
     title: String,

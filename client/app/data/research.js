@@ -221,28 +221,28 @@
     rD['dragon']['research cost']=[0,2000000,3000000,7000000,8000000];
 
     rD['list'].push('P.E.K.K.A');
-    rD['p.e.k.k.a']=[];
-    rD['p.e.k.k.a']['type']="Ground";
-    rD['p.e.k.k.a']['preferred target']="None";
-    rD['p.e.k.k.a']['multiplier']=1;
-    rD['p.e.k.k.a']['ground attack']=true;
-    rD['p.e.k.k.a']['air attack']=false;
-    rD['p.e.k.k.a']['splash radius']=-1;
-    rD['p.e.k.k.a']['housing space']=25;
-    rD['p.e.k.k.a']['training time']=2700;
-    rD['p.e.k.k.a']['movement speed']=16;
-    rD['p.e.k.k.a']['attack speed']=2.5;
-    rD['p.e.k.k.a']['barracks type']="Normal";
-    rD['p.e.k.k.a']['barracks level']=10;
-    rD['p.e.k.k.a']['trainable']=true;
-    rD['p.e.k.k.a']['range']=0.8;
-    rD['p.e.k.k.a']['death range']=-1;
-    rD['p.e.k.k.a']['dps']=[240,270,300,340,380];
-    rD['p.e.k.k.a']['hitpoints']=[2800,3100,3500,4000,4500];
-    rD['p.e.k.k.a']['training cost']=[30000,35000,40000,45000,50000];
-    rD['p.e.k.k.a']['laboratory level']=[6,6,6,8,8];
-    rD['p.e.k.k.a']['research time']=[0,240,288,336,336];
-    rD['p.e.k.k.a']['research cost']=[0,3000000,6000000,7000000,8000000];
+    rD['pekka']=[];
+    rD['pekka']['type']="Ground";
+    rD['pekka']['preferred target']="None";
+    rD['pekka']['multiplier']=1;
+    rD['pekka']['ground attack']=true;
+    rD['pekka']['air attack']=false;
+    rD['pekka']['splash radius']=-1;
+    rD['pekka']['housing space']=25;
+    rD['pekka']['training time']=2700;
+    rD['pekka']['movement speed']=16;
+    rD['pekka']['attack speed']=2.5;
+    rD['pekka']['barracks type']="Normal";
+    rD['pekka']['barracks level']=10;
+    rD['pekka']['trainable']=true;
+    rD['pekka']['range']=0.8;
+    rD['pekka']['death range']=-1;
+    rD['pekka']['dps']=[240,270,300,340,380];
+    rD['pekka']['hitpoints']=[2800,3100,3500,4000,4500];
+    rD['pekka']['training cost']=[30000,35000,40000,45000,50000];
+    rD['pekka']['laboratory level']=[6,6,6,8,8];
+    rD['pekka']['research time']=[0,240,288,336,336];
+    rD['pekka']['research cost']=[0,3000000,6000000,7000000,8000000];
 
     rD['list'].push('Minion');
     rD['minion']=[];
@@ -452,7 +452,7 @@
     rD['lavahound']['research cost']=[0,60000,70000];
     rD['lavahound']['subtroops']=[8,10,12];
     rD['lavahound']['max subtroops']=[8,10,12];
-    
+
     rD['list'].push('Lava Pup');
     rD['lavapup']=[];
     rD['lavapup']['subtype']="Lava Hound";

@@ -75,9 +75,9 @@ angular.module 'cocApp'
             console.log(actLists);
             if Auth.isLoggedInAsync()
                 $http.post '/api/users/me/data',
-                    actLists
+                    [ actLists ]
                 .success (response)->
-                    # console.log(response)
+                    console.log(response)
                     cb && cb()
             else
                 localStorageService.set('user', user)
@@ -86,7 +86,7 @@ angular.module 'cocApp'
 .factory 'util', (userFactory, lodash, HEROFLAG) ->
 
     cannonicalName =  (name) ->
-        name.replace(/\s+|\'/g, '').toLowerCase()
+        name.replace(/\s+|\./g, '').toLowerCase()
 
     max_level = (level, required) ->
         for l, i in required by -1
