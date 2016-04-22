@@ -75,12 +75,12 @@ bD['hiddentesla']['upgrade time']=[1440,4320,7200,8640,11520,14400,17280,20160,]
 bD['hiddentesla']['upgrade cost']=[[1000000,0,0],[1250000,0,0],[1500000,0,0],[2000000,0,0],[2500000,0,0],[3000000,0,0],[3500000,0,0],[5000000,0,0],]
 
 bD['list'].push('X-Bow')
-bD['number available']['x-bow']=[0,0,0,0,0,0,0,0,2,3,4,]
-bD['x-bow']=[]
-bD['x-bow']['type']="Defense"
-bD['x-bow']['required town hall']=[9,9,9,10,]
-bD['x-bow']['upgrade time']=[10080,14400,20160,20160,]
-bD['x-bow']['upgrade cost']=[[3000000,0,0],[5000000,0,0],[7000000,0,0],[8000000,0,0],]
+bD['number available']['xbow']=[0,0,0,0,0,0,0,0,2,3,4,]
+bD['xbow']=[]
+bD['xbow']['type']="Defense"
+bD['xbow']['required town hall']=[9,9,9,10,]
+bD['xbow']['upgrade time']=[10080,14400,20160,20160,]
+bD['xbow']['upgrade cost']=[[3000000,0,0],[5000000,0,0],[7000000,0,0],[8000000,0,0],]
 
 bD['list'].push('Inferno Tower')
 bD['number available']['infernotower']=[0,0,0,0,0,0,0,0,0,2,2,]

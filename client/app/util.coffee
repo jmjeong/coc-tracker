@@ -86,7 +86,7 @@ angular.module 'cocApp'
 .factory 'util', (userFactory, lodash, HEROFLAG) ->
 
     cannonicalName =  (name) ->
-        name.replace(/\s+|\./g, '').toLowerCase()
+        name.replace(/\s+|\.|-/g, '').toLowerCase()
 
     max_level = (level, required) ->
         for l, i in required by -1
@@ -150,7 +150,7 @@ angular.module 'cocApp'
             uc = hD[name]['training cost']
             ut = hD[name]['training time']
 
-            level = user[name]
+            level = user.hero[name]
             find = lodash.findIndex user.upgrade,
                                     name: name,
                                     index: HEROFLAG
@@ -228,16 +228,16 @@ angular.module 'cocApp'
         doneTime = maxDoneTime = 0
         for item in building_list(type)
             name = cannonicalName(item)
-            availableNum = bD['number available'][name][user.hall-1]
+            availableNum = bD['number available'][name][user.setting.hall-1]
             continue if (availableNum == 0 )
 
-            maxLevel = max_level(user.hall, bD[name]['required town hall'])
+            maxLevel = max_level(user.setting.hall, bD[name]['required town hall'])
             uc = bD[name]['upgrade cost']
             ut = bD[name]['upgrade time']
 
             for i in [0..availableNum-1]
-                user[name] ?= []
-                currentLevel = user[name][i] ? 0
+                user.building[name] ?= []
+                currentLevel = user.building[name][i] ? 0
                 find = lodash.findIndex(user.upgrade, {
                     name: name,
                     index:  i
@@ -302,10 +302,10 @@ angular.module 'cocApp'
         pB = ['goldmine', 'elixircollector', 'darkelixirdrill']
         result = [0,0,0]
         for name in pB
-            availableNum = bD['number available'][name][user.hall-1]
+            availableNum = bD['number available'][name][user.setting.hall-1]
             continue if (availableNum == 0 )
             for i in [0..availableNum-1]
-                currentLevel = user[name][i] ? 0
+                currentLevel = user.building[name][i] ? 0
                 continue if (currentLevel == 0)
                 find = lodash.findIndex(user.upgrade, {
                     name: name,
@@ -327,7 +327,7 @@ angular.module 'cocApp'
             uc = rD[name]['research cost']
             ut = rD[name]['research time']
 
-            level = user[name]
+            level = user.research[name]
             find = lodash.findIndex user.upgrade,
                                     name: name,
                                     index: -1

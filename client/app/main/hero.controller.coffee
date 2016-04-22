@@ -66,7 +66,7 @@ angular.module('cocApp')
         if oldLevel != currentLevel
             user.hero[name] = currentLevel
             $scope.summary = util.totalHeroCostTime(user)
-            userFactory.set({'action': 'changeLevel', data: {name:name,index:HEROFLAG,level:currentLevel}}, user)
+            userFactory.set({'action': 'changeHero', data: {name:name,level:currentLevel}}, user)
 
     $scope.upgrade = (name, title, index) ->
         level = user.hero[name] ? 0

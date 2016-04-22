@@ -20,7 +20,6 @@ var UserSchema = new Schema({
     builder: Number
   },
   building: {
-      townhall: [Number],
       airdefense: [Number],
       airsweeper: [Number],
       archertower: [Number],
@@ -28,6 +27,7 @@ var UserSchema = new Schema({
       hiddentesla: [Number],
       mortar: [Number],
       wizardtower: [Number],
+      xbow: [Number],
 
       airbomb: [Number],
       bomb: [Number],
@@ -48,7 +48,11 @@ var UserSchema = new Schema({
       elixircollector: [Number],
       elixirstorage: [Number],
       goldmine: [Number],
-      goldstorage: [Number]
+      goldstorage: [Number],
+
+
+      clancastle: [Number],
+      townhall: [Number]
   } ,
   research: {
       barbarian: Number,
@@ -65,11 +69,17 @@ var UserSchema = new Schema({
       hogrider: Number,
       valkyrie: Number,
       golem: Number,
+      witch: Number,
+      lavahound: Number,
+      bowler: Number,
       lightning: Number,
       healing: Number,
       rage: Number,
+      jump: Number,
+      freeze: Number,
       poison: Number,
-      earthquake: Number
+      earthquake: Number,
+      haste1: Number
   },
   walls: [ Number],
   log: [ {
@@ -79,7 +89,8 @@ var UserSchema = new Schema({
   }],
   hero: {
       barbarianking: Number,
-      archerqueen: Number
+      archerqueen: Number,
+      grandwarden: Number
   },
   upgrade: [ {
     name: String,

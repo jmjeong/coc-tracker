@@ -105,7 +105,7 @@ angular.module 'cocApp'
             $scope.summary = util.totalCostTime(category, user)
             if ($scope.isResource)
                 $scope.totalProduction = util.totalProduction(user)
-            userFactory.set({'action':'changeLevel','data':{name:name,index:$scope.detail[name][index].idx,level:currentLevel}}, user)
+            userFactory.set({'action':'changeBuilding','data':{name:name,index:$scope.detail[name][index].idx,level:currentLevel}}, user)
 
     $scope.timeWithBuilder = (time, builder, maxTime) ->
         # console.log($scope.longRequiredTime, $scope.requiredTime)
@@ -115,21 +115,21 @@ angular.module 'cocApp'
 
     $scope.setHall = (hall) ->
         $scope.hall = user.setting.hall = hall
-        userFactory.set({'action':'set', 'data':{name:'hall',value:user.setting.hall}}, user)
+        userFactory.set({'action':'setting', 'data':{name:'hall',value:user.setting.hall}}, user)
         update()
 
     $scope.setBuilder = (builder) ->
         $scope.builder = user.setting.builder = builder
-        userFactory.set({'action':'set', 'data':{name:'builder', value:builder}}, user)
+        userFactory.set({'action':'setting', 'data':{name:'builder', value:builder}}, user)
 
     $scope.setHideDoneBuilding = (flag) ->
         user.setting.hideDoneBuilding = $scope.hideDoneBuilding = flag
         # console.log($scope.hideDoneBuilding, $scope.hideDoneResearch);
-        userFactory.set({'action':'set', 'data':{name:'hideDoneBuilding', value:$scope.hideDoneBuilding}}, user)
+        userFactory.set({'action':'setting', 'data':{name:'hideDoneBuilding', value:$scope.hideDoneBuilding}}, user)
 
     $scope.setHideDoneResearch = (flag) ->
         user.setting.hideDoneResearch = $scope.hideDoneResearch = flag
-        userFactory.set({'action':'set', 'data':{name:'hideDoneResearch', value:$scope.hideDoneResearch}}, user)
+        userFactory.set({'action':'setting', 'data':{name:'hideDoneResearch', value:$scope.hideDoneResearch}}, user)
 
     $scope.upgrade = (name, title, index) ->
         idx = $scope.detail[name][index].idx

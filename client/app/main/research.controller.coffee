@@ -72,7 +72,7 @@ angular.module('cocApp')
         if oldLevel != currentLevel
             user.research[name] = currentLevel
             $scope.summary = util.totalResearchCostTime(user)
-            userFactory.set({'action':'changeLevel', 'data':{name:name,index:-1,level:currentLevel}}, user)
+            userFactory.set({'action':'changeResearch', 'data':{name:name,level:currentLevel}}, user)
 
     $scope.upgrade = (name, title, index) ->
         level = user.research[name] ? 0

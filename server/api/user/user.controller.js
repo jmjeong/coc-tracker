@@ -100,7 +100,6 @@ exports.me = function(req, res, next) {
 };
 
 exports.getData = function(req, res, next) {
-    // console.log(req.params.id)
     if (req.params.id) {
         var userId = req.params.id;
     }
@@ -109,10 +108,9 @@ exports.getData = function(req, res, next) {
     }
     User.findOne({
         _id: userId
-    }, 'name log upgrade settting research building walls', function(err, user) { // don't ever give out the password or salt
+    }, 'name log hero upgrade setting research building walls', function(err, user) { // don't ever give out the password or salt
         if (err) return next(err);
         if (!user) return res.json(401);
-        logger.info(user);
         res.json(user);
     });
 };
@@ -163,31 +161,60 @@ exports.putData = function(req, res, next) {
         _.map(req.body, function(d) {
             console.log(d);
             switch (d.action) {
-                case 'changeLevel':
-                {
-                    if (d.data.index == HEROFLAG) {
-                        user.hero[d.data.name] = d.data.level;
-                    }
-                    else if (d.data.index < 0) {
-                        user.research[d.data.name] = d.data.level;
-                        console.log(user.research);
-                    }
-                    else {
-                        // console.log(user.building, user.building.airdefense, user.building['airdefense'], d.name)
-                        user.building[d.data.name].set(d.data.index, d.data.level);
-                        console.log(user.building);
-                    }
-
+                // case 'changeLevel':
+                // {
+                //     if (d.data.index == HEROFLAG) {
+                //         user.hero[d.data.name] = d.data.level;
+                //     }
+                //     else if (d.data.index < 0) {
+                //         user.research[d.data.name] = d.data.level;
+                //         console.log(user.research);
+                //     }
+                //     else {
+                //         // console.log(user.building, user.building.airdefense, user.building['airdefense'], d.name)
+                //         user.building[d.data.name].set(d.data.index, d.data.level);
+                //         console.log(user.building);
+                //     }
+                //
+                //     break;
+                // }
+                case 'changeHero':
+                    user.hero[d.data.name] = d.data.level;
                     break;
-                }
+                case 'changeBuilding':
+                    user.building[d.data.name].set(d.data.index, d.data.level);
+                    break;
+                case 'changeResearch':
+                    user.research[d.data.name] = d.data.level;
+                    break;
                 case 'changeWall': {
                     user.walls.set(d.data.index, d.data.level);
                     break;
                 }
-                case 'set': {
-
+                case 'setting': {
+                    user.setting[d.data.name] = d.data.value;
+                    break;
                 }
-
+                case 'removeUpgrade':
+                    var find = _.findIndex(user.upgrade, {
+                        name: d.data.name,
+                        index: d.data.index
+                    });
+                    if (find >= 0) {
+                        user.upgrade[find].remove();
+                    }
+                    break;
+                case 'changeUpgrade': {
+                    var find = _.findIndex(user.upgrade, {
+                        name: d.data.name,
+                        index: d.data.index
+                    });
+                    if (find < 0) {
+                        user.upgrade.push(d.data)
+                    }
+                    else user.upgrade.set(find, d.data);
+                    break;
+                }
             }
         });
         user.lastUpdated = lastUpdated;
