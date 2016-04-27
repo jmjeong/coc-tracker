@@ -238,7 +238,7 @@ angular.module 'cocApp'
                     name: name,
                     index:  i
                 if find < 0
-                    if (i <= availableNum)
+                    if (i < availableNum)
                         user.building[name][i] = maxLevel
                     else user.building[name][i] = 0
 
