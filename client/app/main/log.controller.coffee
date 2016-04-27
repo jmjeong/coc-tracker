@@ -1,9 +1,9 @@
 'use strict'
 
 angular.module 'cocApp'
-.controller 'LogCtrl', ($scope, $filter, data, util, ngTableParams) ->
+.controller 'LogCtrl', ($scope, $filter, data, util, lodash, ngTableParams) ->
 
-    $scope.viewname = data.viewname
+    $scope.readonlyName = data.readonlyName
     log = data.log
 
     $scope.tableParams = new ngTableParams
@@ -15,7 +15,6 @@ angular.module 'cocApp'
             complete: 'desc'
     ,
         getData: ($defer, params) ->
-            total = log.length
             orderedData = if params.filter() then $filter('filter')(log, params.filter()) else log
             orderedData = if params.sorting() then $filter('orderBy')(orderedData, params.orderBy()) else orderedData
             params.total(orderedData.length)

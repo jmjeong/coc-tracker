@@ -2,23 +2,6 @@ div(ng-include='"components/navbar/navbar.html"')
 div(ng-include="'app/main/subnav.html'")
 toast
 
-div
-    script(type='text/ng-template' id='myModalContent.html')
-        .modal-header
-            h4.modal-title Upgrade to {{sliders.title}} \#{{sliders.level}}
-        .modal-body
-            span.space Time: {{origin}}
-            span.text-primary ({{changed}})
-            p
-            p
-            span.text-iinfo Adjust Completion Time
-            span(slider ng-model="sliders.sliderValue" min=0 max="sliders.sliderMax"
-            value='sliders.sliderValue' formater='format' on-slide='sliderDelegate(value,$event)')
-        .modal-footer
-            button.btn.btn-primary(ng-click='ok()' ng-show='update') Update
-            button.btn.btn-primary(ng-click='ok()' ng-show='!update') Upgrade
-            button.btn.btn-danger(ng-click='stop()' ng-show='update') Stop
-
 .container
 
     table.table.table-bordered.table-condensed.col-md-12.top-margin
@@ -32,15 +15,15 @@ div
                 td {{d.title}}
                 td.text-center
                     a.btn.btn-default.btn-xs.pull-left(ng-click='changeLevel(d.name,$index,-1,d.maxLevel)'
-                    ng-disabled="d.level==0 || d.upgradeIdx>=0 || viewname")
+                    ng-disabled="d.level==0 || d.upgradeIdx>=0 || readonlyName")
                         span.glyphicon.glyphicon-minus
                     {{d.level}}/{{d.maxLevel}}
                     span.pull-right
                         a.btn.btn-default.btn-xs(ng-click='changeLevel(d.name,$index,1,d.maxLevel)'
-                        ng-disabled="d.level>=d.maxLevel || d.upgradeIdx >= 0 || viewname")
+                        ng-disabled="d.level>=d.maxLevel || d.upgradeIdx >= 0 || readonlyName")
                             span.glyphicon.glyphicon-plus
                         a.btn.btn-default.btn-xs(ng-click='upgrade(d.name,d.title,$index,d.maxLevel)'
-                                                ng-disabled="d.level>=d.maxLevel || viewname")
+                                                ng-disabled="d.level>=d.maxLevel || readonlyName")
                             span.glyphicon.glyphicon-home
                 td
                     div(ng-show='d.upgradeIdx >= 0')

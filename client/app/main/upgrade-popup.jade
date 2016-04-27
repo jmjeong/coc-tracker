@@ -1,0 +1,36 @@
+div
+    script(type='text/ng-template' id='myModalContent.html')
+        .modal-header
+            h4.modal-title Upgrade to {{title}} \#{{level}}
+        .modal-body
+            div
+                span.space
+                    b Time:
+                span.space {{origin}}
+                span.text-primary ({{changed}})
+            p
+            p
+            div
+                span.space.text-info
+                    b Adjust completion time
+            p
+            p
+            div
+                span(slider ng-model="sliderValue" min=0 max="sliderMax"
+                    value='sliderValue' formater='format' on-slide='sliderDelegate(value,$event)')
+            p
+            p
+            div.col-sm-12
+                input.form-inline.col-sm-2(type='number' ng-model='day' ng-max-length='2' ng-change='changeInput()')
+                span.col-sm-2 day
+                input.form-inline.col-sm-2(type='numbimler' ng-model='hour' ng-max-length='2' ng-change='changeInput()')
+                span.col-sm-2 hour
+                input.form-inline.col-sm-2(type='number' ng-model='minute' ng-max-length='2' ng-change='changeInput()')
+                span.col-sm-2 minutes
+            p
+            div
+                span.space
+        .modal-footer
+            button.btn.btn-primary(ng-click='ok()' ng-show='update') Update
+            button.btn.btn-primary(ng-click='ok()' ng-show='!update') Upgrade
+            button.btn.btn-danger(ng-click='stop()' ng-show='update') Stop

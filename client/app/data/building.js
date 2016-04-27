@@ -67,7 +67,7 @@ bD['wizardtower']['upgrade time']=[720,1440,2880,4320,5760,7200,10080,14400,1728
 bD['wizardtower']['upgrade cost']=[[180000,0,0],[360000,0,0],[720000,0,0],[1280000,0,0],[1960000,0,0],[2680000,0,0],[5360000,0,0],[6480000,0,0],[8560000,0,0]]
 
 bD['list'].push('Hidden Tesla')
-bD['number available']['hiddentesla']=[0,0,0,0,0,0,2,3,4,4,]
+bD['number available']['hiddentesla']=[0,0,0,0,0,0,2,3,4,4,4]
 bD['hiddentesla']=[]
 bD['hiddentesla']['type']="Defense"
 bD['hiddentesla']['required town hall']=[7,7,7,8,8,8,9,10,]
@@ -115,7 +115,7 @@ bD['springtrap']['upgrade time']=[0,]
 bD['springtrap']['upgrade cost']=[[2000,0,0],]
 
 bD['list'].push('Giant Bomb')
-bD['number available']['giantbomb']=[0,0,0,0,0,1,2,3,4,5,]
+bD['number available']['giantbomb']=[0,0,0,0,0,1,2,3,4,5,5]
 bD['giantbomb']=[]
 bD['giantbomb']['type']="Trap"
 bD['giantbomb']['required town hall']=[6,6,8,10,]
@@ -217,7 +217,7 @@ bD['armycamp']['upgrade time']=[5,60,180,480,1440,4320,7200,14400,]
 bD['armycamp']['upgrade cost']=[[0,250,0],[0,2500,0],[0,10000,0],[0,100000,0],[0,250000,0],[0,750000,0],[0,2250000,0],[0,6750000,0],]
 
 bD['list'].push('Barracks')
-bD['number available']['barracks']=[1,2,2,3,3,3,4,4,4,4,]
+bD['number available']['barracks']=[1,2,2,3,3,3,4,4,4,4,4,]
 bD['barracks']=[]
 bD['barracks']['type']="Army"
 bD['barracks']['required town hall']=[1,1,1,2,3,4,5,6,7,8,]

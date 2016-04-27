@@ -3,22 +3,7 @@ div(ng-include="'app/main/subnav.html'")
 
 toast
 
-div
-    script(type='text/ng-template' id='myModalContent.html')
-        .modal-header
-            h4.modal-title Upgrade to {{sliders.title}} \#{{sliders.level}}
-        .modal-body
-            span.space Time: {{origin}}
-            span.text-primary ({{changed}})
-            p
-            p
-            span.text-iinfo Adjust Completion Time
-            span(slider ng-model="sliders.sliderValue" min=0 max="sliders.sliderMax"
-                value='sliders.sliderValue' formater='format' on-slide='sliderDelegate(value,$event)')
-        .modal-footer
-            button.btn.btn-primary(ng-click='ok()' ng-show='update') Update
-            button.btn.btn-primary(ng-click='ok()' ng-show='!update') Upgrade
-            button.btn.btn-danger(ng-click='stop()' ng-show='update') Stop
+div(ng-include="'app/main/upgrade-popup.html'")
 
 .container
     table.table.table-bordered.table-condensed.col-md-12.top-margin
@@ -32,16 +17,16 @@ div
                 td(rowspan="{{detail[item.name].length}}") {{item.title}}
                 td.text-center
                     a.btn.btn-default.btn-xs.pull-left(ng-click='changeLevel(item.name,0,-1,item.maxLevel)'
-                        ng-disabled='detail[item.name][0].level==0 || detail[item.name][0].upgradeIdx>=0 || viewname')
+                        ng-disabled='detail[item.name][0].level==0 || detail[item.name][0].upgradeIdx>=0 || readonlyName')
                         span.glyphicon.glyphicon-minus
                     //a(href='#' editable-text="detail[item.name][0].level" buttons='no' e-style='width: 25px')
                     {{detail[item.name][0].level}}/{{item.maxLevel}}
                     span.pull-right
                         a.btn.btn-default.btn-xs(ng-click='changeLevel(item.name,0,1,item.maxLevel)'
-                            ng-disabled="detail[item.name][0].level>=item.maxLevel || detail[item.name][0].upgradeIdx >= 0 || viewname")
+                            ng-disabled="detail[item.name][0].level>=item.maxLevel || detail[item.name][0].upgradeIdx >= 0 || readonlyName")
                             span.glyphicon.glyphicon-plus
                         a.btn.btn-default.btn-xs(ng-click='upgrade(item.name,item.title,0)'
-                            ng-disabled="detail[item.name][0].level>=item.maxLevel || viewname")
+                            ng-disabled="detail[item.name][0].level>=item.maxLevel || readonlyName")
                             span.glyphicon.glyphicon-home
                 td
                     div(ng-show='detail[item.name][0].upgradeIdx >= 0')
@@ -61,16 +46,16 @@ div
             tr(ng-repeat-end ng-repeat="d in detail[item.name].slice(1)")
                 td.text-center
                     a.btn.btn-default.btn-xs.pull-left(ng-click='changeLevel(item.name,$index+1,-1,item.maxLevel)'
-                        ng-disabled="d.level==0 || d.upgradeIdx>=0 || viewname")
+                        ng-disabled="d.level==0 || d.upgradeIdx>=0 || readonlyName")
                         span.glyphicon.glyphicon-minus
                     // a(href='#' editable-text="d.level" buttons='no' e-style='width: 25px')
                     {{d.level}}/{{item.maxLevel}}
                     span.pull-right
                         a.btn.btn-default.btn-xs(ng-click='changeLevel(item.name,$index+1,1,item.maxLevel)'
-                            ng-disabled="d.level>=item.maxLevel || d.upgradeIdx >= 0 || viewname")
+                            ng-disabled="d.level>=item.maxLevel || d.upgradeIdx >= 0 || readonlyName")
                             span.glyphicon.glyphicon-plus
                         a.btn.btn-default.btn-xs(ng-click='upgrade(item.name,item.title,$index+1)'
-                            ng-disabled="d.level>=item.maxLevel || viewname")
+                            ng-disabled="d.level>=item.maxLevel || readonlyName")
                             span.glyphicon.glyphicon-home
                 td
                     div(ng-show='d.upgradeIdx >= 0')
@@ -137,4 +122,3 @@ div
                         span(ng-hide='summary.doneCost[2] == 0')
                             span.d {{costFormat(summary.doneCost[2])}}
                             icon-darkelixir
-

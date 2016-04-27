@@ -4,7 +4,7 @@ angular.module('cocApp')
 .controller 'HeroCtrl', ($scope, $modal, $interval, util, lodash, ngToast, userFactory, HEROFLAG, data) ->
     user = data.user
 
-    $scope.viewname = data.viewname
+    $scope.readonlyName = data.readonlyName
     $scope.costStr = util.costStr
     $scope.timeStr = util.timeStr
     $scope.costFormat = util.costFormat
@@ -32,11 +32,11 @@ angular.module('cocApp')
 
             maxlevel = util.max_level(user.setting.hall, hD[name]['required town hall'])
             continue if (maxlevel <= 1)
-            continue if (user.setting.hideDoneBuilding && user.hero[name] >= maxlevel)
             find = lodash.findIndex(user.upgrade, {
                 name: name,
                 index: HEROFLAG
             })
+            continue if (user.setting.hideDoneBuilding && user.hero[name] >= maxlevel && find < 0)
             level = user.hero[name]
             level++ if find >= 0
             $scope.data.push
@@ -66,7 +66,7 @@ angular.module('cocApp')
         if oldLevel != currentLevel
             user.hero[name] = currentLevel
             $scope.summary = util.totalHeroCostTime(user)
-            userFactory.set({'action': 'changeHero', data: {name:name,level:currentLevel}}, user)
+            userFactory.set([{'action': 'changeHero', data: {name:name,level:currentLevel}}], user)
 
     $scope.upgrade = (name, title, index) ->
         level = user.hero[name] ? 0
@@ -92,22 +92,9 @@ angular.module('cocApp')
         else
             value = ut[level]
 
-        modalInstance = $modal.open
-            templateUrl: 'myModalContent.html'
-            controller: 'ModalInstanceCtrl',
-            resolve:
-                data: () ->
-                    {
-                    sliderValue: value
-                    title: title
-                    sliderMax: ut[level]
-                    level: level+1
-                    update: (find >= 0)
-                    }
-        modalInstance.result.then (value) ->
-            $scope.upgradeAction(name, title, index, value)
+        util.showUpgradeModal($modal, $scope.upgradeAction, name, title, level+1, index, ut[level], value, (find>=0))
 
-    $scope.upgradeAction = (name, title, index, value) ->
+    $scope.upgradeAction = (name, title, index, level, value) ->
         level = user.hero[name] ? 0
         user.upgrade ?= []
 
@@ -122,7 +109,7 @@ angular.module('cocApp')
                 index: HEROFLAG
             })
             $scope.data[index].upgradeIdx = -1
-            userFactory.set({'action':'removeUpgrade','data':{name:name,index:HEROFLAG}},user)
+            userFactory.set([{'action':'removeUpgrade','data':{name:name,index:HEROFLAG}}],user)
         else
             due = new moment()
             due = due.add(value, 'minutes')
@@ -146,7 +133,7 @@ angular.module('cocApp')
                     time: ut[level]
                     due: due
                 $scope.data[index].upgradeIdx = find
-            userFactory.set({'action':'changeUpgrade', 'data':{name:name,title:title,index:HEROFLAG,level:level+1,time:ut[level],due:due}},user)
+            userFactory.set([{'action':'changeUpgrade', 'data':{name:name,title:title,index:HEROFLAG,level:level+1,time:ut[level],due:due}}],user)
             level++
         maxlevel = util.max_level(user.setting.hall, hD[name]['required town hall'])
         $scope.data[index].nextUpgrade = nextUpgrade(level, maxlevel,

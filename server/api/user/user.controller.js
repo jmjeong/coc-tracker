@@ -30,7 +30,7 @@ exports.index = function(req, res) {
  */
 exports.create = function (req, res, next) {
   var newUser = new User(req.body);
-  //  console.log(req.body);
+  console.log(req.body);
   newUser.provider = 'local';
   newUser.role = 'user';
   newUser.save(function(err, user) {
@@ -108,7 +108,8 @@ exports.getData = function(req, res, next) {
     }
     User.findOne({
         _id: userId
-    }, 'name log hero upgrade setting research building walls', function(err, user) { // don't ever give out the password or salt
+    }, 'name hero upgrade setting research building walls', function(err, user) { // don't ever give out the password or salt
+        // console.log('getData', user);
         if (err) return next(err);
         if (!user) return res.json(401);
         res.json(user);
@@ -151,7 +152,6 @@ exports.getUpgrade = function(req, res, next) {
 };
 
 exports.putData = function(req, res, next) {
-    logger.info('putData', req.user._id, req.body);
     var lastUpdated = new moment();
     var HEROFLAG = 100;
 
@@ -159,25 +159,8 @@ exports.putData = function(req, res, next) {
         if (err) return res.send(500,err);
         if (!user) return res.send(404);
         _.map(req.body, function(d) {
-            console.log(d);
+            // console.log(d);
             switch (d.action) {
-                // case 'changeLevel':
-                // {
-                //     if (d.data.index == HEROFLAG) {
-                //         user.hero[d.data.name] = d.data.level;
-                //     }
-                //     else if (d.data.index < 0) {
-                //         user.research[d.data.name] = d.data.level;
-                //         console.log(user.research);
-                //     }
-                //     else {
-                //         // console.log(user.building, user.building.airdefense, user.building['airdefense'], d.name)
-                //         user.building[d.data.name].set(d.data.index, d.data.level);
-                //         console.log(user.building);
-                //     }
-                //
-                //     break;
-                // }
                 case 'changeHero':
                     user.hero[d.data.name] = d.data.level;
                     break;
@@ -193,6 +176,10 @@ exports.putData = function(req, res, next) {
                 }
                 case 'setting': {
                     user.setting[d.data.name] = d.data.value;
+                    break;
+                }
+                case 'addLog': {
+                    user.log.push({title:d.data.title, level:d.data.level, complete:d.data.complete});
                     break;
                 }
                 case 'removeUpgrade':
@@ -215,6 +202,14 @@ exports.putData = function(req, res, next) {
                     else user.upgrade.set(find, d.data);
                     break;
                 }
+                case 'setuphall': {
+                    user.setting = d.data.setting;
+                    user.building = d.data.building;
+                    user.walls = d.data.walls;
+                    user.hero = d.data.hero;
+                    user.research = d.data.research;
+                    break;
+                }
             }
         });
         user.lastUpdated = lastUpdated;
@@ -225,98 +220,6 @@ exports.putData = function(req, res, next) {
             res.send(200);
         });
     });
-/*
-    User.findById(req.user._id, function (err, user) {
-        if (err) return res.send(500, err);
-        if (!user) return res.send(404);
-
-        var data = {}
-        if (user.data)
-            data = JSON.parse(user.data);
-
-		logger.info('userdata', data);
-
-        if (req.body.action) {
-            user.lastUpdated = new moment();
-            switch (req.body.action) {
-            case 'changeLevel':
-                _.map(req.body.data, function (d) {
-                    var name = d.name;
-                    var index = d.index;
-                    var level = d.level;
-                    if (index < 0 || index == HEROFLAG) {
-                        data[name] = level;
-                    }
-                    else {
-                        if (typeof data[name] == 'undefined') {
-                            data[name] = [];
-                        }
-                        data[name][index] = level;
-                    }
-                });
-                break;
-            case 'completeUpgrade':
-				console.log('complete Upgrade', data.upgrade);
-                    var now = new moment();
-                    _.map(data.upgrade, function(u) {
-                        if (now.isAfter(moment(u.due))) {
-                            if (u.index < 0 || u.index == HEROFLAG) {
-                                data[u.name] = u.level;
-                            }
-                            else {
-                                if (typeof data[u.name] == 'undefined') {
-                                    data[u.name] = [];
-                                }
-                                data[u.name][u.index] = u.level;
-                            }
-                            user.log.push({title:u.title, level:u.level, complete:u.due});
-                            // console.log(user.log);
-                        }
-                    });
-                    _.remove(data.upgrade, function(u) {
-                        return now.isAfter(moment(u.due));
-                    });
-                    break;
-            case 'changeUpgrade':
-                _.map(req.body.data, function(d) {
-                    var find = _.findIndex(data.upgrade, {
-                        name: d.name,
-                        index: d.index
-                    });
-                    if (find < 0) {
-                        if (!('upgrade' in data)) {
-                            data.upgrade = [];
-                        }
-                        data.upgrade.push(d);
-                    }
-                    else data.upgrade[find] = d;
-                });
-                break;
-            case 'removeUpgrade':
-                _.map(req.body.data, function(d) {
-                    var name = d.name;
-                    var index = d.index;
-                    _.remove(data.upgrade, {
-                        name: name,
-                        index: index
-                    })
-                });
-                break;
-            case 'set':
-                _.map(req.body.data, function(d) {
-                    data[d.name] = d.value;
-                });
-                break;
-            }
-        }
-        user.data = JSON.stringify(data);
-        user.markModified('data');
-        user.save(function (err) {
-            if (err) return res.send(500, err);
-            res.send(200);
-        });
-    });
-    */
 };
 
 /**

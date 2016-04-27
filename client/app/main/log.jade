@@ -8,4 +8,5 @@ div(ng-include="'app/main/subnav.html'")
                 b.text-info(ng-show='category(e.title)=="research"') {{e.title}} - Lev {{e.level}}
                 b.text-success(ng-show='category(e.title)=="hero"') {{e.title}} - Lev {{e.level}}
                 span(ng-show='category(e.title)=="building"') {{e.title}} - Lev {{e.level}}
-            td.col-md-9(data-title="'Completed'") {{e.complete|amCalendar}}
+            td.col-md-9(data-title="'Completed'")
+                span {{e.complete|amCalendar}}

@@ -3,9 +3,11 @@
 angular.module 'cocApp'
 .controller 'SettingsCtrl', ($scope, $location, User, Auth) ->
   $scope.errors = {}
-  $scope.url = '/p/overview?id='+ Auth.getCurrentUser()._id
-  $scope.upgrade = $location.protocol()+'://'+$location.host()+'/api/users/'+ Auth.getCurrentUser()._id + '/upgrade'
-  $scope.log = $location.protocol()+'://'+$location.host()+'/api/users/'+ Auth.getCurrentUser()._id + '/log'
+  uri = $location.protocol()+'://'+$location.host()+':'+$location.port()
+  $scope.url = uri+'/p/overview?id='+ Auth.getCurrentUser()._id
+
+  $scope.upgrade = uri+'/api/users/'+ Auth.getCurrentUser()._id + '/upgrade'
+  $scope.log = uri+'/api/users/'+ Auth.getCurrentUser()._id + '/log'
   $scope.changePassword = (form) ->
     $scope.submitted = true
 

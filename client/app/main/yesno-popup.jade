@@ -1,0 +1,10 @@
+div
+    script(type='text/ng-template' id='myYesNoContent.html')
+        .modal-header
+            h4.modal-title Confirmation
+        .modal-body
+            div
+                span This action will change your upgrade status. Are you sure to proceed?
+        .modal-footer
+            button.btn.btn-primary(ng-click='ok()' ) Yes
+            button.btn.btn-danger(ng-click='stop()') No

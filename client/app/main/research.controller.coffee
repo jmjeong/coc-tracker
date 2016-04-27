@@ -5,7 +5,7 @@ angular.module('cocApp')
     # user = userFactory.get()
 
     user = data.user
-    $scope.viewname = data.viewname
+    $scope.readonlyName = data.readonlyName
 
     $scope.costStr = util.costStr
     $scope.timeStr = util.timeStr
@@ -32,17 +32,18 @@ angular.module('cocApp')
 
     update = () ->
         $scope.data = []
-        for title in util.upgrade_list()
+        for title in util.research_list()
             name = util.cannonicalName(title)
             user.research ?= {}
             user.research[name] ?= 0
             maxlevel = util.max_level(labLevel, rD[name]['laboratory level'])
-            continue if (typeof rD[name].subtype != 'undefined' || maxlevel < 1)
-            continue if (user.setting.hideDoneResearch && user.research[name] >= maxlevel)
+            continue if (maxlevel < 1)
             find = lodash.findIndex(user.upgrade, {
                 name: name,
                 index: -1
             })
+            continue if (user.setting.hideDoneResearch && user.research[name] >= maxlevel && find < 0)
+
             level = user.research[name]
             level++ if find >= 0
             $scope.data.push
@@ -72,7 +73,7 @@ angular.module('cocApp')
         if oldLevel != currentLevel
             user.research[name] = currentLevel
             $scope.summary = util.totalResearchCostTime(user)
-            userFactory.set({'action':'changeResearch', 'data':{name:name,level:currentLevel}}, user)
+            userFactory.set([{'action':'changeResearch', 'data':{name:name,level:currentLevel}}], user)
 
     $scope.upgrade = (name, title, index) ->
         level = user.research[name] ? 0
@@ -98,22 +99,9 @@ angular.module('cocApp')
         else
             value = ut[level]*60
 
-        modalInstance = $modal.open
-            templateUrl: 'myModalContent.html'
-            controller: 'ModalInstanceCtrl',
-            resolve:
-                data: () ->
-                    {
-                    sliderValue: value
-                    title: title
-                    sliderMax: ut[level]*60
-                    level: level+1
-                    update: (find >= 0)
-                    }
-        modalInstance.result.then (value) ->
-            $scope.upgradeAction(name, title, index, value)
+        util.showUpgradeModal($modal, $scope.upgradeAction, name, title, level+1, index, value, ut[level]*60, (find>=0))
 
-    $scope.upgradeAction = (name, title, index, value) ->
+    $scope.upgradeAction = (name, title, index, level, value) ->
         level = user.research[name] ? 0
         user.upgrade ?= []
 
@@ -128,7 +116,7 @@ angular.module('cocApp')
                 index: -1
             })
             $scope.data[index].upgradeIdx = -1
-            userFactory.set({'action':'removeUpgrade','data':{name:name,index:-1}},user)
+            userFactory.set([{'action':'removeUpgrade','data':{name:name,index:-1}}],user)
         else
             due = new moment()
             due = due.add(value, 'minutes')
@@ -151,7 +139,7 @@ angular.module('cocApp')
                     time: ut[level]*60
                     due: due
                 $scope.data[index].upgradeIdx = find
-            userFactory.set({'action':'changeUpgrade','data':{name:name,title:title,index:-1,level:level+1,time:ut[level]*60,due:due}},user)
+            userFactory.set([{'action':'changeUpgrade','data':{name:name,title:title,index:-1,level:level+1,time:ut[level]*60,due:due}}],user)
             level++
         maxlevel = util.max_level(labLevel, rD[name]['laboratory level'])
         $scope.data[index].nextUpgrade = nextUpgrade(level, maxlevel,

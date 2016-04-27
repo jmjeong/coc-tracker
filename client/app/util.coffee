@@ -6,13 +6,17 @@ angular.module 'cocApp'
     initUser = (user)->
         user.upgrade ?= []
         user.setting ?= {}
-        user.setting.hall ?= 8
+        user.setting.hall ?= 9
         user.setting.builder ?= 4
+        user.setting.setuphall ?= 9
         user.setting.hideDoneBuilding ?= false
         user.setting.hideDoneResearch ?= false
         user.setting.limitTo ?= 5
         user.building ?= {}
-        user.building.townhall = [user.setting.hall];
+        user.building.townhall ?= [user.setting.hall];
+        user.hero ?= {}
+        user.research ?= {}
+        user.walls ?= []
         #console.log(user);
 
     get: (id) ->
@@ -20,23 +24,20 @@ angular.module 'cocApp'
         if (id)
             $http.get '/api/users/'+id+'/data'
                 .then (response)->
-                    if (response.data.data == undefined)
-                        user = {}
-                    else
-                        user = JSON.parse(response.data.data)
-                    initUser(user)
+                    # console.log(response)
+                    initUser(response.data)
                     {
-                        viewname: response.data.name
-                        user: user
+                        readonlyName: response.data.name
+                        user: response.data
                     }
         else
             if Auth.isLoggedInAsync()
                 $http.get '/api/users/me/data'
                 .then (response)->
-                    console.log(response)
+                    console.log('logged get', response)
                     initUser(response.data)
                     {
-                        viewname: undefined
+                        readonlyName: undefined
                         user: response.data
                     }
             else
@@ -44,7 +45,7 @@ angular.module 'cocApp'
                 user ?= {}
                 initUser(user)
                 {
-                    viewname: undefined
+                    readonlyName: undefined
                     user: user
                 }
 
@@ -53,7 +54,7 @@ angular.module 'cocApp'
             $http.get '/api/users/'+id+'/log'
             .then (response)->
                 {
-                viewname: response.data.name
+                readonlyName: response.data.name
                 log: response.data.log
                 }
         else
@@ -61,13 +62,16 @@ angular.module 'cocApp'
                 $http.get '/api/users/me/log'
                 .then (response)->
                     {
-                    viewname: undefined
+                    readonlyName: undefined
                     log: response.data.log
                     }
             else
+                user = localStorageService.get('user')
+                user ?= {}
+                initUser(user)
                 {
-                    viewname: undefined
-                    log: []
+                    readonlyName: undefined
+                    log: user.log
                 }
 
     set: (actLists, user, cb) ->
@@ -75,7 +79,7 @@ angular.module 'cocApp'
             console.log(actLists);
             if Auth.isLoggedInAsync()
                 $http.post '/api/users/me/data',
-                    [ actLists ]
+                    actLists
                 .success (response)->
                     console.log(response)
                     cb && cb()
@@ -131,7 +135,7 @@ angular.module 'cocApp'
         doneCost: lodash.map(doneCost, (n)->n*count)
         requiredCost: lodash.map(requiredCost, (n)->n*count)
         }
-    upgrade_list = () ->
+    research_list = () ->
         rD.list
 
     hero_list = () ->
@@ -192,32 +196,36 @@ angular.module 'cocApp'
         fired = lodash.filter user.upgrade, (u)->
             now.isAfter(moment(u.due))
 
-        return 1 if fired.length == 0
-
+        return [] if fired.length == 0
         upgradeDone = []
 
+        user.log ?= []
         for u in fired
-            upgradeDone.push({name:u.name,index:u.index,level:u.level})
             if u.index == HEROFLAG
                 user.hero[u.name] = u.level
+                upgradeDone.push({'action': 'changeHero', data: {name:u.name,level:u.level}})
             else if u.index >= 0
                 user.building[u.name][u.index] = u.level
+                upgradeDone.push({'action':'changeBuilding','data':{name:u.name,index:u.index,level:u.level}})
             else
                 user.research[u.name] = u.level
+                upgradeDone.push({'action':'changeResearch', 'data':{name:u.name,level:u.level}})
 
+            upgradeDone.push({'action':'removeUpgrade','data':{name:u.name,index:u.index}})
+            upgradeDone.push({'action':'addLog', 'data':{title:u.title, level:u.level, complete:u.due}})
+            user.log.push({title:u.title, level:u.level, complete:u.due})
+
+        console.log(user.log);
         lodash.remove user.upgrade, (u) ->
             now.isAfter(moment(u.due))
 
-
-        console.log(upgradeDone)
-
-        return 0
+        return upgradeDone
 
     return {
 
     building_list: building_list
 
-    upgrade_list: upgrade_list
+    research_list: research_list
 
     hero_list: hero_list
 
@@ -238,10 +246,9 @@ angular.module 'cocApp'
             for i in [0..availableNum-1]
                 user.building[name] ?= []
                 currentLevel = user.building[name][i] ? 0
-                find = lodash.findIndex(user.upgrade, {
+                find = lodash.findIndex user.upgrade,
                     name: name,
                     index:  i
-                })
                 mrt = mdt = 0
                 for k in [0..maxLevel-1]
                     if k < currentLevel
@@ -307,10 +314,9 @@ angular.module 'cocApp'
             for i in [0..availableNum-1]
                 currentLevel = user.building[name][i] ? 0
                 continue if (currentLevel == 0)
-                find = lodash.findIndex(user.upgrade, {
+                find = lodash.findIndex user.upgrade,
                     name: name,
                     index: i
-                })
                 continue if (find >= 0)
                 result = addArrays(result, bD[name]['production'][currentLevel-1], '+')
         lodash.map(result, (n)->n*24)
@@ -320,10 +326,10 @@ angular.module 'cocApp'
         requiredTime = doneTime = 0
         labLevel = max_level(user.setting.hall, bD['laboratory']['required town hall'])
 
-        for item in upgrade_list()
+        for item in research_list()
             name = cannonicalName(item)
             maxlevel = max_level(labLevel, rD[name]['laboratory level'])
-            continue if (typeof rD[name].subtype != 'undefined' || maxlevel < 1)
+            continue if (maxlevel < 1)
             uc = rD[name]['research cost']
             ut = rD[name]['research time']
 
@@ -394,15 +400,32 @@ angular.module 'cocApp'
 
     registerTimer: ($interval, $scope, user, cb)->
         intervalPromise = $interval ()->
-            return if $scope.viewname
-            if !checkUpgrade(user)
-                userFactory.set({'action':'completeUpgrade', 'data':[]}, user, ()->
+            return if $scope.readonlyName
+            upgradeDone = checkUpgrade(user)
+            if _.size(upgradeDone) > 0
+                userFactory.set(upgradeDone, user, ()->
                     cb();
                 );
-
         , 3000
         $scope.$on '$destroy', () ->
             $interval.cancel(intervalPromise)
+
+    showUpgradeModal: ($modal, cb, name, title, level, index, maxTime, valueTime, update) ->
+        modalInstance = $modal.open
+            templateUrl: 'myModalContent.html'
+            controller: 'ModalInstanceCtrl',
+            resolve:
+                data: () ->
+                    {
+                        sliderValue: valueTime
+                        title: title
+                        sliderMax: maxTime
+                        level: level
+                        update: update
+                    }
+        modalInstance.result.then (v) ->
+            cb(name, title, index, level,  v)
+
 
     remainTime: (researchDue) ->
         due = moment(researchDue)
@@ -417,7 +440,7 @@ angular.module 'cocApp'
             return 'building' if item == name
         for item in hero_list()
             return 'hero' if item == name
-        for item in upgrade_list()
+        for item in research_list()
             return 'research' if item == name
         return 'error'
     }

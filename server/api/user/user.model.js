@@ -16,6 +16,7 @@ var UserSchema = new Schema({
     hideDoneBuilding: Boolean,
     hideDoneResearch: Boolean,
     hall: Number,
+    setuphall: Number,
     limitTo: Number,
     builder: Number
   },
@@ -24,7 +25,9 @@ var UserSchema = new Schema({
       airsweeper: [Number],
       archertower: [Number],
       cannon: [Number],
+      eagleartillery: [Number],
       hiddentesla: [Number],
+      infernotower: [Number],
       mortar: [Number],
       wizardtower: [Number],
       xbow: [Number],
@@ -50,10 +53,9 @@ var UserSchema = new Schema({
       goldmine: [Number],
       goldstorage: [Number],
 
-
       clancastle: [Number],
       townhall: [Number]
-  } ,
+  },
   research: {
       barbarian: Number,
       archer: Number,
@@ -79,7 +81,7 @@ var UserSchema = new Schema({
       freeze: Number,
       poison: Number,
       earthquake: Number,
-      haste1: Number
+      haste: Number
   },
   walls: [ Number],
   log: [ {

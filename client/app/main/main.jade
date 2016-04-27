@@ -1,6 +1,8 @@
 div(ng-include='"components/navbar/navbar.html"')
 div(ng-include="'app/main/subnav.html'")
 
+div(ng-include="" src='"app/main/yesno-popup.html"')
+
 .container
 
   h4.page-header Upgrades
@@ -16,6 +18,7 @@ div(ng-include="'app/main/subnav.html'")
               td
                   div.row-fluid
                       div.col-md-12
+
                           b.text-info(ng-show='u.index<0') {{u.title}} Lv{{u.level}}
                           b.text-success(ng-show='u.index==HEROFLAG') {{u.title}} Lv{{u.level}}
                           span(ng-show='u.index>=0&&u.index!=HEROFLAG') {{u.title}} Lv{{u.level}}
@@ -23,7 +26,9 @@ div(ng-include="'app/main/subnav.html'")
               td
                   div.row-fluid
                       div.col-md-12
-                          {{u.due | amCalendar}}
+                          span {{u.due | amCalendar}}
+                          a.trash(ng-click='deleteUpgrade(u)')
+                            span.glyphicon.glyphicon-trash.pull-right
           tr(ng-show="!upgradeList.length")
               td(colspan=5).text-center No Upgrades
 
@@ -124,7 +129,5 @@ div(ng-include="'app/main/subnav.html'")
                 span(ng-hide='wallSummary.doneCost[1] == 0' popover='{{pString()}}' popover-trigger='mouseenter')
                     span.e ~{{costFormat(wallSummary.doneCost[1])}}
                     icon-elixir.space
-
-  h4.page-header Setting
 
   div(ng-include="'app/main/setting.html'")

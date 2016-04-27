@@ -1,30 +1,12 @@
 div(ng-include='"components/navbar/navbar.html"')
 div(ng-include="'app/main/subnav.html'")
 
-
-div
-    script(type='text/ng-template' id='myModalContent.html')
-        .modal-header
-            h4.modal-title Upgrade to {{sliders.title}} \#{{sliders.level}}
-        .modal-body
-            span.space Time: {{origin}}
-            span.text-primary ({{changed}})
-            p
-            p
-            span.text-iinfo Adjust Completion Time
-            span(slider ng-model="sliders.sliderValue" min=0 max="sliders.sliderMax"
-            value='sliders.sliderValue' formater='format' on-slide='sliderDelegate(value,$event)')
-        .modal-footer
-            button.btn.btn-primary(ng-click='ok()' ng-show='update') Update
-            button.btn.btn-primary(ng-click='ok()' ng-show='!update') Upgrade
-            button.btn.btn-danger(ng-click='stop()' ng-show='update') Stop
-
 .container
-    table.table-bordered.table-condensed.row-border.hover.top-margin(ng-table='tableParams')
+    table.table-bordered.table-condensed.row-border.hover.top-margin(ng-table='tableParams' ng-show='$data.length')
         tr(ng-repeat='e in $data' ng-class="{'upgrade':e.upgrade}")
             td(data-title="'Name'" sortable="'title'" ng-class="{'text-info':e.index<0, 'text-success':e.index==HEROFLAG}")
                 a.btn.btn-default.btn-xs.space(ng-click='upgrade(e.name,e.title,e.level,e.index,e.time)'
-                    ng-disabled="viewname || e.upgrade || !e.available")
+                    ng-disabled="readonlyName || e.upgrade || !e.available")
                     span.glyphicon.glyphicon-home
                 sup(ng-show='e.num>1') {{e.num}} &nbsp;
                 span
@@ -38,3 +20,5 @@ div
             td.text-center(data-title="'D.E.'" sortable="'costd'")
                 span.d {{costFormat(e.costd)}}
             td.text-center(data-title="'Gem'") {{gemPrice(e.time)}}
+        tr(ng-show="!$data.length")
+            td(colspan=6).text-center No Upgrades

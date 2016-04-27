@@ -1,11 +1,13 @@
 div.container
     div
         ul.nav.nav-tabs(ng-controller='subNavbarCtrl')
-            li.active(ng-show='viewname')
-                a(ng-href="") {{viewname}}
+            li.active(ng-show='readonlyName')
+                a(ng-href="") {{readonlyName}}
             li(ng-repeat="m in menu")
                 a(ng-href="{{m.link}}" ng-class='{active: isActive("{{m.link}}")}') {{m.title}}
             li
                 a(ng-href="{{link('upgrade')}}") [Upgrade]
             li
-                a(ng-href="{{link('log')}}" ng-show='isLoggedIn()',) [Log]
+                a(ng-href="{{link('log')}}") [Log]
+
+div(ng-include="" src='"app/main/upgrade-popup.html"')

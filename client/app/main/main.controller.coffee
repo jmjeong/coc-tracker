@@ -5,13 +5,14 @@ angular.module 'cocApp'
     util, lodash, userFactory, $routeParams, $http, moment, ngToast, data) ->
 
     user = data.user
-    $scope.viewname = data.viewname
+    $scope.readonlyName = data.readonlyName
 
     $scope.timeStr = util.timeStr
     $scope.costStr = util.costStr
     $scope.costFormat = util.costFormat
     $scope.builder ?= user.setting.builder
     $scope.hall ?= user.setting.hall
+    $scope.setuphall ?= user.setting.setuphall
     $scope.hideDoneBuilding = user.setting.hideDoneBuilding
     $scope.hideDoneResearch = user.setting.hideDoneResearch
     $scope.limitTo = user.setting.limitTo
@@ -57,11 +58,12 @@ angular.module 'cocApp'
                 user.building ?= {}
                 user.building[name] ?= []
                 currentLevel = user.building[name][i] ? 0
-                continue if ($scope.hideDoneBuilding && currentLevel >= maxLevel)
                 find = lodash.findIndex(user.upgrade, {
                     name: name,
                     index: i
                 })
+                continue if ($scope.hideDoneBuilding && currentLevel >= maxLevel && find < 0)
+
                 # console.log(find)
                 level = currentLevel
                 level++ if find >= 0
@@ -85,7 +87,6 @@ angular.module 'cocApp'
         if ($scope.isResource)
             $scope.totalProduction = util.totalProduction(user)
 
-
     update()
 
     $scope.changeLevel = (name, index, inc, maxLevel) ->
@@ -105,7 +106,7 @@ angular.module 'cocApp'
             $scope.summary = util.totalCostTime(category, user)
             if ($scope.isResource)
                 $scope.totalProduction = util.totalProduction(user)
-            userFactory.set({'action':'changeBuilding','data':{name:name,index:$scope.detail[name][index].idx,level:currentLevel}}, user)
+            userFactory.set([{'action':'changeBuilding','data':{name:name,index:$scope.detail[name][index].idx,level:currentLevel}}], user)
 
     $scope.timeWithBuilder = (time, builder, maxTime) ->
         # console.log($scope.longRequiredTime, $scope.requiredTime)
@@ -115,21 +116,21 @@ angular.module 'cocApp'
 
     $scope.setHall = (hall) ->
         $scope.hall = user.setting.hall = hall
-        userFactory.set({'action':'setting', 'data':{name:'hall',value:user.setting.hall}}, user)
+        userFactory.set([{'action':'setting', 'data':{name:'hall',value:user.setting.hall}}], user)
         update()
 
     $scope.setBuilder = (builder) ->
         $scope.builder = user.setting.builder = builder
-        userFactory.set({'action':'setting', 'data':{name:'builder', value:builder}}, user)
+        userFactory.set([{'action':'setting', 'data':{name:'builder', value:builder}}], user)
 
     $scope.setHideDoneBuilding = (flag) ->
         user.setting.hideDoneBuilding = $scope.hideDoneBuilding = flag
         # console.log($scope.hideDoneBuilding, $scope.hideDoneResearch);
-        userFactory.set({'action':'setting', 'data':{name:'hideDoneBuilding', value:$scope.hideDoneBuilding}}, user)
+        userFactory.set([{'action':'setting', 'data':{name:'hideDoneBuilding', value:$scope.hideDoneBuilding}}], user)
 
     $scope.setHideDoneResearch = (flag) ->
         user.setting.hideDoneResearch = $scope.hideDoneResearch = flag
-        userFactory.set({'action':'setting', 'data':{name:'hideDoneResearch', value:$scope.hideDoneResearch}}, user)
+        userFactory.set([{'action':'setting', 'data':{name:'hideDoneResearch', value:$scope.hideDoneResearch}}], user)
 
     $scope.upgrade = (name, title, index) ->
         idx = $scope.detail[name][index].idx
@@ -154,23 +155,9 @@ angular.module 'cocApp'
         else
             value = ut[level]
 
-        modalInstance = $modal.open
-            templateUrl: 'myModalContent.html'
-            controller: 'ModalInstanceCtrl',
-            # size: 'sm'
-            resolve:
-                data: () ->
-                    {
-                    sliderValue: value
-                    title: title
-                    sliderMax: ut[level]
-                    level: level+1
-                    update: (find >= 0)
-                    }
-        modalInstance.result.then (value) ->
-            $scope.upgradeAction(name, title, index, value)
+        util.showUpgradeModal($modal, $scope.upgradeAction, name, title, level+1, index, value, ut[level], (find>=0))
 
-    $scope.upgradeAction = (name, title, index, value) ->
+    $scope.upgradeAction = (name, title, index, level, value) ->
         idx = $scope.detail[name][index].idx
         level = user.building[name][idx] ? 0
         user.upgrade ?= []
@@ -186,7 +173,7 @@ angular.module 'cocApp'
                 index: idx
             })
             $scope.detail[name][index].upgradeIdx = -1
-            userFactory.set({'action':'removeUpgrade','data':{name:name,index:idx}},user)
+            userFactory.set([{'action':'removeUpgrade','data':{name:name,index:idx}}],user)
         else
             due = new moment()
             due = due.add(value, 'minutes')
@@ -211,7 +198,7 @@ angular.module 'cocApp'
                     time: ut[level]
                     due: due
                 }
-            userFactory.set({'action':'changeUpgrade','data':{name:name,title:title,index:idx,level:level+1,time:ut[level],due:due}},user)
+            userFactory.set([{'action':'changeUpgrade','data':{name:name,title:title,index:idx,level:level+1,time:ut[level],due:due}}],user)
             level++
         maxLevel = util.max_level(user.setting.hall, bD[name]['required town hall'])
         uc = bD[name]['upgrade cost']
@@ -234,42 +221,80 @@ angular.module 'cocApp'
         $scope.researchSummary = util.totalResearchCostTime(user)
         if ($scope.isResource)
             $scope.totalProduction = util.totalProduction(user)
-        userFactory.set({'action':'removeUpgrade','data':{name:name,index:index}},user)
+        userFactory.set([{'action':'removeUpgrade','data':{name:name,index:index}}],user)
 
     $scope.pString = ->
         "may replace elixirs for walls"
 
-    util.registerTimer($interval, $scope, user, update);
+    changeToMaxHall = (setuphall) ->
+        for item in util.building_list('all')
+            name = util.cannonicalName(item)
+            availableNum = bD['number available'][name][setuphall-1]
 
-angular.module('cocApp')
-    .controller 'ModalInstanceCtrl', ($scope, $modalInstance, data) ->
-        $scope.sliders = data
-        $scope.selected = data.sliderValue
-        $scope.update = data.update
+            maxLevel = util.max_level(setuphall, bD[name]['required town hall'])
+            user.building[name] ?= []
+            for i in [0..bD['number available'][name].length-1]
+                find = lodash.findIndex user.upgrade,
+                    name: name,
+                    index:  i
+                if find < 0
+                    if (i <= availableNum)
+                        user.building[name][i] = maxLevel
+                    else user.building[name][i] = 0
 
-        timeStr = (value) ->
-            duration = moment.duration({
-                minutes: value
-            })
-            d = duration.days()
-            h = duration.hours()
-            m = duration.minutes()
-            if (d==0)
-                h + 'h ' + m + 'm'
-            else
-                d + 'd ' + h + 'h'
+        for item in util.hero_list()
+            name = util.cannonicalName(item)
+            maxLevel = util.max_level(setuphall, hD[name]['required town hall'])
+            find = lodash.findIndex user.upgrade,
+                name: name,
+                index: HEROFLAG
+            if find < 0
+                if (maxLevel < 1)
+                    user.hero[name] = 0
+                else
+                    user.hero[name] = maxLevel
 
-        $scope.origin = timeStr(data.sliderMax)
-        $scope.changed = $scope.origin
+        labLevel = util.max_level(setuphall, bD['laboratory']['required town hall'])
+        for item in util.research_list()
+            name = util.cannonicalName(item)
+            maxLevel = util.max_level(labLevel, rD[name]['laboratory level'])
+            find = lodash.findIndex user.upgrade,
+                name: name,
+                index: -1
+            if (find < 0)
+                if (maxLevel < 1)
+                    user.research[name] = 0
+                else
+                    user.research[name] = maxLevel
 
-        $scope.ok = ()->
-            $modalInstance.close($scope.selected)
-        $scope.stop = ()->
-            $modalInstance.close(-1)
-        $scope.cancel = ()->
-            $modalInstance.dismiss('cancel')
-        $scope.format = (value)->
-            timeStr(value)
-        $scope.sliderDelegate = (value, $event) ->
-            $scope.changed = timeStr(value)
-            $scope.selected = value
+        name = util.cannonicalName('Walls')
+        for i in [0..bD['number available'][name].length-1]
+            user.walls[i] = 0
+        maxWallsLevel = util.max_level(setuphall, bD[name]['required town hall'])
+        user.walls[maxWallsLevel-1] = bD['number available'][name][maxWallsLevel-1]
+
+        $scope.hall = user.setting.hall = setuphall
+        update()
+
+        userFactory.set([{'action':'setuphall','data':user}],user)
+
+    $scope.changeSetupHall = (setuphall) ->
+        user.setting.setuphall = setuphall
+        userFactory.set([{'action':'setting', 'data':{name:'setuphall',value:user.setting.setuphall}}], user)
+
+    $scope.changeToMaxHall= (setuphall) ->
+        m = $modal.open
+            templateUrl: 'myYesNoContent.html'
+            controller: 'YesNoCtrl'
+
+        m.result.then (v) ->
+            changeToMaxHall(setuphall) if v
+
+    $scope.deleteUpgrade = (u) ->
+        lodash.remove user.upgrade,
+            name: u.name,
+            index: u.index
+        userFactory.set([{'action':'removeUpgrade','data':{name:u.name,index:u.index}}],user)
+
+    util.registerTimer($interval, $scope, user, update)
+

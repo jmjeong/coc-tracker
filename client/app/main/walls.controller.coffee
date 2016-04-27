@@ -2,10 +2,8 @@
 
 angular.module('cocApp')
 .controller 'WallCtrl', ($scope, util, lodash, userFactory, data) ->
-    # user = userFactory.get()
-
     user = data.user
-    $scope.viewname = data.viewname
+    $scope.readonlyName = data.readonlyName
 
     name = util.cannonicalName('Walls')
     user[name] ?= []
@@ -51,9 +49,8 @@ angular.module('cocApp')
                 user[name][i] ?= 0
                 count = user[name][i]
                 walls.total += count
-                # continue if ($scope.hideDoneBuilding && currentLevel >= maxLevel)
                 walls.data.push(
-                    idx: i-start
+                    idx: i
                     count: count
                     upgrade: nextUpgrade(i+1, maxLevel, bD[name]['upgrade cost'], user)
                 )
@@ -74,7 +71,7 @@ angular.module('cocApp')
             total += user['walls'][i]
         $scope.walls.total = total
         $scope.summary = util.totalWallCost(user)
-        userFactory.set({'action':'changeWall','data':{index:idx,level:count}}, user)
+        userFactory.set([{'action':'changeWall','data':{index:idx,level:count}}], user)
 
     $scope.pString = ->
         "may replace elixirs for walls"
