@@ -15,7 +15,7 @@
     "jade": "~1.2.0",
     "jsonwebtoken": "^0.3.0",
     "lodash": "~2.4.1",
-    "log4js": "^0.6.33",
+    "log4js": "^0.6.35",
     "method-override": "~1.0.0",
     "moment": "^2.10.2",
     "mongoose": "~3.8.8",
