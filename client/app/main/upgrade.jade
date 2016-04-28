@@ -2,7 +2,7 @@ div(ng-include='"components/navbar/navbar.html"')
 div(ng-include="'app/main/subnav.html'")
 
 .container
-    table.table-bordered.table-condensed.row-border.hover.top-margin(ng-table='tableParams' ng-show='$data.length')
+    table.table-bordered.table-condensed.row-border.hover.top-margin(ng-table='tableParams')
         tr(ng-repeat='e in $data' ng-class="{'upgrade':e.upgrade}")
             td(data-title="'Name'" sortable="'title'" ng-class="{'text-info':e.index<0, 'text-success':e.index==HEROFLAG}")
                 a.btn.btn-default.btn-xs.space(ng-click='upgrade(e.name,e.title,e.level,e.index,e.time)'

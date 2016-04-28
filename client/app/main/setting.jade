@@ -4,11 +4,11 @@ ul
     li
         span.space Set your town hall level 
         select(ng-model='hall' ng-change="setHall(hall)" ng-disabled='readonlyName')
-            option(ng-repeat='i in [1,2,3,4,5,6,7,8,9,10,11]' ng-selected="hall == i" value="i") Town Hall {{i}}
+            option(ng-repeat='i in [1,2,3,4,5,6,7,8,9,10,11]' ng-selected="hall == i" value="{{i}}") Town Hall {{i}}
     li
         span.space Number of builders
         select(ng-model='builder' ng-change="setBuilder(builder)" ng-disabled='readonlyName')
-            option(ng-repeat='i in [2,3,4,5]' ng-selected='builder == i' value="i") {{i}}
+            option(ng-repeat='i in [2,3,4,5]' ng-selected='builder == i' value="{{i}}") {{i}}
     li
         span Display Options
         div.form-group
@@ -23,5 +23,5 @@ ul
         span.text-danger.space Change to the max-upgraded townhall
         div
             select.space(ng-model='setuphall' ng-disabled='readonlyName' ng-change="changeSetupHall(setuphall)")
-                option(ng-repeat='i in [4,5,6,7,8,9,10,11]' ng-selected='setuphall == i' value="i") Town Hall {{i}}
+                option(ng-repeat='i in [4,5,6,7,8,9,10,11]' ng-selected='setuphall == i' value="{{i}}") Town Hall {{i}}
             button.btn-xs.btn-danger(ng-click='changeToMaxHall(setuphall)') Set
