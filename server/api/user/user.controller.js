@@ -6,9 +6,6 @@ var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var _ = require('lodash');
 var moment = require('moment');
-var logger = require('log4js').getLogger('user.controller');
-
-logger.setLevel('INFO');
 
 var validationError = function(res, err) {
   return res.json(422, err);
