@@ -12,7 +12,7 @@ div(ng-include="'app/main/subnav.html'")
             form.form-group(novalidate name='form')
                 tr(ng-repeat='w in walls.data')
                     td
-                        img(ng-src="/assets/walls{{w.level}}.png" width='30')
+                        img(ng-src="/assets/walls{{w.idx+1}}.png" width='30')
                         span  Level {{w.idx+1}}
                     td
                         input.form-control(type='number' name='count' ng-model='w.count' ng-max-length='3'
