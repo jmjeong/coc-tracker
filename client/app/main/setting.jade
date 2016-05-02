@@ -1,27 +1,28 @@
 h4.page-header Settings
 
-ul
-    li
-        span.space Set your town hall level 
-        select(ng-model='hall' ng-change="setHall(hall)" ng-disabled='readonlyName')
-            option(ng-repeat='i in [1,2,3,4,5,6,7,8,9,10,11]' ng-selected="hall == i" value="{{i}}") Town Hall {{i}}
-    li
-        span.space Number of builders
-        select(ng-model='builder' ng-change="setBuilder(builder)" ng-disabled='readonlyName')
-            option(ng-repeat='i in [2,3,4,5]' ng-selected='builder == i' value="{{i}}") {{i}}
-    li
-        span Display Options
-        div.form-group
-            div.checkbox-inline
-                input(type='checkbox' ng-model='hideDoneBuilding' ng-click='setHideDoneBuilding(hideDoneBuilding)' ng-disabled='readonlyName')
-                span Hide max upgraded buildings
+div
+    ul
+        li
+            span.space Set your town hall level 
+            select(ng-model='hall' ng-change="setHall(hall)" ng-disabled='readonlyName')
+                option(ng-repeat='i in [1,2,3,4,5,6,7,8,9,10,11]' ng-selected="hall == i" value="{{i}}") Town Hall {{i}}
+        li
+            span.space Number of builders
+            select(ng-model='builder' ng-change="setBuilder(builder)" ng-disabled='readonlyName')
+                option(ng-repeat='i in [2,3,4,5]' ng-selected='builder == i' value="{{i}}") {{i}}
+        li
+            span Display Options
+            div.form-group
+                div.checkbox-inline
+                    input(type='checkbox' ng-model='hideDoneBuilding' ng-change='setHideDoneBuilding()' ng-disabled='readonlyName')
+                    span Hide max upgraded buildings
+                div
+                div.checkbox-inline
+                    input(type='checkbox' ng-model='hideDoneResearch' ng-change='setHideDoneResearch()' ng-disabled='readonlyName')
+                    span Hide max upgraded researches
+        li
+            span.text-danger.space Change to the max-upgraded townhall
             div
-            div.checkbox-inline
-                input(type='checkbox' ng-model='hideDoneResearch' ng-click='setHideDoneResearch(hideDoneResearch)' ng-disabled='readonlyName')
-                span Hide max upgraded researches
-    li
-        span.text-danger.space Change to the max-upgraded townhall
-        div
-            select.space(ng-model='setuphall' ng-disabled='readonlyName' ng-change="changeSetupHall(setuphall)")
-                option(ng-repeat='i in [4,5,6,7,8,9,10,11]' ng-selected='setuphall == i' value="{{i}}") Town Hall {{i}}
-            button.btn-xs.btn-danger(ng-click='changeToMaxHall(setuphall)') Set
+                select.space(ng-model='setuphall' ng-disabled='readonlyName' ng-change="changeSetupHall(setuphall)")
+                    option(ng-repeat='i in [4,5,6,7,8,9,10,11]' ng-selected='setuphall == i' value="{{i}}") Town Hall {{i}}
+                button.btn-xs.btn-danger(ng-click='changeToMaxHall(setuphall)') Set

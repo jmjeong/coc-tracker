@@ -123,13 +123,12 @@ angular.module 'cocApp'
         $scope.builder = user.setting.builder = builder
         userFactory.set([{'action':'setting', 'data':{name:'builder', value:builder}}], user)
 
-    $scope.setHideDoneBuilding = (flag) ->
-        user.setting.hideDoneBuilding = $scope.hideDoneBuilding = flag
-        # console.log($scope.hideDoneBuilding, $scope.hideDoneResearch);
+    $scope.setHideDoneBuilding = () ->
+        user.setting.hideDoneBuilding = $scope.hideDoneBuilding 
         userFactory.set([{'action':'setting', 'data':{name:'hideDoneBuilding', value:$scope.hideDoneBuilding}}], user)
 
-    $scope.setHideDoneResearch = (flag) ->
-        user.setting.hideDoneResearch = $scope.hideDoneResearch = flag
+    $scope.setHideDoneResearch = () ->
+        user.setting.hideDoneResearch = $scope.hideDoneResearch
         userFactory.set([{'action':'setting', 'data':{name:'hideDoneResearch', value:$scope.hideDoneResearch}}], user)
 
     $scope.upgrade = (name, title, index) ->

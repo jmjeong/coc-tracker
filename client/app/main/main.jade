@@ -8,126 +8,153 @@ div(ng-include="" src='"app/main/yesno-popup.html"')
   h4.page-header Upgrades
 
   table.table-bordered
-      thead
-          tr
-              td.col-md-3 Item
-              td.col-md-2.text-center Remaining
-              td.col-md-4 Due Date
-      tbody
-          tr(ng-repeat="u in upgradeList | orderBy:'due'")
-              td
-                  div.row-fluid
-                      div.col-md-12
+    thead
+        tr
+            td.col-md-3 Item
+            td.col-md-2.text-center Remaining
+            td.col-md-4 Due Date
+    tbody
+        tr(ng-repeat="u in upgradeList | orderBy:'due'")
+            td
+                div.row-fluid
+                    div.col-md-12
 
-                          b.text-info(ng-show='u.index<0') {{u.title}} Lv{{u.level}}
-                          b.text-success(ng-show='u.index==HEROFLAG') {{u.title}} Lv{{u.level}}
-                          span(ng-show='u.index>=0&&u.index!=HEROFLAG') {{u.title}} Lv{{u.level}}
-              td.text-center {{timeStrMoment(remainTime(u.due))}} / {{timeStr(u.time)}}
-              td
-                  div.row-fluid
-                      div.col-md-12
-                          span {{u.due | amCalendar}}
-                          a.trash(ng-click='deleteUpgrade(u)')
-                            span.glyphicon.glyphicon-trash.pull-right
-          tr(ng-show="!upgradeList.length")
-              td(colspan=5).text-center No Upgrades
+                        b.text-info(ng-show='u.index<0') {{u.title}} Lv{{u.level}}
+                        b.text-success(ng-show='u.index==HEROFLAG') {{u.title}} Lv{{u.level}}
+                        span(ng-show='u.index>=0&&u.index!=HEROFLAG') {{u.title}} Lv{{u.level}}
+            td.text-center {{timeStrMoment(remainTime(u.due))}} / {{timeStr(u.time)}}
+            td
+                div.row-fluid
+                    div.col-md-12
+                        span {{u.due | amCalendar}}
+                        a.trash(ng-click='deleteUpgrade(u)')
+                          span.glyphicon.glyphicon-trash.pull-right
+        tr(ng-show="!upgradeList.length")
+            td(colspan=5).text-center No Upgrades
 
 
   h4.page-header Summary
 
   table.table-bordered
-      thead
-          tr
-              td(colspan=3)
-                  div.row-fluid
-                      div.col-md-12 Resources required to upgrade to a max Town Hall {{hall}}
-      tbody.active
-          tr
-              td.col-md-2 Time
-              td.col-md-10(colspan=2)  {{timeStr(summary.requiredTime)}}
-                  span(popover='with {{builder}} builders' popover-trigger='mouseenter' style='margin: 10px')
-                      {{timeWithBuilder(summary.requiredTime, builder, summary.maxRequiredTime)}}
-                      small.glyphicon.glyphicon-home(style='margin:5px')
-                  span(popover='Research time' popover-trigger='mouseenter' style='margin: 10px')
-                      {{timeStr(researchSummary.requiredTime)}}
-                      small.glyphicon.glyphicon-book(style='margin:5px')
-          tr
-              td.col-md-2(rowspan=3) Cost
-              td.col-md-2 Building
-              td.col-md-8
-                  span(ng-hide='summary.requiredCost[0] == 0')
-                      span.g {{costFormat(summary.requiredCost[0])}}
-                      icon-gold.space
-                  span(ng-hide='summary.requiredCost[1] == 0')
-                      span.e {{costFormat(summary.requiredCost[1])}}
-                      icon-elixir.space
-                  span(ng-hide='summary.requiredCost[2] == 0')
-                      span.d {{costFormat(summary.requiredCost[2])}}
-                      icon-darkelixir
-          tr
-              td.col-md-2 Research
-              td.col-md-8
-                  span(ng-hide='researchSummary.requiredCost[1]==0')
-                      span.e {{costFormat(researchSummary.requiredCost[1])}}
-                      icon-elixir.space
-                  span(ng-hide='researchSummary.requiredCost[2]==0')
-                      span.d {{costFormat(researchSummary.requiredCost[2])}}
-                      icon-darkelixir.space
-          tr
-              td.col-md-2 Wall
-              td.col-md-8
-                    span(ng-hide='wallSummary.requiredCost[0] == 0')
-                        span.g {{costFormat(wallSummary.requiredCost[0])}}
-                            icon-gold.space
-                    span(ng-hide='wallSummary.requiredCost[1] == 0' popover='{{pString()}}' popover-trigger='mouseenter')
-                        span.e ~{{costFormat(wallSummary.requiredCost[1])}}
-                            icon-elixir.space
-
-      thead
-          tr
-              td(colspan=3)
-                  div.row-fluid
-                      div.col-md-12 Total resources to the a current Town Hall {{hall}}
-      tbody
-          tr
-              td.col-md-2 Time
-              td.col-md-10(colspan=2) {{timeStr(summary.doneTime)}}
-                  span(popover='with {{builder}} builders' popover-trigger='mouseenter' style='margin: 10px')
-                      {{timeWithBuilder(summary.doneTime, builder, summary.maxDoneTime)}}
-                      small.glyphicon.glyphicon-home(style='margin:5px')
-                  span(popover='Research time' popover-trigger='mouseenter' style='margin: 10px')
-                      {{timeStr(researchSummary.doneTime)}}
-                      small.glyphicon.glyphicon-book(style='margin:5px')
-          tr
-              td.col-md-2(rowspan=3) Cost
-              td.col-md-2 Building
-              td.col-md-8
-                  span(ng-hide='summary.doneCost[0] == 0')
-                      span.g {{costFormat(summary.doneCost[0])}}
-                      icon-gold.space
-                  span.sp5(ng-hide='summary.doneCost[1] == 0')
-                      span.e {{costFormat(summary.doneCost[1])}}
-                      icon-elixir.space
-                  span(ng-hide='summary.doneCost[2] == 0')
-                      span.d {{costFormat(summary.doneCost[2])}}
-                      icon-darkelixir
-          tr
-              td.col-md-2 Research
-              td.col-md-8
-                  span(ng-hide='researchSummary.doneCost[1] == 0')
-                      span.e {{costFormat(researchSummary.doneCost[1])}}
-                      icon-elixir.space
-                  span(ng-hide='researchSummary.doneCost[2] == 0')
-                      span.d {{costFormat(researchSummary.doneCost[2])}}
-                      icon-darkelixir.space
-          tr
-              td.col-md-2 Wall
-              td.col-md-8
-                span(ng-hide='wallSummary.doneCost[0] == 0')
-                    span.g {{costFormat(wallSummary.doneCost[0])}}
+    thead
+        tr
+            td(colspan=3)
+                div.row-fluid
+                    div.col-md-12 Resources required to upgrade to a max Town Hall {{hall}}
+    tbody.active
+        tr
+            td.col-md-2 Time
+            td.col-md-10(colspan=2)  {{timeStr(summary.requiredTime)}}
+                span(popover='with {{builder}} builders' popover-trigger='mouseenter' style='margin: 10px')
+                    {{timeWithBuilder(summary.requiredTime, builder, summary.maxRequiredTime)}}
+                    small.glyphicon.glyphicon-home(style='margin:5px')
+                span(popover='Research time' popover-trigger='mouseenter' style='margin: 10px')
+                    {{timeStr(researchSummary.requiredTime)}}
+                    small.glyphicon.glyphicon-book(style='margin:5px')
+        tr
+            td.col-md-2(rowspan=3) Cost
+            td.col-md-2 Building
+            td.col-md-8
+                span(ng-hide='summary.requiredCost[0] == 0')
+                    span.g {{costFormat(summary.requiredCost[0])}}
                     icon-gold.space
-                span(ng-hide='wallSummary.doneCost[1] == 0' popover='{{pString()}}' popover-trigger='mouseenter')
-                    span.e ~{{costFormat(wallSummary.doneCost[1])}}
+                span(ng-hide='summary.requiredCost[1] == 0')
+                    span.e {{costFormat(summary.requiredCost[1])}}
                     icon-elixir.space
+                span(ng-hide='summary.requiredCost[2] == 0')
+                    span.d {{costFormat(summary.requiredCost[2])}}
+                    icon-darkelixir
+        tr
+            td.col-md-2 Research
+            td.col-md-8
+                span(ng-hide='researchSummary.requiredCost[1]==0')
+                    span.e {{costFormat(researchSummary.requiredCost[1])}}
+                    icon-elixir.space
+                span(ng-hide='researchSummary.requiredCost[2]==0')
+                    span.d {{costFormat(researchSummary.requiredCost[2])}}
+                    icon-darkelixir.space
+        tr
+            td.col-md-2 Wall
+            td.col-md-8
+                  span(ng-hide='wallSummary.requiredCost[0] == 0')
+                      span.g {{costFormat(wallSummary.requiredCost[0])}}
+                          icon-gold.space
+                  span(ng-hide='wallSummary.requiredCost[1] == 0' popover='{{pString()}}' popover-trigger='mouseenter')
+                      span.e ~{{costFormat(wallSummary.requiredCost[1])}}
+                          icon-elixir.space
 
-  div(ng-include="'app/main/setting.html'")
+    thead
+        tr
+            td(colspan=3)
+                div.row-fluid
+                    div.col-md-12 Total resources to the a current Town Hall {{hall}}
+    tbody
+        tr
+            td.col-md-2 Time
+            td.col-md-10(colspan=2) {{timeStr(summary.doneTime)}}
+                span(popover='with {{builder}} builders' popover-trigger='mouseenter' style='margin: 10px')
+                    {{timeWithBuilder(summary.doneTime, builder, summary.maxDoneTime)}}
+                    small.glyphicon.glyphicon-home(style='margin:5px')
+                span(popover='Research time' popover-trigger='mouseenter' style='margin: 10px')
+                    {{timeStr(researchSummary.doneTime)}}
+                    small.glyphicon.glyphicon-book(style='margin:5px')
+        tr
+            td.col-md-2(rowspan=3) Cost
+            td.col-md-2 Building
+            td.col-md-8
+                span(ng-hide='summary.doneCost[0] == 0')
+                    span.g {{costFormat(summary.doneCost[0])}}
+                    icon-gold.space
+                span.sp5(ng-hide='summary.doneCost[1] == 0')
+                    span.e {{costFormat(summary.doneCost[1])}}
+                    icon-elixir.space
+                span(ng-hide='summary.doneCost[2] == 0')
+                    span.d {{costFormat(summary.doneCost[2])}}
+                    icon-darkelixir
+        tr
+            td.col-md-2 Research
+            td.col-md-8
+                span(ng-hide='researchSummary.doneCost[1] == 0')
+                    span.e {{costFormat(researchSummary.doneCost[1])}}
+                    icon-elixir.space
+                span(ng-hide='researchSummary.doneCost[2] == 0')
+                    span.d {{costFormat(researchSummary.doneCost[2])}}
+                    icon-darkelixir.space
+        tr
+            td.col-md-2 Wall
+            td.col-md-8
+              span(ng-hide='wallSummary.doneCost[0] == 0')
+                  span.g {{costFormat(wallSummary.doneCost[0])}}
+                  icon-gold.space
+              span(ng-hide='wallSummary.doneCost[1] == 0' popover='{{pString()}}' popover-trigger='mouseenter')
+                  span.e ~{{costFormat(wallSummary.doneCost[1])}}
+                  icon-elixir.space
+
+  h4.page-header Settings
+
+  ul
+      li
+          span.space Set your town hall level 
+          select(ng-model='hall' ng-change="setHall(hall)" ng-disabled='readonlyName')
+              option(ng-repeat='i in [1,2,3,4,5,6,7,8,9,10,11]' ng-selected="hall == i" value="{{i}}") Town Hall {{i}}
+      li
+          span.space Number of builders
+          select(ng-model='builder' ng-change="setBuilder(builder)" ng-disabled='readonlyName')
+              option(ng-repeat='i in [2,3,4,5]' ng-selected='builder == i' value="{{i}}") {{i}}
+      li
+          span Display Options
+          div.form-group
+              div.checkbox-inline
+                  input(type='checkbox' ng-model='hideDoneBuilding' ng-change='setHideDoneBuilding()' ng-disabled='readonlyName')
+                  span Hide max upgraded buildings
+              div
+              div.checkbox-inline
+                  input(type='checkbox' ng-model='hideDoneResearch' ng-change='setHideDoneResearch()' ng-disabled='readonlyName')
+                  span Hide max upgraded researches
+      li
+          span.text-danger.space Change to the max-upgraded townhall
+          div
+              select.space(ng-model='setuphall' ng-disabled='readonlyName' ng-change="changeSetupHall(setuphall)")
+                  option(ng-repeat='i in [4,5,6,7,8,9,10,11]' ng-selected='setuphall == i' value="{{i}}") Town Hall {{i}}
+              button.btn-xs.btn-danger(ng-click='changeToMaxHall(setuphall)') Set
+
