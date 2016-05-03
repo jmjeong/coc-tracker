@@ -13,7 +13,7 @@ angular.module 'cocApp'
         name: $scope.user.name
         email: $scope.user.email
         password: $scope.user.password
-        data: JSON.stringify(userFactory.get())
+        data: userFactory.get().user
 
       .then ->
         $location.path '/'
