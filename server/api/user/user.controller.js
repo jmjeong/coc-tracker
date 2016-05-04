@@ -36,7 +36,6 @@ exports.create = function (req, res, next) {
   newUser.save(function(err, user) {
     if (err) return validationError(res, err);
     var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresIn: '10d' });
-    console.log(token);
     res.json({ token: token });
   });
 };

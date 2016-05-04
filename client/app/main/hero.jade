@@ -31,7 +31,7 @@ toast
                         span.space
                         b.text-primary {{timeStrMoment(remainTime(upgradeList[d.upgradeIdx].due))}} / {{timeStr(upgradeList[d.upgradeIdx].time)}}
                     div
-                        span(ng-hide='d.nextUpgrade. data.length==0')
+                        span(ng-hide='d.nextUpgrade.data.length==0')
                             icon-elixir(ng-show='d.nextUpgrade.type == "e"')
                             icon-darkelixir(ng-show='d.nextUpgrade.type == "d"')
                             icon-gold(ng-show='d.nextUpgrade.type == "g"')

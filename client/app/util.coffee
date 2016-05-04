@@ -34,7 +34,7 @@ angular.module 'cocApp'
             if Auth.isLoggedInAsync()
                 $http.get '/api/users/me/data'
                 .then (response)->
-                    console.log('logged get', response)
+                    # console.log('logged get', response)
                     initUser(response.data)
                     {
                         readonlyName: undefined
@@ -76,7 +76,7 @@ angular.module 'cocApp'
 
     set: (actLists, user, cb) ->
         if (!_id)
-            console.log(actLists);
+            # console.log(actLists);
             if Auth.isLoggedInAsync()
                 $http.post '/api/users/me/data',
                     actLists
