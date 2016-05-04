@@ -81,7 +81,7 @@ angular.module 'cocApp'
                 $http.post '/api/users/me/data',
                     actLists
                 .success (response)->
-                    console.log(response)
+#                    console.log(response)
                     cb && cb()
             else
                 localStorageService.set('user', user)
@@ -215,7 +215,7 @@ angular.module 'cocApp'
             upgradeDone.push({'action':'addLog', 'data':{title:u.title, level:u.level, complete:u.due}})
             user.log.push({title:u.title, level:u.level, complete:u.due})
 
-        console.log(user.log);
+#        console.log(user.log);
         lodash.remove user.upgrade, (u) ->
             now.isAfter(moment(u.due))
 
