@@ -154,7 +154,7 @@ angular.module 'cocApp'
         else
             value = ut[level]
 
-        util.showUpgradeModal($modal, $scope.upgradeAction, name, title, level+1, index, value, ut[level], (find>=0))
+        util.showUpgradeModal($modal, $scope.upgradeAction, name, title, level+1, index, ut[level], value,  (find>=0))
 
     $scope.upgradeAction = (name, title, index, level, value) ->
         idx = $scope.detail[name][index].idx

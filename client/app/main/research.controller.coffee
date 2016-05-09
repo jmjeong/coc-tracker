@@ -99,7 +99,7 @@ angular.module('cocApp')
         else
             value = ut[level]*60
 
-        util.showUpgradeModal($modal, $scope.upgradeAction, name, title, level+1, index, value, ut[level]*60, (find>=0))
+        util.showUpgradeModal($modal, $scope.upgradeAction, name, title, level+1, index, ut[level]*60, value, (find>=0))
 
     $scope.upgradeAction = (name, title, index, level, value) ->
         level = user.research[name] ? 0
