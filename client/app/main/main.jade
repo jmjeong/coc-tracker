@@ -27,7 +27,7 @@ div(ng-include="" src='"app/main/yesno-popup.html"')
                 div.row-fluid
                     div.col-md-12
                         span {{u.due | amCalendar}}
-                        a.trash(ng-click='deleteUpgrade(u)')
+                        a.trash(ng-click='deleteUpgrade(u)' ng-hide='readonlyName')
                           span.glyphicon.glyphicon-trash.pull-right
         tr(ng-show="!upgradeList.length")
             td(colspan=5).text-center No Upgrades
