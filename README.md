@@ -1,14 +1,18 @@
-- mongodb
+## To run locally 
 
-- bower install
+- install mongodb
+
 - npm install
+- bower install
 
 - grunt serve
 
-To deploy
+## To deploy
 
-npm install -g imagemin imagemin-optipng imagemin-pngquant
+npm install -g imagemin imagemin-optipng imagemin-pngquant pm2
 
+grunt build 
 
-NODE_ENV=production node server/coc.js 
+cd dist 
+NODE_ENV=production pm2 server/coc.js 
 
