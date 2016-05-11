@@ -1,7 +1,7 @@
 {
   "name": "coc",
   "version": "2.0.0",
-  "main": "server/app.js",
+  "main": "server/coc.js",
   "dependencies": {
     "body-parser": "~1.5.0",
     "bson": "^0.4.23",
@@ -90,7 +90,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "start": "node server/app.js",
+    "start": "node server/coc.js",
     "test": "grunt test",
     "update-webdriver": "node node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update"
   },
