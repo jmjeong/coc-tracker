@@ -214,7 +214,7 @@ exports.putData = function(req, res, next) {
         });
         user.lastUpdated = lastUpdated;
         user.save(function (err) {
-            err & console.error(err);
+            err && console.error(err);
 
             if (err) return res.send(500, err);
             res.send(200);
