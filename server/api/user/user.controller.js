@@ -156,6 +156,7 @@ exports.putData = function(req, res, next) {
     var HEROFLAG = 100;
 
     User.findById(req.user._id, function(err, user) {
+        console.log(' Processing request for ', user.email);
         if (err) return res.send(500,err);
         if (!user) return res.send(404);
         _.map(req.body, function(d) {

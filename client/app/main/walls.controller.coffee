@@ -51,6 +51,7 @@ angular.module('cocApp')
                 walls.total += count
                 walls.data.push(
                     idx: i
+                    idxno: i-start
                     count: count
                     upgrade: nextUpgrade(i+1, maxLevel, bD[name]['upgrade cost'], user)
                 )
@@ -58,14 +59,14 @@ angular.module('cocApp')
 
     update()
 
-    $scope.changeNum = (idx, count) ->
+    $scope.changeNum = (idx, idxno, count) ->
         if (count == undefined || count < 0)
-            $scope.walls.data[idx].count = 0;
+            $scope.walls.data[no].count = 0;
             return;
 
         user['walls'][idx] = count
         maxLevel = util.max_level(user.setting.hall, bD[name]['required town hall'])
-        $scope.walls.data[idx].upgrade = nextUpgrade(idx+1, maxLevel, bD[name]['upgrade cost'], user)
+        $scope.walls.data[idxno].upgrade = nextUpgrade(idx+1, maxLevel, bD[name]['upgrade cost'], user)
         total = 0
         for i in [0..maxLevel-1]
             total += user['walls'][i]

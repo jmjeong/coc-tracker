@@ -16,7 +16,7 @@ div(ng-include="'app/main/subnav.html'")
                         span  Level {{w.idx+1}}
                     td
                         input.form-control(type='number' name='count' ng-model='w.count' ng-max-length='3'
-                        ng-change='changeNum(w.idx, w.count)' ng-disabled='readonlyName')
+                        ng-change='changeNum(w.idx, w.idxno, w.count)' ng-disabled='readonlyName')
                         div.error(ng-show='form.count.$dirty && form.count.$invalid')
                             small Error
                     td
