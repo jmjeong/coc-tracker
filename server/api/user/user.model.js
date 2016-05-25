@@ -74,6 +74,8 @@ var UserSchema = new Schema({
       witch: Number,
       lavahound: Number,
       bowler: Number,
+      miner: Number,
+      babydragon: Number,
       lightning: Number,
       healing: Number,
       rage: Number,
@@ -81,7 +83,9 @@ var UserSchema = new Schema({
       freeze: Number,
       poison: Number,
       earthquake: Number,
-      haste: Number
+      haste: Number,
+      clone: Number,
+      skeleton: Number
   },
   walls: [ Number],
   log: [ {

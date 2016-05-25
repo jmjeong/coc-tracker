@@ -138,13 +138,13 @@
     rD['balloon']['trainable']=true;
     rD['balloon']['range']=0.5;
     rD['balloon']['death range']=1.2;
-    rD['balloon']['dps']=[25,32,48,72,108,162];
-    rD['balloon']['death damage']=[25,32,48,72,108,162];
-    rD['balloon']['hitpoints']=[150,180,216,280,390,545];
-    rD['balloon']['training cost']=[2000,2500,3000,3500,4000,4500];
-    rD['balloon']['laboratory level']=[2,2,4,5,6,7];
-    rD['balloon']['research time']=[0,24,48,72,120,240];
-    rD['balloon']['research cost']=[0,150000,450000,1350000,2500000,6000000];
+    rD['balloon']['dps']=[25,32,48,72,108,162,198];
+    rD['balloon']['death damage']=[25,32,48,72,108,162,198];
+    rD['balloon']['hitpoints']=[150,180,216,280,390,545,690];
+    rD['balloon']['training cost']=[2000,2500,3000,3500,4000,4500,5000];
+    rD['balloon']['laboratory level']=[2,2,4,5,6,7,9];
+    rD['balloon']['research time']=[0,24,48,72,120,240,24*14];
+    rD['balloon']['research cost']=[0,150000,450000,1350000,2500000,6000000,9500000];
 
     rD['list'].push('Wizard');
     rD['wizard']=[];
@@ -341,7 +341,6 @@
     rD['golem']['research time']=[0,240,288,336,336];
     rD['golem']['research cost']=[0,60000,70000,80000,90000];
 
-
     rD['list'].push('Witch');
     rD['witch']=[];
     rD['witch']['type']="Ground";
@@ -366,7 +365,6 @@
     rD['witch']['research time']=[0,240,336];
     rD['witch']['research cost']=[0,75000,160000];
 
-
     rD['list'].push('Lava Hound');
     rD['lavahound']=[];
     rD['lavahound']['type']="Air";
@@ -384,13 +382,13 @@
     rD['lavahound']['trainable']=true;
     rD['lavahound']['range']=1;
     rD['lavahound']['death range']=1.2;
-    rD['lavahound']['dps']=[10,12,14];
-    rD['lavahound']['death damage']=[100,120,140];
-    rD['lavahound']['hitpoints']=[5700,6200,6700];
-    rD['lavahound']['training cost']=[390,450,510];
-    rD['lavahound']['laboratory level']=[7,7,8];
-    rD['lavahound']['research time']=[0,240,288];
-    rD['lavahound']['research cost']=[0,60000,70000];
+    rD['lavahound']['dps']=[10,12,14,16];
+    rD['lavahound']['death damage']=[100,150,200,250];
+    rD['lavahound']['hitpoints']=[5700,6200,6700,7200];
+    rD['lavahound']['training cost']=[390,450,510,570];
+    rD['lavahound']['laboratory level']=[7,7,8,9];
+    rD['lavahound']['research time']=[0,24*10,24*12,24*14];
+    rD['lavahound']['research cost']=[0,60000,70000,150000];
 
 
     rD['list'].push('Bowler');
@@ -417,13 +415,61 @@
     rD['bowler']['research time']=[0,240,336];
     rD['bowler']['research cost']=[0,120000,200000];
 
+
+    rD['list'].push('Miner');
+    rD['miner']=[];
+    rD['miner']['type']="Ground";
+    rD['miner']['preferred target']="Defenses";
+    rD['miner']['multiplier']=1;
+    rD['miner']['ground attack']=true;
+    rD['miner']['air attack']=false;
+    rD['miner']['splash radius']=-1;
+    rD['miner']['housing space']=10;
+    rD['miner']['training time']=240;
+    rD['miner']['movement speed']=16;
+    rD['miner']['attack speed']=1;
+    rD['miner']['barracks type']="Normal";
+    rD['miner']['barracks level']=2;
+    rD['miner']['trainable']=true;
+    rD['miner']['range']=3;
+    rD['miner']['death range']=-1;
+    rD['miner']['dps']=[75,85,95,105];
+    rD['miner']['hitpoints']=[1200,1300,1400,1500];
+    rD['miner']['training cost']=[15000,16000,17000,18000];
+    rD['miner']['laboratory level']=[8,8,9,9];
+    rD['miner']['research time']=[0,24*10,24*12,24*14];
+    rD['miner']['research cost']=[0,7500000,8500000,9500000];
+
+    rD['list'].push('Baby Dragon');
+    rD['babydragon']=[];
+    rD['babydragon']['type']="Air";
+    rD['babydragon']['preferred target']="Defenses";
+    rD['babydragon']['multiplier']=1;
+    rD['babydragon']['ground attack']=true;
+    rD['babydragon']['air attack']=true;
+    rD['babydragon']['splash radius']=0.3;
+    rD['babydragon']['housing space']=10;
+    rD['babydragon']['training time']=240;
+    rD['babydragon']['movement speed']=16;
+    rD['babydragon']['attack speed']=1;
+    rD['babydragon']['barracks type']="Normal";
+    rD['babydragon']['barracks level']=2;
+    rD['babydragon']['trainable']=true;
+    rD['babydragon']['range']=3;
+    rD['babydragon']['death range']=-1;
+    rD['babydragon']['dps']=[75,85,95,105];
+    rD['babydragon']['hitpoints']=[1200,1300,1400,1500];
+    rD['babydragon']['training cost']=[15000,16000,17000,18000];
+    rD['babydragon']['laboratory level']=[7,7,8,9];
+    rD['babydragon']['research time']=[0,24*10,24*12,24*14];
+    rD['babydragon']['research cost']=[0,6000000,7000000,8000000];
+
     var i=0;
     rD['list'].push('Lightning');
     rD['lightning']=[];
     rD['lightning']['available']=true;
     rD['lightning']['creation time']=30;
     rD['lightning']['spell factory']=1;
-    rD['lightning']['creation cost']=[15000,16500,18000,20000,22000,24000,26000];
     rD['lightning']['research cost']=[0,200000,500000,1000000,2000000,6000000,8000000];
     rD['lightning']['research time']=[0,24,48,72,96,240,336];
     rD['lightning']['laboratory level']=[1,1,2,3,6,7,8];
@@ -433,7 +479,6 @@
     rD['healing']['available']=true;
     rD['healing']['creation time']=30;
     rD['healing']['spell factory']=2;
-    rD['healing']['creation cost']=[15000,16500,18000,20000,22000,24000];
     rD['healing']['research cost']=[0,300000,600000,1200000,2400000,4800000];
     rD['healing']['research time']=[0,24,48,72,120,168];
     rD['healing']['laboratory level']=[4,4,4,5,6,7];
@@ -443,44 +488,36 @@
     rD['rage']['available']=true;
     rD['rage']['creation time']=45;
     rD['rage']['spell factory']=3;
-    rD['rage']['creation cost']=[23000,25000,27000,30000,33000];
     rD['rage']['research cost']=[0,450000,900000,1800000,3000000];
     rD['rage']['research time']=[0,48,72,120,168];
     rD['rage']['laboratory level']=[5,5,5,5,5];
-    rD['rage']['data']=['radius','pulses','pulse time','boost time','damage boost','speed boost'];
-    rD['rage']['radius']=5;
-    rD['rage']['pulses']=60;
-    rD['rage']['pulse time']=0.3;
-    rD['rage']['boost time']=1;
-    rD['rage']['damage boost']=[1.3,1.4,1.5,1.6,1.7];
-    rD['rage']['speed boost']=[20,22,24,26,28];
 
     rD['list'].push('Jump');
     rD['jump']=[];
     rD['jump']['available']=true;
-    rD['jump']['data']=['radius','boost time','duration'];
     rD['jump']['creation time']=45;
     rD['jump']['spell factory']=4;
-    rD['jump']['creation cost']=[23000,27000,31000];
     rD['jump']['research cost']=[0,3000000,6000000];
     rD['jump']['research time']=[0,120,168];
     rD['jump']['laboratory level']=[7,7,8];
-    rD['jump']['radius']=3.5;
-    rD['jump']['boost time']=1;
-    rD['jump']['duration']=[20,40,60];
 
     rD['list'].push('Freeze');
     rD['freeze']=[];
     rD['freeze']['available']=true;
     rD['freeze']['creation time']=45;
     rD['freeze']['spell factory']=5;
-    rD['freeze']['creation cost']=[26000,29000,31000,33000,35000];
     rD['freeze']['research cost']=[0,4000000,5000000,6500000,8000000];
     rD['freeze']['research time']=[0,120,168,240,336];
     rD['freeze']['laboratory level']=[8,8,8,8,8];
-    rD['freeze']['data']=['radius','duration'];
-    rD['freeze']['radius']=3.5;
-    rD['freeze']['duration']=[4,5,6,7,8];
+
+    rD['list'].push('Clone');
+    rD['clone']=[];
+    rD['clone']['available']=true;
+    rD['clone']['creation time']=45;
+    rD['clone']['spell factory']=5;
+    rD['clone']['research cost']=[0,5000000,7500000];
+    rD['clone']['research time']=[0,24*10,24*12];
+    rD['clone']['laboratory level']=[8,8,9];
 
     rD['list'].push('Poison');
     rD['poison']=[];
@@ -508,4 +545,13 @@
     rD['haste']['research time']=[0,24*8,24*10,24*14];
     rD['haste']['laboratory level']=[7,7,8,8];
     rD['haste']['barracks type']='Dark';
+
+    rD['list'].push('Skeleton');
+    rD['skeleton']=[];
+    rD['skeleton']['available']=true;
+    rD['skeleton']['creation time']=15;
+    rD['skeleton']['research cost']=[0,50000,75000,100000];
+    rD['skeleton']['research time']=[0,24*8,24*10,24*12];
+    rD['skeleton']['laboratory level']=[7,7,8,8];
+    rD['skeleton']['barracks type']='Dark';
 }

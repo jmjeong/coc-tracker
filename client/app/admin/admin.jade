@@ -4,11 +4,11 @@ div(ng-include='"components/navbar/navbar.html"')
     p
         div Total users : {{users.length}}
         span(ng-repeat="user in users|orderBy:'-lastUpdated'" ng-show="user.lastUpdated")
-          a.col-md-3.col-xs-6(ng-href='/p/overview?id={{user._id}}')
+          a.col-md-6.col-xs-6(ng-href='/p/overview?id={{user._id}}')
             span
               strong{{user.name|limitTo:13}}
               span(ng-show='user.name.length>13') ...
-              span(ng-show='user.hall') &nbsp;({{user.hall}})
+              span(ng-show='user.setting.hall') &nbsp;({{user.setting.hall}})
               span(ng-show='user.lastUpdated') &nbsp; : {{user.lastUpdated | amDateFormat:'MM/DD h:mm a'}}
     //a.trash(ng-click='delete(user)')
     //  span.glyphicon.glyphicon-trash.pull-right

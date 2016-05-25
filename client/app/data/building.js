@@ -22,9 +22,9 @@ bD['list'].push('Cannon')
 bD['number available']['cannon']=[2,2,2,2,3,3,5,5,5,6,7,]
 bD['cannon']=[]
 bD['cannon']['type']="Defense"
-bD['cannon']['required town hall']=[1,1,2,3,4,5,6,7,8,8,9,10,10,]
-bD['cannon']['upgrade time']=[1,15,45,120,360,720,1440,2880,4320,5760,7200,8640,10080,]
-bD['cannon']['upgrade cost']=[[250,0,0],[1000,0,0],[4000,0,0],[16000,0,0],[50000,0,0],[100000,0,0],[200000,0,0],[400000,0,0],[800000,0,0],[1600000,0,0],[3200000,0,0],[6400000,0,0],[7500000,0,0],]
+bD['cannon']['required town hall']=[1,1,2,3,4,5,6,7,8,8,9,10,10,11]
+bD['cannon']['upgrade time']=[1,15,45,120,360,720,1440,2880,4320,5760,7200,8640,10080,60*24*8]
+bD['cannon']['upgrade cost']=[[250,0,0],[1000,0,0],[4000,0,0],[16000,0,0],[50000,0,0],[100000,0,0],[200000,0,0],[400000,0,0],[800000,0,0],[1600000,0,0],[3200000,0,0],[6400000,0,0],[7500000,0,0],[8500000,0,0]]
 
 bD['list'].push('Archer Tower')
 bD['number available']['archertower']=[0,1,1,2,3,3,4,5,6,7,8,]
@@ -110,9 +110,9 @@ bD['list'].push('Spring Trap')
 bD['number available']['springtrap']=[0,0,0,2,2,4,4,6,6,6,6,]
 bD['springtrap']=[]
 bD['springtrap']['type']="Trap"
-bD['springtrap']['required town hall']=[4,]
-bD['springtrap']['upgrade time']=[0,]
-bD['springtrap']['upgrade cost']=[[2000,0,0],]
+bD['springtrap']['required town hall']=[4,7,8,9,10]
+bD['springtrap']['upgrade time']=[0,60*16,60*24,60*24*2,60*24*3]
+bD['springtrap']['upgrade cost']=[[2000,0,0],[500000,0,0],[1000000,0,0],[1500000,0,0],[2000000,0,0]]
 
 bD['list'].push('Giant Bomb')
 bD['number available']['giantbomb']=[0,0,0,0,0,1,2,3,4,5,5]
