@@ -220,9 +220,10 @@ bD['list'].push('Barracks')
 bD['number available']['barracks']=[1,2,2,3,3,3,4,4,4,4,4,]
 bD['barracks']=[]
 bD['barracks']['type']="Army"
-bD['barracks']['required town hall']=[1,1,1,2,3,4,5,6,7,8,]
-bD['barracks']['upgrade time']=[1,15,120,240,600,960,1440,2880,5760,8640,]
-bD['barracks']['upgrade cost']=[[0,200,0],[0,1000,0],[0,2500,0],[0,5000,0],[0,10000,0],[0,80000,0],[0,240000,0],[0,700000,0],[0,1500000,0],[0,2000000,0],]
+bD['barracks']['required town hall']=[1,1,1,2,3,4,5,6,7,8,9,10]
+bD['barracks']['upgrade time']=[1,15,120,240,600,960,1440,2880,5760,8640,60*24*8,60*24*10]
+bD['barracks']['upgrade cost']=[[0,200,0],[0,1000,0],[0,2500,0],[0,5000,0],[0,10000,0],[0,80000,0],
+    [0,240000,0],[0,700000,0],[0,1500000,0],[0,2000000,0],[0,3000000,0],[0,4000000,0]]
 
 bD['list'].push('Dark Barracks')
 bD['number available']['darkbarracks']=[0,0,0,0,0,0,1,2,2,2,2,]
@@ -252,6 +253,6 @@ bD['list'].push('Dark Spell Factory')
 bD['number available']['darkspellfactory']=[0,0,0,0,0,0,0,1,1,1,1,]
 bD['darkspellfactory']=[]
 bD['darkspellfactory']['type']="Army"
-bD['darkspellfactory']['required town hall']=[8,8,9]
-bD['darkspellfactory']['upgrade time']=[1440*4,1440*6,1440*8]
-bD['darkspellfactory']['upgrade cost']=[[0,1500000,0],[0,2500000,0],[0,3500000,0],]
+bD['darkspellfactory']['required town hall']=[8,8,9,9]
+bD['darkspellfactory']['upgrade time']=[1440*4,1440*6,1440*8,1440*10]
+bD['darkspellfactory']['upgrade cost']=[[0,1500000,0],[0,2500000,0],[0,3500000,0],[0,4500000,0]]
