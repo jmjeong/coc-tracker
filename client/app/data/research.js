@@ -90,12 +90,12 @@
     rD['giant']['trainable']=true;
     rD['giant']['range']=1;
     rD['giant']['death range']=-1;
-    rD['giant']['dps']=[11,14,19,24,31,43,50];
-    rD['giant']['hitpoints']=[300, 360,430,520,670,940,1100];
-    rD['giant']['training cost']=[250,750,1250,1750,2250,3000,3500];
-    rD['giant']['laboratory level']=[2,2,4,5,6,7,8];
-    rD['giant']['research time']=[0,24,48,72,120,240,336];
-    rD['giant']['research cost']=[0,100000,250000,750000,2250000,6000000,7000000];
+    rD['giant']['dps']=[11,14,19,24,31,43,50,57];
+    rD['giant']['hitpoints']=[300,360,430,520,670,940,1100,1260];
+    rD['giant']['training cost']=[250,750,1250,1750,2250,3000,3500,4000];
+    rD['giant']['laboratory level']=[2,2,4,5,6,7,8,9];
+    rD['giant']['research time']=[0,24,48,72,120,240,24*12,336];
+    rD['giant']['research cost']=[0,100000,250000,750000,2250000,5000000,6000000,9500000];
 
     rD['list'].push('Wall Breaker');
     rD['wallbreaker']=[];
