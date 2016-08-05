@@ -552,6 +552,6 @@
     rD['skeleton']['creation time']=15;
     rD['skeleton']['research cost']=[0,50000,75000,100000];
     rD['skeleton']['research time']=[0,24*8,24*10,24*12];
-    rD['skeleton']['laboratory level']=[7,7,8,8];
+    rD['skeleton']['laboratory level']=[7,8,8,9];
     rD['skeleton']['barracks type']='Dark';
 }
