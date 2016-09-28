@@ -1,3 +1,7 @@
+## Demo Site
+
+- http://coc.jmjeong.com 
+
 ## To run locally 
 
 - install mongodb
@@ -9,10 +13,9 @@
 
 ## To deploy
 
-npm install -g imagemin imagemin-optipng imagemin-pngquant pm2
+- npm install -g imagemin imagemin-optipng imagemin-pngquant pm2
 
-grunt build 
+- grunt build 
 
-cd dist 
-NODE_ENV=production pm2 server/coc.js 
-
+- cd dist 
+- NODE_ENV=production pm2 start server/coc.js
