@@ -16,7 +16,7 @@ angular.module 'cocApp'
 
     $scope.logout = ->
         Auth.logout()
-        $location.path '/login
+        $location.path '/login'
 
     $scope.isActive = (route) ->
         route is $location.path()

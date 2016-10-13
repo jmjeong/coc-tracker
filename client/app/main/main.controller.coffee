@@ -47,7 +47,6 @@ angular.module 'cocApp'
         # $scope.activeTab = undefined
         for item in lodash.sortBy(util.building_list(category))
             name = util.cannonicalName(item)
-            console.log(name);
             availableNum = bD['number available'][name][user.setting.hall-1]
             continue if (availableNum == 0 )
 
