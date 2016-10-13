@@ -6,7 +6,7 @@ angular.module 'cocApp'
         title: 'Home'
         link: '/'
     ,
-        title: 'v2.12'
+        title: 'v2.2'
         link: '/about'
     ]
     $scope.isCollapsed = true
@@ -16,7 +16,7 @@ angular.module 'cocApp'
 
     $scope.logout = ->
         Auth.logout()
-        $location.path '/login'
+        $location.path '/login
 
     $scope.isActive = (route) ->
         route is $location.path()
