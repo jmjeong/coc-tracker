@@ -31,6 +31,7 @@ var UserSchema = new Schema({
       mortar: [Number],
       wizardtower: [Number],
       xbow: [Number],
+      bombtower: [Number],
 
       airbomb: [Number],
       bomb: [Number],
