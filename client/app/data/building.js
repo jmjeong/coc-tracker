@@ -155,7 +155,7 @@ bD['skeletontrap']['upgrade time']=[0,360,1440,]
 bD['skeletontrap']['upgrade cost']=[[6000,0,0],[600000,0,0],[1300000,0,0],]
 
 bD['list'].push('Walls')
-bD['number available']['walls']=[0,25,50,75,100,125,175,225,250,275,275,]
+bD['number available']['walls']=[0,25,50,75,100,125,175,225,250,275,300,]
 bD['walls']=[]
 bD['walls']['type']="Walls"
 bD['walls']['required town hall']=[2,2,3,4,5,6,7,8,9,9,10,]
