@@ -20,6 +20,13 @@
 - cd dist 
 - NODE_ENV=production pm2 start server/coc.js
 
+## Update
+
+## Change costs, level 
+
+- change information from client/data/building.js, hero.js, research.js
+- change client/app/main/about.jade
+- change client/components/navbar/navbar.controller.coffee 
 
 ## To Add new building, troop 
 

@@ -14,9 +14,9 @@ bD['list'].push('Clan Castle')
 bD['number available']['clancastle']=[0,0,1,1,1,1,1,1,1,1,1,]
 bD['clancastle']=[]
 bD['clancastle']['type']="Other"
-bD['clancastle']['required town hall']=[3,4,6,8,9,10,]
-bD['clancastle']['upgrade time']=[0,360,1440,2880,10080,20160,]
-bD['clancastle']['upgrade cost']=[[10000,0,0],[100000,0,0],[800000,0,0],[1800000,0,0],[5000000,0,0],[7000000,0,0],]
+bD['clancastle']['required town hall']=[3,4,6,8,9,10,11]
+bD['clancastle']['upgrade time']=[0,60*6,60*24,60*24*2,60*24*6,60*24*10,60*24*14,]
+bD['clancastle']['upgrade cost']=[[10000,0,0],[100000,0,0],[800000,0,0],[1800000,0,0],[4000000,0,0],[7000000,0,0],[10000000,0,0],]
 
 bD['list'].push('Cannon')
 bD['number available']['cannon']=[2,2,2,2,3,3,5,5,5,6,7,]
@@ -62,9 +62,10 @@ bD['list'].push('Wizard Tower')
 bD['number available']['wizardtower']=[0,0,0,0,1,2,2,3,4,4,5,]
 bD['wizardtower']=[]
 bD['wizardtower']['type']="Defense"
-bD['wizardtower']['required town hall']=[5,5,6,7,8,8,9,10,11,]
-bD['wizardtower']['upgrade time']=[720,1440,2880,4320,5760,7200,10080,14400,17280]
-bD['wizardtower']['upgrade cost']=[[180000,0,0],[360000,0,0],[720000,0,0],[1280000,0,0],[1960000,0,0],[2680000,0,0],[4500000,0,0],[6000000,0,0],[8560000,0,0]]
+bD['wizardtower']['required town hall']=[5,5,6,7,8,8,9,10,10,11,]
+bD['wizardtower']['upgrade time']=[60*12,60*24,60*24*2,60*24*3,60*24*4,60*24*5,60*24*6,60*24*8,60*24*10,60*24*12]
+bD['wizardtower']['upgrade cost']=[[180000,0,0],[360000,0,0],[700000,0,0],[1200000,0,0],
+    [1700000,0,0],[2200000,0,0],[3700000,0,0],[5200000,0,0],[7200000,0,0],[9200000,0,0]]
 
 bD['list'].push('Hidden Tesla')
 bD['number available']['hiddentesla']=[0,0,0,0,0,0,2,3,4,4,4]
@@ -158,9 +159,10 @@ bD['list'].push('Walls')
 bD['number available']['walls']=[0,25,50,75,100,125,175,225,250,275,300,]
 bD['walls']=[]
 bD['walls']['type']="Walls"
-bD['walls']['required town hall']=[2,2,3,4,5,6,7,8,9,9,10,]
-bD['walls']['upgrade time']=[0,0,0,0,0,0,0,0,0,0,0,]
-bD['walls']['upgrade cost']=[[200,0,0],[1000,0,0],[5000,0,0],[10000,0,0],[30000,0,0],[75000,0,0],[200000,0,0],[500000,0,0],[1000000,1000000,0],[3000000,3000000,0],[4000000,4000000,0],]
+bD['walls']['required town hall']=[2,2,3,4,5,6,7,8,9,9,10,11,]
+bD['walls']['upgrade time']=[0,0,0,0,0,0,0,0,0,0,0,0,]
+bD['walls']['upgrade cost']=[[50,0,0],[1000,0,0],[5000,0,0],[10000,0,0],[30000,0,0],[75000,0,0],
+    [200000,0,0],[500000,0,0],[1000000,1000000,0],[2000000,2000000,0],[3000000,3000000,0],[4000000,4000000,0],]
 
 bD['list'].push('Gold Mine')
 bD['number available']['goldmine']=[1,2,3,4,5,6,6,6,6,7,7,]

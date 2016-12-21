@@ -217,7 +217,7 @@
     rD['dragon']['hitpoints']=[1900,2100,2300,2500,2700,2900];
     rD['dragon']['training cost']=[25000,29000,33000,37000,42000,46000];
     rD['dragon']['laboratory level']=[5,5,6,7,8,9];
-    rD['dragon']['research time']=[0,24*7,24*8,24*10,24*12,24*14];
+    rD['dragon']['research time']=[0,24*7,24*9,24*10,24*12,24*14];
     rD['dragon']['research cost']=[0,2000000,3000000,5000000,7000000,9000000];
 
     rD['list'].push('P.E.K.K.A');
@@ -239,9 +239,9 @@
     rD['pekka']['death range']=-1;
     rD['pekka']['dps']=[240,270,300,340,380];
     rD['pekka']['hitpoints']=[2800,3100,3500,4000,4500];
-    rD['pekka']['training cost']=[30000,35000,40000,45000,50000];
+    rD['pekka']['training cost']=[28000,32000,36000,40000,45000];
     rD['pekka']['laboratory level']=[6,6,6,8,8];
-    rD['pekka']['research time']=[0,240,288,336,336];
+    rD['pekka']['research time']=[0,24*10,24*12,24*14,24*14];
     rD['pekka']['research cost']=[0,3000000,6000000,7000000,8000000];
 
     rD['list'].push('Minion');
@@ -285,12 +285,12 @@
     rD['hogrider']['trainable']=true;
     rD['hogrider']['range']=0.6;
     rD['hogrider']['death range']=-1;
-    rD['hogrider']['dps']=[60,70,80,92,105,118];
-    rD['hogrider']['hitpoints']=[270,312,360,415,475,535];
-    rD['hogrider']['training cost']=[40,45,52,58,65,90];
-    rD['hogrider']['laboratory level']=[5,5,6,6,7,8];
-    rD['hogrider']['research time']=[0,192,240,288,336,336];
-    rD['hogrider']['research cost']=[0,20000,30000,40000,50000,100000];
+    rD['hogrider']['dps']=[60,70,80,92,105,118,135];
+    rD['hogrider']['hitpoints']=[270,312,360,415,475,535,600];
+    rD['hogrider']['training cost']=[40,45,52,58,65,90,115];
+    rD['hogrider']['laboratory level']=[5,5,6,6,7,8,9];
+    rD['hogrider']['research time']=[0,24*5,24*6,24*8,24*10,24*12,24*14];
+    rD['hogrider']['research cost']=[0,20000,30000,40000,50000,100000,150000];
 
     rD['list'].push('Valkyrie');
     rD['valkyrie']=[];
@@ -333,13 +333,13 @@
     rD['golem']['trainable']=true;
     rD['golem']['range']=1;
     rD['golem']['death range']=1.2;
-    rD['golem']['dps']=[38,42,46,50,54];
-    rD['golem']['death damage']=[350,400,450,500,550];
-    rD['golem']['hitpoints']=[4500,5000,5500,6000,6300];
-    rD['golem']['training cost']=[450,525,600,675,750];
-    rD['golem']['laboratory level']=[6,6,7,7,8];
-    rD['golem']['research time']=[0,240,288,336,336];
-    rD['golem']['research cost']=[0,60000,70000,80000,90000];
+    rD['golem']['dps']=[38,42,46,50,54,58];
+    rD['golem']['death damage']=[350,400,450,500,550,600];
+    rD['golem']['hitpoints']=[4500,5000,5500,6000,6300,6500];
+    rD['golem']['training cost']=[450,525,600,675,750,825];
+    rD['golem']['laboratory level']=[6,6,7,7,8,9];
+    rD['golem']['research time']=[0,24*6,24*8,24*10,24*12,24*14];
+    rD['golem']['research cost']=[0,60000,70000,80000,90000,200000];
 
     rD['list'].push('Witch');
     rD['witch']=[];
@@ -358,11 +358,11 @@
     rD['witch']['trainable']=true;
     rD['witch']['range']=4;
     rD['witch']['death range']=-1;
-    rD['witch']['dps']=[25,30];
-    rD['witch']['hitpoints']=[75,100];
-    rD['witch']['training cost']=[250,350];
+    rD['witch']['dps']=[50,60,70];
+    rD['witch']['hitpoints']=[270,300,330];
+    rD['witch']['training cost']=[250,350,450];
     rD['witch']['laboratory level']=[7,7,9];
-    rD['witch']['research time']=[0,240,336];
+    rD['witch']['research time']=[0,24*10,24*14];
     rD['witch']['research cost']=[0,75000,160000];
 
     rD['list'].push('Lava Hound');
@@ -523,9 +523,9 @@
     rD['poison']=[];
     rD['poison']['available']=true;
     rD['poison']['creation time']=15;
-    rD['poison']['research cost']=[0,25000,50000,75000];
-    rD['poison']['research time']=[0,24*4,24*6,24*10];
-    rD['poison']['laboratory level']=[6,6,7,8];
+    rD['poison']['research cost']=[0,25000,50000,75000,150000];
+    rD['poison']['research time']=[0,24*4,24*6,24*10,24*12];
+    rD['poison']['laboratory level']=[6,6,7,8,9];
     rD['poison']['barracks type']='Dark';
 
     rD['list'].push('Earthquake');
