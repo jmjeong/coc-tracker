@@ -515,9 +515,9 @@
     rD['clone']['available']=true;
     rD['clone']['creation time']=45;
     rD['clone']['spell factory']=5;
-    rD['clone']['research cost']=[0,5000000,7500000];
-    rD['clone']['research time']=[0,24*10,24*12];
-    rD['clone']['laboratory level']=[8,8,9];
+    rD['clone']['research cost']=[0,5000000,7000000,9000000];
+    rD['clone']['research time']=[0,24*8,24*10,24*14];
+    rD['clone']['laboratory level']=[8,8,9,9];
 
     rD['list'].push('Poison');
     rD['poison']=[];
