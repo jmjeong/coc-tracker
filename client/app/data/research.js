@@ -213,7 +213,7 @@
     rD['dragon']['trainable']=true;
     rD['dragon']['range']=3;
     rD['dragon']['death range']=-1;
-    rD['dragon']['dps']=[140,160,180,200,220,240];
+    rD['dragon']['dps']=[140,160,180,200,240,270];
     rD['dragon']['hitpoints']=[1900,2100,2300,2500,2700,2900];
     rD['dragon']['training cost']=[25000,29000,33000,37000,42000,46000];
     rD['dragon']['laboratory level']=[5,5,6,7,8,9];
@@ -237,7 +237,7 @@
     rD['pekka']['trainable']=true;
     rD['pekka']['range']=0.8;
     rD['pekka']['death range']=-1;
-    rD['pekka']['dps']=[240,270,300,340,380];
+    rD['pekka']['dps']=[240,270,310,360,410];
     rD['pekka']['hitpoints']=[2800,3100,3500,4000,4500];
     rD['pekka']['training cost']=[28000,32000,36000,40000,45000];
     rD['pekka']['laboratory level']=[6,6,6,8,8];
@@ -286,7 +286,7 @@
     rD['hogrider']['range']=0.6;
     rD['hogrider']['death range']=-1;
     rD['hogrider']['dps']=[60,70,80,92,105,118,135];
-    rD['hogrider']['hitpoints']=[270,312,360,415,475,535,600];
+    rD['hogrider']['hitpoints']=[270,312,360,415,480,550,640];
     rD['hogrider']['training cost']=[40,45,52,58,65,90,115];
     rD['hogrider']['laboratory level']=[5,5,6,6,7,8,9];
     rD['hogrider']['research time']=[0,24*5,24*6,24*8,24*10,24*12,24*14];
@@ -434,7 +434,7 @@
     rD['miner']['range']=3;
     rD['miner']['death range']=-1;
     rD['miner']['dps']=[80,88,96,104];
-    rD['miner']['hitpoints']=[500,550,600,650];
+    rD['miner']['hitpoints']=[500,600,650,700];
     rD['miner']['training cost']=[4200,4800,5400,6000];
     rD['miner']['laboratory level']=[8,8,9,9];
     rD['miner']['research time']=[0,24*10,24*12,24*14];

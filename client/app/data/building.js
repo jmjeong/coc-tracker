@@ -54,9 +54,9 @@ bD['list'].push('Air Defense')
 bD['number available']['airdefense']=[0,0,0,1,1,2,3,3,4,4,4,]
 bD['airdefense']=[]
 bD['airdefense']['type']="Defense"
-bD['airdefense']['required town hall']=[4,4,5,6,7,8,9,10,]
-bD['airdefense']['upgrade time']=[300,1440,4320,7200,8640,11520,14400,17280,]
-bD['airdefense']['upgrade cost']=[[22500,0,0],[90000,0,0],[270000,0,0],[540000,0,0],[1080000,0,0],[2160000,0,0],[4320000,0,0],[7560000,0,0],]
+bD['airdefense']['required town hall']=[4,4,5,6,7,8,9,10,11]
+bD['airdefense']['upgrade time']=[60*5,1440,1440*3,1440*4,1440*5,1440*6,1440*8,1440*10,1440*12]
+bD['airdefense']['upgrade cost']=[[22500,0,0],[90000,0,0],[270000,0,0],[500000,0,0],[1000000,0,0],[2000000,0,0],[4000000,0,0],[6300000,0,0],[8800000,0,0],]
 
 bD['list'].push('Wizard Tower')
 bD['number available']['wizardtower']=[0,0,0,0,1,2,2,3,4,4,5,]
