@@ -165,7 +165,7 @@ bD['walls']['upgrade cost']=[[50,0,0],[1000,0,0],[5000,0,0],[10000,0,0],[30000,0
     [200000,0,0],[500000,0,0],[1000000,1000000,0],[2000000,2000000,0],[3000000,3000000,0],[4000000,4000000,0],]
 
 bD['list'].push('Gold Mine')
-bD['number available']['goldmine']=[1,2,3,4,5,6,6,6,6,7,7,]
+bD['number available']['goldmine']=[1,2,3,4,5,6,6,6,7,7,7,]
 bD['goldmine']=[]
 bD['goldmine']['type']="Resource"
 bD['goldmine']['required town hall']=[1,1,2,2,3,3,4,4,5,5,7,8,]
@@ -174,7 +174,7 @@ bD['goldmine']['production']=[[200,0,0],[400,0,0],[600,0,0],[800,0,0],[1000,0,0]
 bD['goldmine']['upgrade cost']=[[0,150,0],[0,300,0],[0,700,0],[0,1400,0],[0,3500,0],[0,7000,0],[0,14000,0],[0,28000,0],[0,56000,0],[0,84000,0],[0,168000,0],[0,336000,0],]
 
 bD['list'].push('Elixir Collector')
-bD['number available']['elixircollector']=[1,2,3,4,5,6,6,6,6,7,7,]
+bD['number available']['elixircollector']=[1,2,3,4,5,6,6,6,7,7,7,]
 bD['elixircollector']=[]
 bD['elixircollector']['type']="Resource"
 bD['elixircollector']['required town hall']=[1,1,2,2,3,3,4,4,5,5,7,8,]

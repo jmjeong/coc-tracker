@@ -477,11 +477,11 @@
     rD['list'].push('Healing');
     rD['healing']=[];
     rD['healing']['available']=true;
-    rD['healing']['creation time']=30;
+    rD['healing']['creation time']=6;
     rD['healing']['spell factory']=2;
-    rD['healing']['research cost']=[0,300000,600000,1200000,2400000,4800000];
-    rD['healing']['research time']=[0,24,48,72,120,168];
-    rD['healing']['laboratory level']=[4,4,4,5,6,7];
+    rD['healing']['research cost']=[0,300000,600000,1200000,2400000,4000000,6000000];
+    rD['healing']['research time']=[0,24*1,24*2,24*3,24*5,24*7,24*10,];
+    rD['healing']['laboratory level']=[2,2,4,5,6,7,8];
 
     rD['list'].push('Rage');
     rD['rage']=[];
@@ -504,20 +504,20 @@
     rD['list'].push('Freeze');
     rD['freeze']=[];
     rD['freeze']['available']=true;
-    rD['freeze']['creation time']=45;
-    rD['freeze']['spell factory']=5;
-    rD['freeze']['research cost']=[0,4000000,5000000,6500000,8000000];
-    rD['freeze']['research time']=[0,120,168,240,336];
-    rD['freeze']['laboratory level']=[8,8,8,8,8];
+    rD['freeze']['creation time']=6;
+    rD['freeze']['spell factory']=4;
+    rD['freeze']['research cost']=[0,3000000,4000000,5000000,7000000,9500000];
+    rD['freeze']['research time']=[0,24*5,24*7,24*10,24*12,24*14,];
+    rD['freeze']['laboratory level']=[8,8,8,8,8,9];
 
     rD['list'].push('Clone');
     rD['clone']=[];
     rD['clone']['available']=true;
-    rD['clone']['creation time']=45;
+    rD['clone']['creation time']=12;
     rD['clone']['spell factory']=5;
-    rD['clone']['research cost']=[0,5000000,7000000,9000000];
-    rD['clone']['research time']=[0,24*8,24*10,24*14];
-    rD['clone']['laboratory level']=[8,8,9,9];
+    rD['clone']['research cost']=[0,4000000,6000000,8000000,10000000];
+    rD['clone']['research time']=[0,24*6,24*8,24*10,24*14];
+    rD['clone']['laboratory level']=[8,8,8,9,9];
 
     rD['list'].push('Poison');
     rD['poison']=[];
