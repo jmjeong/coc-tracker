@@ -61,7 +61,7 @@ angular.module('cocApp')
 
     $scope.changeNum = (idx, idxno, count) ->
         if (count == undefined || count < 0)
-            $scope.walls.data[no].count = 0;
+            $scope.walls.data[idxno].count = 0;
             return;
 
         user['walls'][idx] = count
