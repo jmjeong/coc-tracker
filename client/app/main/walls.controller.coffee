@@ -17,11 +17,20 @@ angular.module('cocApp')
         return if (current >= maxLevel)
         data = []
         count = user[name][current-1] ? 0
-        for i in [current..maxLevel-1]
-            data.push([i+1, costArray[i][0]*count])
+
+        if (current < 11) 
+            for i in [current..maxLevel-2]
+                data.push([i+1, costArray[i][0]*count])
+        else if (current == 11)
+            maxWallCount = user[name][11] ? 0
+            count = lodash.min([75-maxWallCount, user[name][11-1] ? 0])
+            if (count > 0)
+                data.push([11, costArray[11][0]*(count)])
+            else return
+
         return {
-        type: 'g'
-        data: data
+            type: 'g'
+            data: data
         }
 
     update = () ->
@@ -67,6 +76,9 @@ angular.module('cocApp')
         user['walls'][idx] = count
         maxLevel = util.max_level(user.setting.hall, bD[name]['required town hall'])
         $scope.walls.data[idxno].upgrade = nextUpgrade(idx+1, maxLevel, bD[name]['upgrade cost'], user)
+        if (idxno != 10)
+            $scope.walls.data[10].upgrade = nextUpgrade(10+1, maxLevel, bD[name]['upgrade cost'], user)
+           
         total = 0
         for i in [0..maxLevel-1]
             total += user['walls'][i]
