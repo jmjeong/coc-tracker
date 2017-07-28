@@ -6,7 +6,7 @@ angular.module 'cocApp'
         title: 'Home'
         link: '/'
     ,
-        title: 'v2.61'
+        title: 'v2.62'
         link: '/about'
     ]
     $scope.isCollapsed = true
