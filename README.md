@@ -51,4 +51,4 @@ Demo Site - http://coc.jmjeong.com
 
 The MIT License (MIT)
 
-Copyright(c) Jaemok Jeong
+Copyright(c) 2015-2017 Jaemok Jeong
