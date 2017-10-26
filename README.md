@@ -1,6 +1,6 @@
-## Demo Site
+# Clash of Clans tracker
 
-- http://coc.jmjeong.com 
+Demo Site - http://coc.jmjeong.com 
 
 ## To run locally 
 
@@ -20,25 +20,35 @@
 - cd dist 
 - NODE_ENV=production pm2 start server/coc.js
 
-## Update
+## Update the information
 
-## Change costs, level 
+### Update costs, level 
 
 - change information from client/data/building.js, hero.js, research.js
 - change client/app/main/about.jade
 - change client/components/navbar/navbar.controller.coffee 
 
-## To Add new building, troop 
+### To add new building, troop etc
 
 - change server/api/users/user.model.js file 
+```
 	ex) building: {
 			…
-		​ bombtower: [Number],
+		    bombtower: [Number],
 			…
 		}
-- set initial value in mongodb
+```
 
+- set initial value in mongodb
+```
 	ex) db.users.update( 
 		{}, 
 		{ $set: {"building.bombtower": [] } }, 
 		{ multi:true })
+```
+
+## License
+
+The MIT License (MIT)
+
+Copyright(c) Jaemok Jeong
