@@ -122,26 +122,18 @@ angular.module 'cocApp'
                 result.push(item)
         return result
 
-    wallCost = (current, maxLevel, costArray, count, maxWallCount) ->
+    wallCost = (current, maxLevel, costArray, count) ->
         doneCost = [0,0,0]
         requiredCost = [0,0,0]
         if (maxLevel > 0)
             for i in [0..maxLevel-1]
                 if (i <= current)
-                    doneCost[0] += costArray[i][0]*count
-                    doneCost[1] += costArray[i][1]*count
-                    doneCost[2] += costArray[i][2]*count                    
+                    doneCost = addArrays(doneCost, costArray[i], '+')
                 else
-                    if (current == 10) 
-                        c = lodash.max([lodash.min([75-maxWallCount, count ? 0]), 0])
-                    else 
-                        c = count                    
-                    requiredCost[0] = costArray[i][0]*c
-                    requiredCost[1] = costArray[i][1]*c
-                    requiredCost[2] = costArray[i][2]*c
+                    requiredCost = addArrays(requiredCost, costArray[i], '+')
         return {
-        doneCost: doneCost 
-        requiredCost: requiredCost 
+        doneCost: lodash.map(doneCost, (n)->n*count)
+        requiredCost: lodash.map(requiredCost, (n)->n*count)
         }
     research_list = () ->
         rD.list
@@ -305,8 +297,7 @@ angular.module 'cocApp'
 
         for i in [0..maxLevel-1]
             count = user[name][i] ? 0
-            maxWallCount = user[name][11] ? 0
-            costVal = wallCost(i, maxLevel, uc, count, maxWallCount)
+            costVal = wallCost(i, maxLevel, uc, count)
             doneCost = addArrays(doneCost, costVal.doneCost, '+')
             requiredCost = addArrays(requiredCost, costVal.requiredCost, '+')
 
