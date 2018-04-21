@@ -114,7 +114,7 @@ bD['number available']['bomb']=[0,0,2,2,4,4,6,6,6,6,6,]
 bD['bomb']=[]
 bD['bomb']['type']="Trap"
 bD['bomb']['required town hall']=[3,3,5,7,8,9,10,]
-bD['bomb']['upgrade time']=[0,15,120,480,1440,2880,6120.]
+bD['bomb']['upgrade time']=[0,15,120,480,1440,2880,6120,]
 bD['bomb']['upgrade cost']=[[400,0,0],[1000,0,0],[10000,0,0],[100000,0,0],[1000000,0,0],[1500000,0,0],[2000000,0,0],]
 
 bD['list'].push('Spring Trap')
