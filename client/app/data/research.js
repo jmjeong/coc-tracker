@@ -237,12 +237,12 @@
     rD['pekka']['trainable']=true;
     rD['pekka']['range']=0.8;
     rD['pekka']['death range']=-1;
-    rD['pekka']['dps']=[240,270,310,360,410,460];
-    rD['pekka']['hitpoints']=[2800,3100,3500,4000,4500,5000];
-    rD['pekka']['training cost']=[28000,32000,36000,40000,45000];
-    rD['pekka']['laboratory level']=[6,6,6,8,8,9];
-    rD['pekka']['research time']=[0,24*8,24*9,24*10,24*12,24*14];
-    rD['pekka']['research cost']=[0,3000000,5000000,6000000,7500000,10000000];
+    rD['pekka']['dps']=[240,270,310,360,410,470,540];
+    rD['pekka']['hitpoints']=[2800,3100,3500,4000,4500,5100,5700];
+    rD['pekka']['training cost']=[28000,32000,36000,40000,45000,50000,55000];
+    rD['pekka']['laboratory level']=[6,6,6,7,8,8,9];
+    rD['pekka']['research time']=[0,24*7,24*8,24*9,24*11,24*13,24*14];
+    rD['pekka']['research cost']=[0,3000000,5000000,6000000,7500000,8500000,10000000];
 
     rD['list'].push('Minion');
     rD['minion']=[];
@@ -334,12 +334,12 @@
     rD['golem']['range']=1;
     rD['golem']['death range']=1.2;
     rD['golem']['dps']=[38,42,46,50,54,58];
-    rD['golem']['death damage']=[350,400,450,500,550,600];
-    rD['golem']['hitpoints']=[4500,5000,5500,6000,6300,6500];
-    rD['golem']['training cost']=[450,525,600,675,750,825];
-    rD['golem']['laboratory level']=[6,6,7,7,8,9];
-    rD['golem']['research time']=[0,24*6,24*8,24*10,24*12,24*14];
-    rD['golem']['research cost']=[0,60000,70000,80000,90000,200000];
+    rD['golem']['death damage']=[350,400,450,500,550,600,650];
+    rD['golem']['hitpoints']=[5100,5400,5700,6000,6300,6600,6900];
+    rD['golem']['training cost']=[450,525,600,675,750,825,900];
+    rD['golem']['laboratory level']=[6,6,7,7,8,9,9];
+    rD['golem']['research time']=[0,24*6,24*8,24*10,24*12,24*14,24*14];
+    rD['golem']['research cost']=[0,60000,70000,80000,90000,150000,200000];
 
     rD['list'].push('Witch');
     rD['witch']=[];

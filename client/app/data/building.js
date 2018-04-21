@@ -224,9 +224,9 @@ bD['list'].push('Army Camp')
 bD['number available']['armycamp']=[1,1,2,2,3,3,4,4,4,4,4,]
 bD['armycamp']=[]
 bD['armycamp']['type']="Army"
-bD['armycamp']['required town hall']=[1,2,3,4,5,6,9,10,]
-bD['armycamp']['upgrade time']=[5,60,180,480,1440,4320,7200,14400,]
-bD['armycamp']['upgrade cost']=[[0,250,0],[0,2500,0],[0,10000,0],[0,100000,0],[0,250000,0],[0,750000,0],[0,2250000,0],[0,6750000,0],]
+bD['armycamp']['required town hall']=[1,2,3,4,5,6,9,10,11,]
+bD['armycamp']['upgrade time']=[5,60,180,480,1440,4320,7200,14400,20160,]
+bD['armycamp']['upgrade cost']=[[0,250,0],[0,2500,0],[0,10000,0],[0,100000,0],[0,250000,0],[0,750000,0],[0,2250000,0],[0,6750000,0],[0,9000000,0],]
 
 bD['list'].push('Barracks')
 bD['number available']['barracks']=[1,2,2,3,3,3,4,4,4,4,4,]
