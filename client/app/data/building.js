@@ -113,9 +113,9 @@ bD['list'].push('Bomb')
 bD['number available']['bomb']=[0,0,2,2,4,4,6,6,6,6,6,]
 bD['bomb']=[]
 bD['bomb']['type']="Trap"
-bD['bomb']['required town hall']=[3,3,5,7,8,9,]
-bD['bomb']['upgrade time']=[0,15,120,480,1440,2880,]
-bD['bomb']['upgrade cost']=[[400,0,0],[1000,0,0],[10000,0,0],[100000,0,0],[1000000,0,0],[1500000,0,0],]
+bD['bomb']['required town hall']=[3,3,5,7,8,9,10,]
+bD['bomb']['upgrade time']=[0,15,120,480,1440,2880,6120,]
+bD['bomb']['upgrade cost']=[[400,0,0],[1000,0,0],[10000,0,0],[100000,0,0],[1000000,0,0],[1500000,0,0],[2000000,0,0],]
 
 bD['list'].push('Spring Trap')
 bD['number available']['springtrap']=[0,0,0,2,2,4,4,6,6,6,6,]
@@ -129,17 +129,17 @@ bD['list'].push('Giant Bomb')
 bD['number available']['giantbomb']=[0,0,0,0,0,1,2,3,4,5,5]
 bD['giantbomb']=[]
 bD['giantbomb']['type']="Trap"
-bD['giantbomb']['required town hall']=[6,6,8,10,]
-bD['giantbomb']['upgrade time']=[0,360,1440,4320,]
-bD['giantbomb']['upgrade cost']=[[12500,0,0],[75000,0,0],[750000,0,0],[2500000,0,0],]
+bD['giantbomb']['required town hall']=[6,6,8,10,11,]
+bD['giantbomb']['upgrade time']=[0,360,1440,4320,7200,]
+bD['giantbomb']['upgrade cost']=[[12500,0,0],[75000,0,0],[750000,0,0],[2500000,0,0], [3500000,0,0],]
 
 bD['list'].push('Air Bomb')
 bD['number available']['airbomb']=[0,0,0,0,2,2,2,4,4,5,5,]
 bD['airbomb']=[]
 bD['airbomb']['type']="Trap"
-bD['airbomb']['required town hall']=[5,5,7,9,]
-bD['airbomb']['upgrade time']=[0,240,720,1440,]
-bD['airbomb']['upgrade cost']=[[4000,0,0],[20000,0,0],[200000,0,0],[1500000,0,0],]
+bD['airbomb']['required town hall']=[5,5,7,9,11,]
+bD['airbomb']['upgrade time']=[0,240,720,1440,2880,]
+bD['airbomb']['upgrade cost']=[[4000,0,0],[20000,0,0],[200000,0,0],[1500000,0,0],[2500000,0,0],]
 
 bD['list'].push('Seeking Air Mine')
 bD['number available']['seekingairmine']=[0,0,0,0,0,0,1,2,4,5,5,]
@@ -153,9 +153,9 @@ bD['list'].push('Skeleton Trap')
 bD['number available']['skeletontrap']=[0,0,0,0,0,0,0,2,2,3,3,]
 bD['skeletontrap']=[]
 bD['skeletontrap']['type']="Trap"
-bD['skeletontrap']['required town hall']=[8,8,9,]
-bD['skeletontrap']['upgrade time']=[0,360,1440,]
-bD['skeletontrap']['upgrade cost']=[[6000,0,0],[600000,0,0],[1300000,0,0],]
+bD['skeletontrap']['required town hall']=[8,8,9,11,]
+bD['skeletontrap']['upgrade time']=[0,360,1440,2880]
+bD['skeletontrap']['upgrade cost']=[[6000,0,0],[600000,0,0],[1300000,0,0],[2000000,0,0],]
 
 bD['list'].push('Walls')
 bD['number available']['walls']=[0,25,50,75,100,125,175,225,250,275,300,]
@@ -224,9 +224,9 @@ bD['list'].push('Army Camp')
 bD['number available']['armycamp']=[1,1,2,2,3,3,4,4,4,4,4,]
 bD['armycamp']=[]
 bD['armycamp']['type']="Army"
-bD['armycamp']['required town hall']=[1,2,3,4,5,6,9,10,]
-bD['armycamp']['upgrade time']=[5,60,180,480,1440,4320,7200,14400,]
-bD['armycamp']['upgrade cost']=[[0,250,0],[0,2500,0],[0,10000,0],[0,100000,0],[0,250000,0],[0,750000,0],[0,2250000,0],[0,6750000,0],]
+bD['armycamp']['required town hall']=[1,2,3,4,5,6,9,10,11,]
+bD['armycamp']['upgrade time']=[5,60,180,480,1440,4320,7200,14400,20160,]
+bD['armycamp']['upgrade cost']=[[0,250,0],[0,2500,0],[0,10000,0],[0,100000,0],[0,250000,0],[0,750000,0],[0,2250000,0],[0,6750000,0],[0,9000000,0],]
 
 bD['list'].push('Barracks')
 bD['number available']['barracks']=[1,2,2,3,3,3,4,4,4,4,4,]
