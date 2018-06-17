@@ -87,7 +87,7 @@ div(ng-include="" src='"app/main/yesno-popup.html"')
         tr
             td(colspan=3)
                 div.row-fluid
-                    div.col-md-12 Total resources to the a current Town Hall {{hall}}
+                    div.col-md-12 Total resources used to upgrade to the current Town Hall {{hall}}
     tbody
         tr
             td.col-md-2 Time
@@ -134,9 +134,9 @@ div(ng-include="" src='"app/main/yesno-popup.html"')
 
   ul
       li
-          span.space Set your town hall level 
+          span.space Set your town hall level
           select(ng-model='hall' ng-change="setHall(hall)" ng-disabled='readonlyName')
-              option(ng-repeat='i in [1,2,3,4,5,6,7,8,9,10,11]' ng-selected="hall == i" value="{{i}}") Town Hall {{i}}
+              option(ng-repeat='i in [1,2,3,4,5,6,7,8,9,10,11,12]' ng-selected="hall == i" value="{{i}}") Town Hall {{i}}
       li
           span.space Number of builders
           select(ng-model='builder' ng-change="setBuilder(builder)" ng-disabled='readonlyName')
@@ -155,6 +155,5 @@ div(ng-include="" src='"app/main/yesno-popup.html"')
           span.text-danger.space Change to the max-upgraded townhall
           div
               select.space(ng-model='setuphall' ng-disabled='readonlyName' ng-change="changeSetupHall(setuphall)")
-                  option(ng-repeat='i in [4,5,6,7,8,9,10,11]' ng-selected='setuphall == i' value="{{i}}") Town Hall {{i}}
+                  option(ng-repeat='i in [4,5,6,7,8,9,10,11,12]' ng-selected='setuphall == i' value="{{i}}") Town Hall {{i}}
               button.btn-xs.btn-danger(ng-click='changeToMaxHall(setuphall)' ng-hide='readonlyName') Set
-

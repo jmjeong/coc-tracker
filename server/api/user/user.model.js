@@ -32,6 +32,7 @@ var UserSchema = new Schema({
       wizardtower: [Number],
       xbow: [Number],
       bombtower: [Number],
+      gigatesla: [Number],
 
       airbomb: [Number],
       bomb: [Number],
@@ -46,6 +47,7 @@ var UserSchema = new Schema({
       darkspellfactory: [Number],
       laboratory: [Number],
       spellfactory: [Number],
+      seigeworkshop: [Number],
 
       darkelixirdrill: [Number],
       darkelixirstorage: [Number],
