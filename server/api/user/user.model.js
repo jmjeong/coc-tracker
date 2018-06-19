@@ -88,7 +88,10 @@ var UserSchema = new Schema({
       earthquake: Number,
       haste: Number,
       clone: Number,
-      skeleton: Number
+      skeleton: Number,
+      electrodragon: Number,
+      wallwrecker: Number,
+      battleblimp: Number	 
   },
   walls: [ Number],
   log: [ {
