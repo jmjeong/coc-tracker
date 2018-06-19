@@ -18,12 +18,12 @@
     rD['barbarian']['range']=0.4;
 
     rD['barbarian']['death range']=-1;
-    rD['barbarian']['dps']=[8,11,14,18,23,26,30];
-    rD['barbarian']['hitpoints']=[45,54,65,78,95,110,125];
-    rD['barbarian']['training cost']=[25,40,60,80,100,150,200];
-    rD['barbarian']['laboratory level']=[1,1,3,5,6,7,8];
-    rD['barbarian']['research time']=[0,6,24,72,120,240,336];
-    rD['barbarian']['research cost']=[0,50000,150000,500000,1500000,4500000,6000000];
+    rD['barbarian']['dps']=[8,11,14,18,23,26,30,34];
+    rD['barbarian']['hitpoints']=[45,54,65,78,95,110,125,140];
+    rD['barbarian']['training cost']=[25,40,60,80,100,150,200,300];
+    rD['barbarian']['laboratory level']=[1,1,3,5,6,7,8,9];
+    rD['barbarian']['research time']=[0,6,24,72,120,240,336,240];
+    rD['barbarian']['research cost']=[0,50000,150000,500000,1500000,4500000,6000000,8000000];
 
     rD['list'].push('Archer');
     rD['archer']=[];
@@ -42,12 +42,12 @@
     rD['archer']['trainable']=true;
     rD['archer']['range']=3.5;
     rD['archer']['death range']=-1;
-    rD['archer']['dps']=[7,9,12,16,20,22,25];
-    rD['archer']['hitpoints']=[20,23,28,33,40,44,48];
-    rD['archer']['training cost']=[50,80,120,160,200,300,400];
-    rD['archer']['laboratory level']=[1,1,3,5,6,7,8];
-    rD['archer']['research time']=[0,12,48,72,120,240,336];
-    rD['archer']['research cost']=[0,50000,250000,750000,2250000,6000000,7500000];
+    rD['archer']['dps']=[7,9,12,16,20,22,25,28];
+    rD['archer']['hitpoints']=[20,23,28,33,40,44,48,52];
+    rD['archer']['training cost']=[50,80,120,160,200,300,400,600];
+    rD['archer']['laboratory level']=[1,1,3,5,6,7,8,9];
+    rD['archer']['research time']=[0,12,48,72,120,7*24,9*24,240];
+    rD['archer']['research cost']=[0,50000,250000,750000,2250000,6000000,7500000,9000000];
 
     rD['list'].push('Goblin');
     rD['goblin']=[];
@@ -90,12 +90,12 @@
     rD['giant']['trainable']=true;
     rD['giant']['range']=1;
     rD['giant']['death range']=-1;
-    rD['giant']['dps']=[11,14,19,24,31,43,50,57];
-    rD['giant']['hitpoints']=[300,360,430,520,670,940,1100,1260];
-    rD['giant']['training cost']=[250,750,1250,1750,2250,3000,3500,4000];
-    rD['giant']['laboratory level']=[2,2,4,5,6,7,8,9];
-    rD['giant']['research time']=[0,24,48,72,120,240,24*12,24*14];
-    rD['giant']['research cost']=[0,100000,250000,750000,2250000,5000000,6000000,9500000];
+    rD['giant']['dps']=[11,14,19,24,31,43,50,57,64];
+    rD['giant']['hitpoints']=[300,360,430,520,670,940,1280,1480,1660];
+    rD['giant']['training cost']=[250,750,1250,1750,2250,3000,3500,4000,4500];
+    rD['giant']['laboratory level']=[2,2,4,5,6,7,8,9,10];
+    rD['giant']['research time']=[0,24,48,72,120,240,24*12,24*14,24*14];
+    rD['giant']['research cost']=[0,100000,250000,750000,2250000,5000000,6000000,9500000,12000000];
 
     rD['list'].push('Wall Breaker');
     rD['wallbreaker']=[];
@@ -114,12 +114,12 @@
     rD['wallbreaker']['trainable']=true;
     rD['wallbreaker']['range']=1;
     rD['wallbreaker']['death range']=-1;
-    rD['wallbreaker']['dps']=[12,16,24,32,46,60,78];
-    rD['wallbreaker']['hitpoints']=[20,24,29,35,42,54,62];
-    rD['wallbreaker']['training cost']=[1000,1500,2000,2500,3000,3500,4000];
-    rD['wallbreaker']['laboratory level']=[2,2,4,5,6,8,9];
-    rD['wallbreaker']['research time']=[0,24,24*2,24*3,24*5,24*10,24*12];
-    rD['wallbreaker']['research cost']=[0,100000,250000,750000,2250000,6000000,9000000];
+    rD['wallbreaker']['dps']=[12,16,24,32,46,60,78,100];
+    rD['wallbreaker']['hitpoints']=[20,24,29,35,42,54,62,70];
+    rD['wallbreaker']['training cost']=[1000,1500,2000,2500,3000,3500,4000,4500];
+    rD['wallbreaker']['laboratory level']=[2,2,4,5,6,8,9,10];
+    rD['wallbreaker']['research time']=[0,24,24*2,24*3,24*5,24*10,24*12,24*14];
+    rD['wallbreaker']['research cost']=[0,100000,250000,750000,2250000,6000000,9000000,12000000];
 
     rD['list'].push('Balloon');
     rD['balloon']=[];
@@ -138,13 +138,13 @@
     rD['balloon']['trainable']=true;
     rD['balloon']['range']=0.5;
     rD['balloon']['death range']=1.2;
-    rD['balloon']['dps']=[25,32,48,72,108,162,198];
-    rD['balloon']['death damage']=[25,32,48,72,108,162,198];
-    rD['balloon']['hitpoints']=[150,180,216,280,390,545,690];
-    rD['balloon']['training cost']=[2000,2500,3000,3500,4000,4500,5000];
-    rD['balloon']['laboratory level']=[2,2,4,5,6,7,9];
-    rD['balloon']['research time']=[0,24,48,72,120,240,24*14];
-    rD['balloon']['research cost']=[0,150000,450000,1350000,2500000,6000000,9500000];
+    rD['balloon']['dps']=[25,32,48,72,108,162,198,236];
+    rD['balloon']['death damage']=[25,32,48,72,108,162,214,268];
+    rD['balloon']['hitpoints']=[150,180,216,280,390,545,690,840];
+    rD['balloon']['training cost']=[2000,2500,3000,3500,4000,4500,5000,5500];
+    rD['balloon']['laboratory level']=[2,2,4,5,6,7,9,10];
+    rD['balloon']['research time']=[0,24,48,72,120,240,24*14,24*14];
+    rD['balloon']['research cost']=[0,150000,450000,1350000,2500000,6000000,9500000,12000000];
 
     rD['list'].push('Wizard');
     rD['wizard']=[];
@@ -163,12 +163,12 @@
     rD['wizard']['trainable']=true;
     rD['wizard']['range']=3;
     rD['wizard']['death range']=-1;
-    rD['wizard']['dps']=[50,70,90,125,170,185,200,215];
-    rD['wizard']['hitpoints']=[75,105,135,187.5,255,277.5,300,322.5];
-    rD['wizard']['training cost']=[1500,2000,2500,3000,3500,4000,4500,5000];
-    rD['wizard']['laboratory level']=[3,3,4,5,6,7,8,9];
-    rD['wizard']['research time']=[0,24*1,24*2,24*3,24*5,24*9,24*12,24*14];
-    rD['wizard']['research cost']=[0,150000,450000,1350000,2500000,5000000,7000000,9000000];
+    rD['wizard']['dps']=[50,70,90,125,170,185,200,215,230];
+    rD['wizard']['hitpoints']=[75,105,135,187.5,255,277.5,300,322.5,345];
+    rD['wizard']['training cost']=[1500,2000,2500,3000,3500,4000,4500,5000,5500];
+    rD['wizard']['laboratory level']=[3,3,4,5,6,7,8,9,10];
+    rD['wizard']['research time']=[0,24*1,24*2,24*3,24*5,24*9,24*12,24*14,24*14];
+    rD['wizard']['research cost']=[0,150000,450000,1350000,2500000,5000000,7000000,9000000,11000000];
 
     rD['list'].push('Healer');
     rD['healer']=[];
@@ -213,12 +213,12 @@
     rD['dragon']['trainable']=true;
     rD['dragon']['range']=3;
     rD['dragon']['death range']=-1;
-    rD['dragon']['dps']=[140,160,180,210,240,270];
-    rD['dragon']['hitpoints']=[1900,2100,2300,2600,2900,3200];
-    rD['dragon']['training cost']=[25000,29000,33000,37000,42000,46000];
-    rD['dragon']['laboratory level']=[5,5,6,7,8,9];
-    rD['dragon']['research time']=[0,24*7,24*9,24*10,24*12,24*14];
-    rD['dragon']['research cost']=[0,2000000,3000000,5000000,7000000,9000000];
+    rD['dragon']['dps']=[140,160,180,210,240,270,310];
+    rD['dragon']['hitpoints']=[1900,2100,2300,2600,2900,3300,3600];
+    rD['dragon']['training cost']=[18000,20000,22000,24000,26000,28000,30000];
+    rD['dragon']['laboratory level']=[5,5,6,7,8,9,10];
+    rD['dragon']['research time']=[0,24*7,24*9,24*10,24*12,24*14,24*14];
+    rD['dragon']['research cost']=[0,2000000,3000000,5000000,7000000,9000000,11000000];
 
     rD['list'].push('P.E.K.K.A');
     rD['pekka']=[];
@@ -237,12 +237,12 @@
     rD['pekka']['trainable']=true;
     rD['pekka']['range']=0.8;
     rD['pekka']['death range']=-1;
-    rD['pekka']['dps']=[240,270,310,360,410,470,540];
-    rD['pekka']['hitpoints']=[2800,3100,3500,4000,4500,5100,5700];
-    rD['pekka']['training cost']=[28000,32000,36000,40000,45000,50000,55000];
-    rD['pekka']['laboratory level']=[6,6,6,7,8,8,9];
-    rD['pekka']['research time']=[0,24*7,24*8,24*9,24*11,24*13,24*14];
-    rD['pekka']['research cost']=[0,3000000,5000000,6000000,7500000,8500000,10000000];
+    rD['pekka']['dps']=[240,270,310,360,410,470,540,610];
+    rD['pekka']['hitpoints']=[2800,3100,3500,4000,4500,5100,5700,6300];
+    rD['pekka']['training cost']=[21000,24000,27000,30000,33000,35000,37000,39000];
+    rD['pekka']['laboratory level']=[6,6,6,7,8,8,9,10];
+    rD['pekka']['research time']=[0,24*7,24*8,24*9,24*11,24*13,24*14,24*14];
+    rD['pekka']['research cost']=[0,3000000,5000000,6000000,7500000,8500000,10000000,12000000];
 
     rD['list'].push('Minion');
     rD['minion']=[];
@@ -261,12 +261,12 @@
     rD['minion']['trainable']=true;
     rD['minion']['range']=2.75;
     rD['minion']['death range']=-1;
-    rD['minion']['dps']=[35,38,42,46,50,54,57];
-    rD['minion']['hitpoints']=[55,60,66,72,78,84,90];
-    rD['minion']['training cost']=[6,7,8,9,10,11,12];
-    rD['minion']['laboratory level']=[5,5,6,6,7,8,9];
-    rD['minion']['research time']=[0,120,144,168,240,288,336];
-    rD['minion']['research cost']=[0,10000,20000,30000,40000,100000,140000];
+    rD['minion']['dps']=[35,38,42,46,50,54,58,62];
+    rD['minion']['hitpoints']=[55,60,66,72,78,84,90,96];
+    rD['minion']['training cost']=[6,7,8,9,10,11,12,13];
+    rD['minion']['laboratory level']=[5,5,6,6,7,8,9,10];
+    rD['minion']['research time']=[0,120,144,168,240,288,336,24*14];
+    rD['minion']['research cost']=[0,10000,20000,30000,40000,100000,140000,180000];
 
     rD['list'].push('Hog Rider');
     rD['hogrider']=[];
@@ -285,12 +285,12 @@
     rD['hogrider']['trainable']=true;
     rD['hogrider']['range']=0.6;
     rD['hogrider']['death range']=-1;
-    rD['hogrider']['dps']=[60,70,80,92,105,118,135];
-    rD['hogrider']['hitpoints']=[270,312,360,415,480,590,700];
-    rD['hogrider']['training cost']=[40,45,52,58,65,90,115];
-    rD['hogrider']['laboratory level']=[5,5,6,6,7,8,9];
-    rD['hogrider']['research time']=[0,24*5,24*6,24*8,24*10,24*12,24*14];
-    rD['hogrider']['research cost']=[0,20000,30000,40000,50000,100000,150000];
+    rD['hogrider']['dps']=[60,70,80,92,105,118,135,148];
+    rD['hogrider']['hitpoints']=[270,312,360,415,480,590,700,810];
+    rD['hogrider']['training cost']=[40,45,52,58,65,90,115,140];
+    rD['hogrider']['laboratory level']=[5,5,6,6,7,8,9,10];
+    rD['hogrider']['research time']=[0,24*5,24*6,24*8,24*10,24*12,24*14,24*14];
+    rD['hogrider']['research cost']=[0,20000,30000,40000,50000,100000,150000,200000];
 
     rD['list'].push('Valkyrie');
     rD['valkyrie']=[];
@@ -309,12 +309,12 @@
     rD['valkyrie']['trainable']=true;
     rD['valkyrie']['range']=0.5;
     rD['valkyrie']['death range']=-1;
-    rD['valkyrie']['dps']=[94,106,119,133,148];
-    rD['valkyrie']['hitpoints']=[750,825,910,1000,1100];
-    rD['valkyrie']['training cost']=[70,100,130,160,190];
-    rD['valkyrie']['laboratory level']=[6,6,7,7,8];
-    rD['valkyrie']['research time']=[0,192,240,288,336];
-    rD['valkyrie']['research cost']=[0,50000,60000,70000,110000];
+    rD['valkyrie']['dps']=[94,106,119,133,148,163,178];
+    rD['valkyrie']['hitpoints']=[750,825,910,1000,1100,1200,1300];
+    rD['valkyrie']['training cost']=[70,100,130,160,190,220,250];
+    rD['valkyrie']['laboratory level']=[6,6,7,7,8,9,10];
+    rD['valkyrie']['research time']=[0,192,240,288,336,14*24,14*24];
+    rD['valkyrie']['research cost']=[0,50000,60000,70000,110000,150000,190000];
 
     rD['list'].push('Golem');
     rD['golem']=[];
@@ -333,13 +333,13 @@
     rD['golem']['trainable']=true;
     rD['golem']['range']=1;
     rD['golem']['death range']=1.2;
-    rD['golem']['dps']=[38,42,46,50,54,58];
-    rD['golem']['death damage']=[350,400,450,500,550,600,650];
-    rD['golem']['hitpoints']=[5100,5400,5700,6000,6300,6600,6900];
-    rD['golem']['training cost']=[450,525,600,675,750,825,900];
-    rD['golem']['laboratory level']=[6,6,7,7,8,9,9];
-    rD['golem']['research time']=[0,24*6,24*8,24*10,24*12,24*14,24*14];
-    rD['golem']['research cost']=[0,60000,70000,80000,90000,150000,200000];
+    rD['golem']['dps']=[38,42,46,50,54,58,62,66];
+    rD['golem']['death damage']=[350,400,450,500,530,530,530,530,530];
+    rD['golem']['hitpoints']=[5100,5400,5700,6000,6300,6600,6900,7200];
+    rD['golem']['training cost']=[450,525,600,675,750,825,900,975];
+    rD['golem']['laboratory level']=[6,6,7,7,8,9,9,10];
+    rD['golem']['research time']=[0,24*6,24*8,24*10,24*12,24*14,24*14,24*14];
+    rD['golem']['research cost']=[0,60000,70000,80000,90000,150000,200000,200000];
 
     rD['list'].push('Witch');
     rD['witch']=[];
@@ -358,12 +358,12 @@
     rD['witch']['trainable']=true;
     rD['witch']['range']=4;
     rD['witch']['death range']=-1;
-    rD['witch']['dps']=[50,60,70];
-    rD['witch']['hitpoints']=[270,300,330];
-    rD['witch']['training cost']=[250,350,450];
-    rD['witch']['laboratory level']=[7,7,9];
-    rD['witch']['research time']=[0,24*10,24*14];
-    rD['witch']['research cost']=[0,75000,160000];
+    rD['witch']['dps']=[100,120,140,160];
+    rD['witch']['hitpoints']=[320,360,400,440];
+    rD['witch']['training cost']=[250,350,450,550];
+    rD['witch']['laboratory level']=[7,7,9,10];
+    rD['witch']['research time']=[0,24*10,24*14,24*14];
+    rD['witch']['research cost']=[0,75000,160000,200000];
 
     rD['list'].push('Lava Hound');
     rD['lavahound']=[];
@@ -382,13 +382,13 @@
     rD['lavahound']['trainable']=true;
     rD['lavahound']['range']=1;
     rD['lavahound']['death range']=1.2;
-    rD['lavahound']['dps']=[10,12,14,16];
-    rD['lavahound']['death damage']=[100,150,200,250];
-    rD['lavahound']['hitpoints']=[5700,6200,6700,7200];
-    rD['lavahound']['training cost']=[390,450,510,570];
-    rD['lavahound']['laboratory level']=[7,7,8,9];
-    rD['lavahound']['research time']=[0,24*10,24*12,24*14];
-    rD['lavahound']['research cost']=[0,60000,70000,150000];
+    rD['lavahound']['dps']=[10,12,14,16,18];
+    rD['lavahound']['death damage']=[100,150,200,250,300];
+    rD['lavahound']['hitpoints']=[6100,6500,6800,7200,7600];
+    rD['lavahound']['training cost']=[390,450,510,570,630];
+    rD['lavahound']['laboratory level']=[7,7,8,9,10];
+    rD['lavahound']['research time']=[0,24*10,24*12,24*14,24*14];
+    rD['lavahound']['research cost']=[0,60000,70000,150000,200000];
 
 
     rD['list'].push('Bowler');
@@ -399,7 +399,7 @@
     rD['bowler']['ground attack']=true;
     rD['bowler']['air attack']=false;
     rD['bowler']['splash radius']=-1;
-    rD['bowler']['housing space']=8;
+    rD['bowler']['housing space']=6;
     rD['bowler']['training time']=480;
     rD['bowler']['movement speed']=14;
     rD['bowler']['attack speed']=1.5;
@@ -408,12 +408,12 @@
     rD['bowler']['trainable']=true;
     rD['bowler']['range']=0.6;
     rD['bowler']['death range']=-1;
-    rD['bowler']['dps']=[65,75,85];
-    rD['bowler']['hitpoints']=[320,350,380];
-    rD['bowler']['training cost']=[130,150,170];
-    rD['bowler']['laboratory level']=[8,8,9];
-    rD['bowler']['research time']=[0,240,336];
-    rD['bowler']['research cost']=[0,120000,200000];
+    rD['bowler']['dps']=[60,70,80,90];
+    rD['bowler']['hitpoints']=[290,310,350,390];
+    rD['bowler']['training cost']=[130,150,170,190];
+    rD['bowler']['laboratory level']=[8,8,9,10];
+    rD['bowler']['research time']=[0,240,336,336];
+    rD['bowler']['research cost']=[0,120000,200000,200000];
 
 
     rD['list'].push('Miner');
@@ -433,12 +433,12 @@
     rD['miner']['trainable']=true;
     rD['miner']['range']=3;
     rD['miner']['death range']=-1;
-    rD['miner']['dps']=[80,88,96,104,112];
-    rD['miner']['hitpoints']=[550,610,670,730,800];
-    rD['miner']['training cost']=[4200,4800,5200,5600,6000];
-    rD['miner']['laboratory level']=[8,8,8,9,9];
-    rD['miner']['research time']=[0,24*8,24*10,24*12,24*14];
-    rD['miner']['research cost']=[0,6000000,7000000,8000000,9500000];
+    rD['miner']['dps']=[80,88,96,104,112,120];
+    rD['miner']['hitpoints']=[550,610,670,730,800,870];
+    rD['miner']['training cost']=[4200,4800,5200,5600,6000,6400];
+    rD['miner']['laboratory level']=[8,8,8,9,9,10];
+    rD['miner']['research time']=[0,24*8,24*10,24*12,24*14,24*14];
+    rD['miner']['research cost']=[0,6000000,7000000,8000000,9500000,11000000];
 
     rD['list'].push('Baby Dragon');
     rD['babydragon']=[];
@@ -457,12 +457,84 @@
     rD['babydragon']['trainable']=true;
     rD['babydragon']['range']=3;
     rD['babydragon']['death range']=-1;
-    rD['babydragon']['dps']=[75,85,95,105,115];
-    rD['babydragon']['hitpoints']=[1200,1300,1400,1500,1600];
-    rD['babydragon']['training cost']=[15000,16000,17000,18000,19000];
-    rD['babydragon']['laboratory level']=[7,7,8,8,9];
-    rD['babydragon']['research time']=[0,24*8,24*10,24*12,24*14];
-    rD['babydragon']['research cost']=[0,5000000,6000000,7000000,8000000];
+    rD['babydragon']['dps']=[75,85,95,105,115,125];
+    rD['babydragon']['hitpoints']=[1200,1300,1400,1500,1600,1700];
+    rD['babydragon']['training cost']=[15000,16000,17000,18000,19000,20000];
+    rD['babydragon']['laboratory level']=[7,7,8,8,9,10];
+    rD['babydragon']['research time']=[0,24*8,24*10,24*12,24*14,24*14];
+    rD['babydragon']['research cost']=[0,5000000,6000000,7000000,8000000,9000000];
+
+    rD['list'].push('Electro Dragon');
+    rD['electrodragon']=[];
+    rD['electrodragon']['type']="Air";
+    rD['electrodragon']['preferred target']="Any";
+    rD['electrodragon']['multiplier']=1;
+    rD['electrodragon']['ground attack']=true;
+    rD['electrodragon']['air attack']=true;
+    rD['electrodragon']['splash radius']=0.3;
+    rD['electrodragon']['housing space']=30;
+    rD['electrodragon']['training time']=1440;
+    rD['electrodragon']['movement speed']=12;
+    rD['electrodragon']['attack speed']=3.5;
+    rD['electrodragon']['barracks type']="Normal";
+    rD['electrodragon']['barracks level']=13;
+    rD['electrodragon']['trainable']=true;
+    rD['electrodragon']['range']=3;
+    rD['electrodragon']['death range']=-1;
+    rD['electrodragon']['dps']=[240,270,300,];
+    rD['electrodragon']['hitpoints']=[3200,3700,4200];
+    rD['electrodragon']['training cost']=[36000,40000,44000];
+    rD['electrodragon']['laboratory level']=[9,9,10];
+    rD['electrodragon']['research time']=[0,10*24,14*24];
+    rD['electrodragon']['research cost']=[0,9000000,11000000];
+
+    rD['list'].push('Wall Wrecker');
+    rD['wallwrecker']=[];
+    rD['wallwrecker']['type']="Ground";
+    rD['wallwrecker']['preferred target']="Walls";
+    rD['wallwrecker']['multiplier']=1;
+    rD['wallwrecker']['ground attack']=true;
+    rD['wallwrecker']['air attack']=false;
+    rD['wallwrecker']['splash radius']=0.0;
+    rD['wallwrecker']['housing space']=1;
+    rD['wallwrecker']['training time']=1440;
+    rD['wallwrecker']['movement speed']=12;
+    rD['wallwrecker']['attack speed']=1.3;
+    rD['wallwrecker']['barracks type']="Normal";
+    rD['wallwrecker']['barracks level']=13;
+    rD['wallwrecker']['trainable']=true;
+    rD['wallwrecker']['range']=3;
+    rD['wallwrecker']['death range']=-1;
+    rD['wallwrecker']['dps']=[300,400,500];
+    rD['wallwrecker']['hitpoints']=[6300,6720,7140];
+    rD['wallwrecker']['training cost']=[100000,125000,150000];
+    rD['wallwrecker']['laboratory level']=[10,10,10];
+    rD['wallwrecker']['research time']=[0,8*24,10*24];
+    rD['wallwrecker']['research cost']=[0,6000000,8000000];
+
+rD['list'].push('Battle Blimp');
+    rD['battleblimp']=[];
+    rD['battleblimp']['type']="Ground";
+    rD['battleblimp']['preferred target']="TownHall";
+    rD['battleblimp']['multiplier']=1;
+    rD['battleblimp']['ground attack']=false;
+    rD['battleblimp']['air attack']=true;
+    rD['battleblimp']['splash radius']=0.0;
+    rD['battleblimp']['housing space']=1;
+    rD['battleblimp']['training time']=1440;
+    rD['battleblimp']['movement speed']=18;
+    rD['battleblimp']['attack speed']=1.3;
+    rD['battleblimp']['barracks type']="Normal";
+    rD['battleblimp']['barracks level']=13;
+    rD['battleblimp']['trainable']=true;
+    rD['battleblimp']['range']=3;
+    rD['battleblimp']['death range']=-1;
+    rD['battleblimp']['dps']=[150,210,270];
+    rD['battleblimp']['hitpoints']=[2500,3000,3500];
+    rD['battleblimp']['training cost']=[100000,125000,150000];
+    rD['battleblimp']['laboratory level']=[10,10,10];
+    rD['battleblimp']['research time']=[0,8*24,10*24];
+    rD['battleblimp']['research cost']=[0,6000000,8000000];
 
     var i=0;
     rD['list'].push('Lightning');
@@ -506,9 +578,9 @@
     rD['freeze']['available']=true;
     rD['freeze']['creation time']=6;
     rD['freeze']['spell factory']=4;
-    rD['freeze']['research cost']=[0,3000000,4000000,5000000,7000000,9500000];
-    rD['freeze']['research time']=[0,24*5,24*7,24*10,24*12,24*14,];
-    rD['freeze']['laboratory level']=[8,8,8,8,8,9];
+    rD['freeze']['research cost']=[0,3000000,4000000,5000000,7000000,9500000,11000000];
+    rD['freeze']['research time']=[0,24*5,24*7,24*10,24*12,24*14,24*14];
+    rD['freeze']['laboratory level']=[8,8,8,8,8,9,10];
 
     rD['list'].push('Clone');
     rD['clone']=[];
@@ -550,8 +622,8 @@
     rD['skeleton']=[];
     rD['skeleton']['available']=true;
     rD['skeleton']['creation time']=15;
-    rD['skeleton']['research cost']=[0,50000,75000,100000];
-    rD['skeleton']['research time']=[0,24*8,24*10,24*12];
-    rD['skeleton']['laboratory level']=[7,8,8,9];
+    rD['skeleton']['research cost']=[0,50000,75000,100000,125000];
+    rD['skeleton']['research time']=[0,24*8,24*10,24*12,24*14];
+    rD['skeleton']['laboratory level']=[7,8,8,9,10];
     rD['skeleton']['barracks type']='Dark';
 }
